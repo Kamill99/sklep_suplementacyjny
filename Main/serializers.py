@@ -12,7 +12,15 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class OcenySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Ocena
-        fields = ['opinia', 'nota']
+        fields = '__all__'
+
+    def update(self, instance, validated_data):
+        instance.opinia = validated_data.get('opinia', instance.opinia)
+        instance.nota = validated_data.get('nota', instance.nota)
+        instance.save()
+
+        return instance
+
 
 
 class SupplementSerializer(serializers.ModelSerializer):
