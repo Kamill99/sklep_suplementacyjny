@@ -4,8 +4,8 @@ from rest_framework import permissions
 from rest_framework.response import Response
 
 from Main.serializers import UserSerializer
-from .models import Supplement
-from .serializers import SupplementSerializer
+from .models import Supplement, Ocena
+from .serializers import SupplementSerializer, OcenySerializer
 from django.http.response import HttpResponseNotAllowed
 
 
@@ -45,3 +45,9 @@ class SupplementViewSet(viewsets.ModelViewSet):
 
         serializer = SupplementSerializer(suplement, many=False)
         return Response(serializer.data)
+
+
+class OcenyViewSet(viewsets.ModelViewSet):
+    queryset = Ocena.objects.all()
+    serializer_class = OcenySerializer
+    permission_classes = [permissions.IsAuthenticated]
