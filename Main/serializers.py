@@ -22,10 +22,10 @@ class OcenySerializer(serializers.HyperlinkedModelSerializer):
         return instance
 
 
-
 class SupplementSerializer(serializers.ModelSerializer):
     oceny = OcenySerializer(many=True)
 
     class Meta:
         model = Supplement
         fields = ['nazwa', 'opis', 'dostepnosc', 'cena', 'rodzaj_suplementu', 'pojemnosc_suplementu', 'oceny']
+        read_only_fields = ['oceny']
