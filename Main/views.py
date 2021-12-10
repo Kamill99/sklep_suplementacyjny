@@ -11,6 +11,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
 class SupplementViewSet(viewsets.ModelViewSet):
     queryset = Supplement.objects.all()
     serializer_class = SupplementSerializer
