@@ -12,4 +12,4 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class SupplementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Supplement
-        fields = ['name', 'description', 'available']
+        fields = ['nazwa', 'opis', 'dostepnosc', 'cena', 'rodzaj_suplementu', 'pojemnosc_suplementu']
