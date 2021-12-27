@@ -2,11 +2,17 @@ from django.contrib.auth.models import User
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.response import Response
-
+from rest_framework.pagination import PageNumberPagination
 from Main.serializers import UserSerializer
 from .models import Supplement, Ocena
 from .serializers import SupplementSerializer, OcenySerializer
 from django.http.response import HttpResponseNotAllowed
+
+
+class SupplementSetPagination(PageNumberPagination):
+    page_size = 2
+    page_size_query_param = 'page_size'
+    max_page_size = 3
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -19,6 +25,7 @@ class SupplementViewSet(viewsets.ModelViewSet):
     queryset = Supplement.objects.all()
     serializer_class = SupplementSerializer
     permission_classes = [permissions.IsAuthenticated]
+    pagination_class = SupplementSetPagination
 
     def create(self, request, *args, **kwargs):
         if request.user.is_staff:
