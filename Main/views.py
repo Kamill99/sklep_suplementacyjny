@@ -7,6 +7,7 @@ from Main.serializers import UserSerializer
 from .models import Supplement, Ocena
 from .serializers import SupplementSerializer, OcenySerializer
 from django.http.response import HttpResponseNotAllowed
+from rest_framework.authentication import TokenAuthentication
 
 
 class SupplementSetPagination(PageNumberPagination):
@@ -19,12 +20,13 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = (TokenAuthentication,)
 
 
 class SupplementViewSet(viewsets.ModelViewSet):
     queryset = Supplement.objects.all()
     serializer_class = SupplementSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     pagination_class = SupplementSetPagination
 
     def create(self, request, *args, **kwargs):
