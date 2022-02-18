@@ -1,7 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers
 from Main import views
-from Main.views import index
+from Main.views import *
 
 router = routers.DefaultRouter()
 # router.register(r'users', views.UserViewSet)
@@ -10,5 +10,7 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     # path('', include(router.urls))
-    path('', index)
+    path('', index, name='index'),
+    path('kategoria/<id>/', kategoria, name='kategoria'),
+    path('suplement/<id>', suplement, name='supplement'),
 ]

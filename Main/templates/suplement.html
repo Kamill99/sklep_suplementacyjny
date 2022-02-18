@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <meta charset="UTF-8">
+    <title>Suplement</title>
+</head>
+<body>
+    {% block suplement %}
+    {% if suplement_adres %}
+        <h1> {{ suplement_adres.nazwa }}</h1>
+        <p>Cena: {{ suplement_adres.cena }}</p>
+        <p>Producent: {{ suplement_adres.producent }}</p>
+        <p>Opis: {{ suplement_adres.opis }}</p>
+        <p>Dostępność: {{ suplement_adres.dostepnosc }}</p>
+        <p>Rodzaj: {{ suplement_adres.rodzaj_suplementu }}</p>
+        <p>Pojemność: {{ suplement_adres.pojemnosc_suplementu }}</p>
+    {% else %}
+        <p>Produkt nie istnieje</p>
+    {% endif %}
+    {% endblock suplement %}
+</body>
+</html>

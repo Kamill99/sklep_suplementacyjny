@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Suplement</title>
+</head>
+<body>
+    {% block suplement %}
+
+        {% if kategoria_suplement %}
+            {% for suplement in kategoria_suplement %}
+                <p><a href="/suplement/{{ suplement.id }}"> {{ suplement.nazwa }}</a> </p>
+            {% endfor %}
+        {% else %}
+
+        {% endif %}
+
+    {% endblock %}
+</body>
+</html>

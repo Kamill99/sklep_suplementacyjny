@@ -1,0 +1,26 @@
+body
+{
+
+}
+
+#top
+{
+    clear: both;
+}
+
+#left-site
+{
+    width: 20%;
+    float: left;
+}
+
+#center
+{
+    width: 70%;
+    float: left;
+}
+
+#cl
+{
+    clear: both;
+}

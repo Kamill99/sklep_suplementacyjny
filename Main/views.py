@@ -4,17 +4,41 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from Main.serializers import UserSerializer
-from .models import Supplement, Ocena
+from .models import Supplement, Ocena, Kategoria
 from .serializers import SupplementSerializer, OcenySerializer
 from django.http.response import HttpResponseNotAllowed, HttpResponse
 from rest_framework.authentication import TokenAuthentication
+from django.shortcuts import render
+
 
 def index(request):
     queryset = Supplement.objects.all()
-    return HttpResponse(queryset)
+    # kat_witaminy = Supplement.objects.filter(kategoria=1)
+    # kat_zdrowie = Supplement.objects.filter(kategoria=2)
+    # kat_mineraly = Supplement.objects.filter(kategoria=3)
+    # kat_zdrowie_sen = Supplement.objects.filter(kategoria=4)
+    kategorie = Kategoria.objects.all()
+    dane = {'kategorie': kategorie}
+    return render(request, 'index.html', dane)
 
 
-# class SupplementSetPagination(PageNumberPagination):
+def kategoria(request, id):
+    kategoria_adres = Kategoria.objects.get(pk=id)
+    kategoria_suplement = Supplement.objects.filter(kategoria=kategoria_adres)
+    kategorie = Kategoria.objects.all()
+    dane = {'kategoria_adres': kategoria_adres,
+            'kategoria_suplement': kategoria_suplement,
+            'kategorie': kategorie}
+    return render(request, 'kategoria_suplement.html', dane)
+
+
+def suplement(request, id):
+    suplement_adres = Supplement.objects.get(pk=id)
+    kategorie = Kategoria.objects.all()
+    dane = {'suplement_adres' : suplement_adres,'kategorie' : kategorie}
+    return render(request, 'suplement.html', dane)
+
+        # class SupplementSetPagination(PageNumberPagination):
 #     page_size = 2
 #     page_size_query_param = 'page_size'
 #     max_page_size = 3

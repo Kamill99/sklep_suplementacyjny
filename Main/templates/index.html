@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <meta charset="UTF-8">
+    <title>Sklep z suplementami</title>
+</head>
+<body>
+    <div>
+        <h1>Strona główna</h1>
+    </div>
+
+    <div id="top"></div>
+
+    <div id="left-site">
+        <h2>Kategorie</h2>
+        {% for kat in kategorie %}
+        <p><a href="/kategoria/{{ kat.id }}"> {{ kat.nazwa }}</a></p>
+        {% endfor %}
+    </div>
+
+    <div id="center">
+        {% block suplement %} {% endblock suplement %}
+    </div>
+    <div id="cl"></div>
+</body>
+</html>
