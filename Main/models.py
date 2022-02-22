@@ -34,9 +34,22 @@ class Kategoria(models.Model):
         verbose_name_plural = "Kategorie"
 
 
+class Foto(models.Model):
+    nazwa = models.CharField(max_length=50, blank=True)
+    foto = models.ImageField(upload_to='images/')
+
+    def __str__(self):
+        return self.nazwa
+
+    class Meta:
+        verbose_name = "Fotografia"
+        verbose_name_plural = "Fotografie"
+
+
 class Supplement(models.Model):
     kategoria = models.ForeignKey(Kategoria, on_delete=models.CASCADE, null=True)
     producent = models.ForeignKey(Producent, on_delete=models.CASCADE, null=True)
+    foto = models.ForeignKey(Foto, on_delete=models.CASCADE, null=True)
     nazwa = models.CharField(max_length=50)
     opis = models.TextField(max_length=250)
     dostepnosc = models.CharField(max_length=50)
@@ -50,6 +63,9 @@ class Supplement(models.Model):
     class Meta:
         verbose_name = "Suplement"
         verbose_name_plural = "Suplementy"
+
+
+# got_url = Supplement.Foto.url
 
 
 class Ocena(models.Model):

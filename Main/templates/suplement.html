@@ -1,8 +1,8 @@
 {% extends 'index.html' %}
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
-    {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <meta charset="UTF-8">
     <title>Suplement</title>
@@ -11,6 +11,8 @@
     {% block suplement %}
     {% if suplement_adres %}
         <h1> {{ suplement_adres.nazwa }}</h1>
+{#        {{ suplement_adres.foto.foto }}#}
+        <img src="{{suplement_adres.foto.foto.url}}">
         <p>Cena: {{ suplement_adres.cena }}</p>
         <p>Producent: {{ suplement_adres.producent }}</p>
         <p>Opis: {{ suplement_adres.opis }}</p>

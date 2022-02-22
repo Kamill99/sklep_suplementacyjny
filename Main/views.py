@@ -35,7 +35,7 @@ def kategoria(request, id):
 def suplement(request, id):
     suplement_adres = Supplement.objects.get(pk=id)
     kategorie = Kategoria.objects.all()
-    dane = {'suplement_adres' : suplement_adres,'kategorie' : kategorie}
+    dane = {'suplement_adres' : suplement_adres, 'kategorie': kategorie}
     return render(request, 'suplement.html', dane)
 
         # class SupplementSetPagination(PageNumberPagination):
