@@ -8,33 +8,45 @@
     <meta charset="UTF-8">
     <title>Sklep z suplementami</title>
     <style>
+        body {
+            background-color: #ffffcc;
+        }
         [class *= "col-"] {
-            background-color: lavender;
+            background-color: #ffffcc;
             text-align: center;
+            padding: 1%;
         }
         [class *= "container-"] {
-            background-color: lightblue;
+            background-color: white;
             text-align: center;
         }
-        body {
-            background-color: lavender;
-            box-sizing: border-box;
+        .row {
+            margin: 0;
         }
+
     </style>
 </head>
 <body>
-    <div class="col-12 border border-dark">
-        <h1> Sklep z suplementami </h1>
+    <div class="row font-italic text-white">
+        <div class="col-3 bg-warning">
+            <h3>Koszyk</h3>
+        </div>
+        <div class="col-6 bg-warning">
+            <h1> Sklep z suplementami </h1>
+        </div>
+        <div class="col-3 bg-warning">
+            <h3> Moje konto </h3>
+        </div>
     </div>
-    <div class="row">
-        <div class="col-3 border border-dark">
+    <div class="row font-italic">
+        <div class="col-3">
             <h2>Kategorie</h2>
             {% for kat in kategorie %}
-            <p><a href="/kategoria/{{ kat.id }}"> {{ kat.nazwa }}</a></p>
+            <p><a href="/kategoria/{{ kat.id }}" class="text-decoration-none"> {{ kat.nazwa }}</a></p>
             {% endfor %}
         </div>
 
-        <div class="col-9 container-sm border border-dark">
+        <div class="col-9 container-sm">
             {% block suplement %} {% endblock suplement %}
         </div>
     </div>

@@ -11,14 +11,13 @@
     {% block suplement %}
     {% if suplement_adres %}
         <h1> {{ suplement_adres.nazwa }}</h1>
-{#        {{ suplement_adres.foto.foto }}#}
-        <img src="{{suplement_adres.foto.foto.url}}">
-        <p>Cena: {{ suplement_adres.cena }}</p>
-        <p>Producent: {{ suplement_adres.producent }}</p>
-        <p>Opis: {{ suplement_adres.opis }}</p>
-        <p>Dostępność: {{ suplement_adres.dostepnosc }}</p>
-        <p>Rodzaj: {{ suplement_adres.rodzaj_suplementu }}</p>
-        <p>Pojemność: {{ suplement_adres.pojemnosc_suplementu }}</p>
+        <img style="height: 30%" src="{{suplement_adres.foto.foto.url}}">
+        <h4><p class="font-italic">Cena: {{ suplement_adres.cena }}</p></h4>
+        <h4><p class="font-italic">Producent: {{ suplement_adres.producent }}</p></h4>
+        <h4><p class="font-italic">Opis: {{ suplement_adres.opis }}</p></h4>
+        <h4><p class="font-italic">Dostępność: {{ suplement_adres.dostepnosc }}</p></h4>
+        <h4><p class="font-italic">Rodzaj: {{ suplement_adres.rodzaj_suplementu }}</p></h4>
+        <h4><p class="font-italic">Pojemność: {{ suplement_adres.pojemnosc_suplementu }}</p></h4>
     {% else %}
         <p>Produkt nie istnieje</p>
     {% endif %}

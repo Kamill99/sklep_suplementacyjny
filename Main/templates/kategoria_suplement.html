@@ -1,6 +1,7 @@
 {% extends 'index.html' %}
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <title>Suplement</title>
@@ -10,7 +11,8 @@
 
         {% if kategoria_suplement %}
             {% for suplement in kategoria_suplement %}
-                <p><a href="/suplement/{{ suplement.id }}"> {{ suplement.nazwa }}</a> </p>
+                    <p><a href="/suplement/{{ suplement.id }}" class="text-left"> {{ suplement.nazwa }} </a></p>
+{#                        - {{ suplement.producent }} <img style="height: 10%" src="{{suplement.foto.foto.url}}">#}
             {% endfor %}
         {% else %}
 
