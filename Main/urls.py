@@ -18,6 +18,7 @@ urlpatterns = [
     # path('', include(router.urls))
     path('', index, name='index'),
     path('kategoria/<id>/', kategoria, name='kategoria'),
+    # path('produkty/<id>', kategoria, name='produkty'),
     path('suplement/<id>', suplement, name='supplement'),
  ]
 

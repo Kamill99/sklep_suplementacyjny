@@ -5,20 +5,26 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <meta charset="UTF-8">
     <title>Sklep z suplementami</title>
     <style>
         body {
             background-color: #ffffcc;
+            margin: 0;
+            padding: 0;
         }
         [class *= "col-"] {
             background-color: #ffffcc;
             text-align: center;
             padding: 1%;
         }
-        [class *= "container-"] {
+        [class *= "container"] {
             background-color: white;
             text-align: center;
+            margin: 0;
+            padding: 0;
+            width: 100%;
         }
         .row {
             margin: 0;
@@ -28,25 +34,40 @@
 </head>
 <body>
     <div class="row font-italic text-white">
-        <div class="col-3 bg-warning">
-            <h3>Koszyk</h3>
+        <div class="col-3 bg-warning d-none d-md-block">
+            <h1><span class="bi-basket"></span></h1>
         </div>
-        <div class="col-6 bg-warning">
-            <h1> Sklep z suplementami </h1>
+        <div class="col-6 bg-warning d-none d-md-block">
+            <h1> SKLEP Z SUPLEMENTAMI </h1>
         </div>
-        <div class="col-3 bg-warning">
-            <h3> Moje konto </h3>
+        <div class="col-3 bg-warning d-none d-md-block">
+            <h2> Moje konto  <span class="bi-person"></span> </h2>
+        </div>
+    </div>
+    <div class="row font-italic text-white">
+        <div class="col-3 bg-warning d-md-none">
+            <h3><span class="bi-basket"></span></h3>
+        </div>
+        <div class="col-6 bg-warning d-md-none">
+            <h4>SKLEP Z SUPLEMENTAMI</h4>
+        </div>
+        <div class="col-3 bg-warning d-md-none">
+            <h3><span class="bi-person"></span></h3>
         </div>
     </div>
     <div class="row font-italic">
-        <div class="col-3">
-            <h2>Kategorie</h2>
+        <div class="col-xs-4 col-sm-3">
+            <h3>Kategorie</h3>
             {% for kat in kategorie %}
-            <p><a href="/kategoria/{{ kat.id }}" class="text-decoration-none"> {{ kat.nazwa }}</a></p>
+                <p><a href="/kategoria/{{ kat.id }}" class="text-decoration-none">
+                    <button type="button" class="btn btn-outline-warning">
+                        {{ kat.nazwa }}
+                    </button>
+                </a></p>
             {% endfor %}
         </div>
 
-        <div class="col-9 container-sm">
+        <div class="col-xs-8 col-sm-9 container-">
             {% block suplement %} {% endblock suplement %}
         </div>
     </div>

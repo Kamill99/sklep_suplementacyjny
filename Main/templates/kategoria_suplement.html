@@ -7,17 +7,28 @@
     <title>Suplement</title>
 </head>
 <body>
-    {% block suplement %}
+    <div class="container">
+        {% block suplement %}
 
-        {% if kategoria_suplement %}
-            {% for suplement in kategoria_suplement %}
-                    <p><a href="/suplement/{{ suplement.id }}" class="text-left"> {{ suplement.nazwa }} </a></p>
-{#                        - {{ suplement.producent }} <img style="height: 10%" src="{{suplement.foto.foto.url}}">#}
-            {% endfor %}
-        {% else %}
+            {% if kategoria_suplement %}
+                <div class="row">
+                    {% for suplement in kategoria_suplement %}
+                        <div class="card col-md-4 col-sm-6 col-xs-12 bg-white text-center" style="min-height: 400px">
+                            <a href="/suplement/{{ suplement.id }}" class="text-left">
+                                <img class="card-img-top" src="{{suplement.foto.foto.url}}" style="height: 70%"><br>
+                                <div class="card-body text-center">
+                                    {{ suplement.nazwa }} - {{ suplement.producent }}<br>
+                                    {{ suplement.cena }}
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
 
-        {% endif %}
+            {% endif %}
 
-    {% endblock %}
+        {% endblock %}
+    </div>
 </body>
 </html>
