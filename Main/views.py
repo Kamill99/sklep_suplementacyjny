@@ -8,15 +8,16 @@ from .models import Supplement, Ocena, Kategoria
 from .serializers import SupplementSerializer, OcenySerializer
 from django.http.response import HttpResponseNotAllowed, HttpResponse
 from rest_framework.authentication import TokenAuthentication
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from .forms import CreateUserForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
-    queryset = Supplement.objects.all()
-    # kat_witaminy = Supplement.objects.filter(kategoria=1)
-    # kat_zdrowie = Supplement.objects.filter(kategoria=2)
-    # kat_mineraly = Supplement.objects.filter(kategoria=3)
-    # kat_zdrowie_sen = Supplement.objects.filter(kategoria=4)
+    # queryset = Supplement.objects.all()
     kategorie = Kategoria.objects.all()
     dane = {'kategorie': kategorie}
     return render(request, 'index.html', dane)
@@ -38,7 +39,50 @@ def suplement(request, id):
     dane = {'suplement_adres': suplement_adres, 'kategorie': kategorie}
     return render(request, 'suplement.html', dane)
 
-        # class SupplementSetPagination(PageNumberPagination):
+
+def stronaRejestracji(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+    else:
+        form = CreateUserForm()
+        if request.method == 'POST':
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get('username')
+                messages.success(request, 'Konto zostało założone, witamy ' + user)
+
+                return redirect('login')
+
+    context = {'form': form}
+    return render(request, 'rejestracja.html', context)
+
+
+def stronaLogowania(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+    else:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+            else:
+                messages.info(request, 'Nazwa użytkownika bądź hasło zostało źle wpisane')
+
+        context = {}
+        return render(request, 'login.html', context)
+
+
+def wylogowanie(request):
+    logout(request)
+    return redirect('login')
+
+# class SupplementSetPagination(PageNumberPagination):
 #     page_size = 2
 #     page_size_query_param = 'page_size'
 #     max_page_size = 3

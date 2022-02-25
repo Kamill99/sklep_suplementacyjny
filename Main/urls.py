@@ -20,6 +20,9 @@ urlpatterns = [
     path('kategoria/<id>/', kategoria, name='kategoria'),
     # path('produkty/<id>', kategoria, name='produkty'),
     path('suplement/<id>', suplement, name='supplement'),
+    path('rejestracja/', views.stronaRejestracji, name="rejestracja"),
+    path('login/', views.stronaLogowania, name="login"),
+    path('wylogowanie/', views.wylogowanie, name="wylogowanie"),
  ]
 
 if settings.DEBUG:
