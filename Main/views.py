@@ -17,10 +17,9 @@ from django.contrib.auth.decorators import login_required
 
 
 def index(request):
-    # queryset = Supplement.objects.all()
     kategorie = Kategoria.objects.all()
     dane = {'kategorie': kategorie}
-    return render(request, 'index.html', dane)
+    return render(request, 'main.html', dane)
 
 
 def kategoria(request, id):

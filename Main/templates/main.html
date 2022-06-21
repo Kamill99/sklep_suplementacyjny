@@ -41,8 +41,8 @@
             <h1> <a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h1>
         </div>
         <div class="col-3 bg-warning d-none d-md-block">
-            <h2> {{ request.user }} <span class="bi-person"></span>
-                <span><a href="{% url 'wylogowanie' %}">Zaloguj/Wyloguj</a></span></h2>
+                <h2><span class="bi-person">{{ request.user }}</span></h2>
+                    <a href="{% url 'wylogowanie' %}">Zaloguj/Wyloguj</a>
         </div>
     </div>
     <div class="row font-italic text-white">
@@ -68,8 +68,11 @@
             {% endfor %}
         </div>
 
-        <div class="col-xs-8 col-sm-9 container-">
-            {% block suplement %} {% endblock suplement %}
+        <div class="col-xs-8 col-sm-9 container- bg-transparent">
+            <br><h3>Witaj {{ request.user }}!</h3><br>
+            <h5 class="font-italic">Witamy w aplikacji naszego sklepu. Zachęcamy do zapoznania się z szeroką ofertą produktów oraz do
+                wypełnienia ankiety, która pomoże Ci dobrać odpowiednie dla Ciebie suplementy.<br><br>
+                Życzymy miłych zakupów!</h5>
         </div>
     </div>
 </body>

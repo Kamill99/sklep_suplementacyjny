@@ -51,7 +51,7 @@ class Supplement(models.Model):
     producent = models.ForeignKey(Producent, on_delete=models.CASCADE, null=True)
     foto = models.ForeignKey(Foto, on_delete=models.CASCADE, null=True)
     nazwa = models.CharField(max_length=50)
-    opis = models.TextField(max_length=250)
+    opis = models.TextField(max_length=3500)
     dostepnosc = models.CharField(max_length=50)
     cena = models.CharField(max_length=50)
     rodzaj_suplementu = models.CharField(max_length=50)
@@ -63,9 +63,6 @@ class Supplement(models.Model):
     class Meta:
         verbose_name = "Suplement"
         verbose_name_plural = "Suplementy"
-
-
-# got_url = Supplement.Foto.url
 
 
 class Ocena(models.Model):

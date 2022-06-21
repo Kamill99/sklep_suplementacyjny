@@ -10,14 +10,13 @@
     <div class="container">
         {% block suplement %}
         {% if suplement_adres %}
-            <h1> {{ suplement_adres.nazwa }}</h1>
-            <img style="height: 30%" src="{{suplement_adres.foto.foto.url}}">
-            <h4><p class="font-italic">Cena: {{ suplement_adres.cena }}</p></h4>
-            <h4><p class="font-italic">Producent: {{ suplement_adres.producent }}</p></h4>
-            <h4><p class="font-italic">Opis: {{ suplement_adres.opis }}</p></h4>
-            <h4><p class="font-italic">Dostępność: {{ suplement_adres.dostepnosc }}</p></h4>
-            <h4><p class="font-italic">Rodzaj: {{ suplement_adres.rodzaj_suplementu }}</p></h4>
-            <h4><p class="font-italic">Pojemność: {{ suplement_adres.pojemnosc_suplementu }}</p></h4>
+            <h1> {{ suplement_adres.nazwa }}</h1><hr>
+            <img style="height: 30%" src="{{suplement_adres.foto.foto.url}}"><hr>
+            <h4><p class="font-italic">Cena: {{ suplement_adres.cena }}</p></h4><hr>
+            <h4><p class="font-italic">Producent: {{ suplement_adres.producent }}</p></h4><hr>
+            <h5>{{ suplement_adres.opis|linebreaks }}</h5><hr>
+            <h4><p class="font-italic">Rodzaj: {{ suplement_adres.rodzaj_suplementu }}</p></h4><hr>
+            <h4><p class="font-italic">Pojemność: {{ suplement_adres.pojemnosc_suplementu }}</p></h4><hr>
         {% else %}
             <p>Produkt nie istnieje</p>
         {% endif %}
