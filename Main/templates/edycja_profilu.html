@@ -41,14 +41,14 @@
             <h1> <a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h1>
         </div>
         <div class="col-3 bg-warning d-none d-md-block">
-            <h4>
-                <a href="{% url 'profil' %}"><span class="bi-person">{{ request.user }}</span></a>
-                {% if request.user.is_anonymous %}
-                    <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h4>
-                {% else %}
-                    <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button></h4>
-                {% endif %}
-            </h4>
+                <h4>
+                    <a href="{% url 'profil' %}"><span class="bi-person">{{ request.user }}</span></a>
+                    {% if request.user.is_anonymous %}
+                        <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h4>
+                    {% else %}
+                        <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button></h4>
+                    {% endif %}
+                </h4>
         </div>
     </div>
     <div class="row font-italic text-white">
@@ -60,7 +60,7 @@
         </div>
         <div class="col-3 bg-warning d-md-none">
             <h4>
-                <span class="bi-person"></span>
+                <a href="{% url 'profil' %}"><span class="bi-person"></span></a>
                 {% if request.user.is_anonymous %}
                     <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button>
                 {% else %}
@@ -71,21 +71,19 @@
     </div>
     <div class="row font-italic">
         <div class="col-xs-4 col-sm-3">
-            <h3>Kategorie</h3>
-            {% for kat in kategorie %}
-                <p><a href="/kategoria/{{ kat.id }}" class="text-decoration-none">
-                    <button type="button" class="btn btn-outline-warning">
-                        {{ kat.nazwa }}
-                    </button>
-                </a></p>
-            {% endfor %}
+            <a href="{% url 'profil' %}"><button class="btn btn-info"><h3>Dane użytkownika</h3></button></a><br><br>
+            <button class="btn btn-info"><h3>Historia zamówień</h3></button>
         </div>
 
         <div class="col-xs-8 col-sm-9 container- bg-transparent">
-            <br><h3>Witaj {{ request.user }}!</h3><br>
-            <h5 class="font-italic">Witamy w aplikacji naszego sklepu. Zachęcamy do zapoznania się z szeroką ofertą produktów oraz do
-                wypełnienia ankiety, która pomoże Ci dobrać odpowiednie dla Ciebie suplementy.<br><br>
-                Życzymy miłych zakupów!</h5>
+            <br><h3 class="font-italic">Edycja danych użytkownika</h3><br><hr>
+            <div class="form-group">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-secondary">Zmień dane</button>
+                </form>
+            </div>
         </div>
     </div>
 </body>

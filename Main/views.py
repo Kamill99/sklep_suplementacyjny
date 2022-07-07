@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
-from rest_framework import viewsets
-from rest_framework import permissions
-from rest_framework.response import Response
-from rest_framework.pagination import PageNumberPagination
+from django.views import generic
+from django.contrib.auth.views import PasswordChangeView
+from rest_framework.reverse import reverse_lazy
+# from django.contrib.auth.forms import PasswordChangingForm
+from .forms import PasswordChangingForm
 from Main.serializers import UserSerializer
 from .models import Supplement, Ocena, Kategoria
 from .serializers import SupplementSerializer, OcenySerializer
@@ -10,9 +11,10 @@ from django.http.response import HttpResponseNotAllowed, HttpResponse
 from rest_framework.authentication import TokenAuthentication
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CreateUserForm
+from .forms import CreateUserForm, EditProfileForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -37,6 +39,15 @@ def suplement(request, id):
     kategorie = Kategoria.objects.all()
     dane = {'suplement_adres': suplement_adres, 'kategorie': kategorie}
     return render(request, 'suplement.html', dane)
+
+
+def profil(request):
+    nazwa = User.username
+    imie = User.first_name
+    nazwisko = User.last_name
+    mail = User.email
+    dane = {'nazwa': nazwa, 'imie': imie, 'nazwisko': nazwisko, 'mail': mail}
+    return render(request, 'profil.html', dane)
 
 
 def stronaRejestracji(request):
@@ -81,53 +92,20 @@ def wylogowanie(request):
     logout(request)
     return redirect('login')
 
-# class SupplementSetPagination(PageNumberPagination):
-#     page_size = 2
-#     page_size_query_param = 'page_size'
-#     max_page_size = 3
+
+class EdycjaProfilu(generic.UpdateView):
+    form_class = EditProfileForm
+    template_name = 'edycja_profilu.html'
+    success_url = reverse_lazy('profil')
+
+    def get_object(self):
+        return self.request.user
 
 
-# class UserViewSet(viewsets.ModelViewSet):
-#     queryset = User.objects.all().order_by('-date_joined')
-#     serializer_class = UserSerializer
-#     permission_classes = [permissions.IsAuthenticated]
-#     authentication_classes = (TokenAuthentication,)
-#
-#
-# class SupplementViewSet(viewsets.ModelViewSet):
-#     queryset = Supplement.objects.all()
-#     serializer_class = SupplementSerializer
-#     permission_classes = [permissions.AllowAny]
-#     # pagination_class = SupplementSetPagination
-#
-#     # def create(self, request, *args, **kwargs):
-#     #     if request.user.is_staff:
-#     #         suplement = Supplement.objects.create(nazwa=request.data['nazwa'],
-#     #                                               opis=request.data['opis'],
-#     #                                               dostepnosc=request.data['dostepnosc'],
-#     #                                               cena=request.data['cena'],
-#     #                                               rodzaj_suplementu=request.data['rodzaj_suplementu'],
-#     #                                               pojemnosc_suplementu=request.data['pojemnosc_suplementu'],)
-#     #         serializer = SupplementSerializer(suplement, many=False)
-#     #         return Response(serializer.data)
-#     #     else:
-#     #         return HttpResponseNotAllowed('Not allowed')
-#     #
-#     # def update(self, request, *args, **kwargs):
-#     #     suplement = self.get_object()
-#     #     suplement.nazwa = request.data['nazwa']
-#     #     suplement.opis = request.data['opis']
-#     #     suplement.dostepnosc = request.data['dostepnosc']
-#     #     suplement.cena = request.data['cena']
-#     #     suplement.rodzaj_suplementu = request.data['rodzaj_suplementu']
-#     #     suplement.pojemnosc_suplementu = request.data['pojemnosc_suplementu']
-#     #     suplement.save()
-#     #
-#     #     serializer = SupplementSerializer(suplement, many=False)
-#     #     return Response(serializer.data)
-#
-#
-# class OcenyViewSet(viewsets.ModelViewSet):
-#     queryset = Ocena.objects.all()
-#     serializer_class = OcenySerializer
-#     permission_classes = [permissions.IsAuthenticated]
+class PasswordsChangeView(PasswordChangeView):
+    form_class = PasswordChangingForm
+    success_url = reverse_lazy('zmienione_haslo')
+
+
+def zmienione_haslo(request):
+    return render(request, 'zmienione_haslo.html', {})

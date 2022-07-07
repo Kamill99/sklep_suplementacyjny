@@ -42,7 +42,7 @@
         </div>
         <div class="col-3 bg-warning d-none d-md-block">
             <h4>
-                <span class="bi-person">{{ request.user }}</span>
+                <a href="{% url 'profil' %}"><span class="bi-person">{{ request.user }}</span></a>
                 {% if request.user.is_anonymous %}
                     <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h4>
                 {% else %}
@@ -60,7 +60,7 @@
         </div>
         <div class="col-3 bg-warning d-md-none">
             <h4>
-                <span class="bi-person"></span>
+                <a href="{% url 'profil' %}"><span class="bi-person"></span></a>
                 {% if request.user.is_anonymous %}
                     <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h4>
                 {% else %}
