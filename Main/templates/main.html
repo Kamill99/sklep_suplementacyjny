@@ -41,8 +41,14 @@
             <h1> <a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h1>
         </div>
         <div class="col-3 bg-warning d-none d-md-block">
-                <h2><span class="bi-person">{{ request.user }}</span></h2>
-                    <a href="{% url 'wylogowanie' %}">Zaloguj/Wyloguj</a>
+                <h4>
+                    <span class="bi-person">{{ request.user }}</span>
+                    {% if request.user.is_anonymous %}
+                        <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h4>
+                    {% else %}
+                        <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button></h4>
+                    {% endif %}
+                </h4>
         </div>
     </div>
     <div class="row font-italic text-white">
@@ -53,7 +59,14 @@
             <h4>SKLEP Z SUPLEMENTAMI</h4>
         </div>
         <div class="col-3 bg-warning d-md-none">
-            <h3><span class="bi-person"></span></h3>
+            <h4>
+                <span class="bi-person"></span>
+                {% if request.user.is_anonymous %}
+                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button>
+                {% else %}
+                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button>
+                {% endif %}
+            </h4>
         </div>
     </div>
     <div class="row font-italic">

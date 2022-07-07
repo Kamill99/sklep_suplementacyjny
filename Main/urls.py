@@ -9,16 +9,9 @@ from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
 
-
-# router.register(r'users', views.UserViewSet)
-# router.register(r'supplement', views.SupplementViewSet)
-# router.register(r'oceny', views.OcenyViewSet)
-
 urlpatterns = [
-    # path('', include(router.urls))
     path('', index, name='index'),
     path('kategoria/<id>/', kategoria, name='kategoria'),
-    # path('produkty/<id>', kategoria, name='produkty'),
     path('suplement/<id>', suplement, name='supplement'),
     path('rejestracja/', views.stronaRejestracji, name="rejestracja"),
     path('login/', views.stronaLogowania, name="login"),
