@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.dispatch import receiver
@@ -78,3 +80,29 @@ class Ocena(models.Model):
     class Meta:
         verbose_name = "Ocena"
         verbose_name_plural = "Oceny"
+
+
+class Koszyk(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
+    klient = models.ForeignKey(User, on_delete=models.CASCADE)
+    zamowione = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.id)
+
+    class Meta:
+        verbose_name = "Koszyk"
+        verbose_name_plural = "Koszyk"
+
+
+class ElementKoszyka(models.Model):
+    produkt = models.ForeignKey(Supplement, on_delete=models.CASCADE, related_name='items')
+    koszyk = models.ForeignKey(Koszyk, on_delete=models.CASCADE, related_name='cartitems')
+    ilosc = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.produkt.nazwa
+
+    class Meta:
+        verbose_name = "Element koszyka"
+        verbose_name_plural = "Elementy koszyka"

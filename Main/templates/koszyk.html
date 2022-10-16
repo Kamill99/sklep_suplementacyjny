@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <meta charset="UTF-8">
+    <title>Sklep z suplementami</title>
+    <style>
+        body {
+            background-color: #ffffcc;
+            margin: 0;
+            padding: 0;
+        }
+        [class *= "col-"] {
+            background-color: #ffffcc;
+            text-align: center;
+            padding: 1%;
+        }
+        [class *= "container"] {
+            background-color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        .row {
+            margin: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="row font-italic text-white bg-light">
+        <div class="col-3 bg-warning d-none d-md-block">
+            <h1><span class="bi-basket"></span></h1>
+        </div>
+        <div class="col-6 bg-warning d-none d-md-block">
+            <h1> <a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h1>
+        </div>
+        <div class="col-3 bg-warning d-none d-md-block">
+            <h4>
+                <a href="{% url 'profil' %}"><span class="bi-person">{{ request.user }}</span></a>
+                {% if request.user.is_anonymous %}
+                    <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h4>
+                {% else %}
+                    <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button></h4>
+                {% endif %}
+            </h4>
+        </div>
+    </div>
+    <div class="row font-italic text-white bg-light">
+        <div class="col-3 bg-warning d-md-none">
+            <h3><span class="bi-basket"></span></h3>
+        </div>
+        <div class="col-6 bg-warning d-md-none">
+            <h4>SKLEP Z SUPLEMENTAMI</h4>
+        </div>
+        <div class="col-3 bg-warning d-md-none">
+            <h4>
+                <span class="bi-person"></span>
+                {% if request.user.is_anonymous %}
+                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button>
+                {% else %}
+                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button>
+                {% endif %}
+            </h4>
+        </div>
+    </div>
+    <div class="text-center p-3">
+        <h2>Koszyk</h2>
+
+        <div class="heading">
+            <div class="p_name"><h4>Nazwa produktu</h4></div>
+            <div class="name"><h4>Ilość</h4></div>
+            <div class="name"><h4>Waluta</h4></div>
+            <div class="name"><h4>Cena</h4></div>
+        </div>
+
+        <div class="itemContainer">
+
+        {% for item in items %}
+        <div class="item">
+          <div class="iteminfo">
+            <div class="p_img">
+              <img src="{{item.product.picture.url}}" alt="" />
+            </div>
+            <p>{{item.product.name}}</p>
+          </div>
+
+          <div class="name"><p>{{item.quantity}}</p></div>
+          <div class="name"><p>${{item.product.price}}</p></div>
+          <div class="name"><p>${{item.price}}</p></div>
+        </div>
+
+        {% endfor %}
+        </div>
+
+        <div class="pay-section">
+        <h3>Całkowita kwota: zł{{cart.total_price}}</h3>
+        <button onclick = "makePayment()" >Zapłać</button>
+        </div>
+    </div>
+
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
+<script>
+
+let cart_total = "{{cart.total_price}}"
+let cart_id = "{{cart.id}}"
+
+
+  function makePayment() {
+    FlutterwaveCheckout({
+      public_key: "FLWPUBK_TEST-PUBLIC KEY",
+      tx_ref: "titanic-48981487343MDI0NzMx",
+      amount: cart_total,
+      currency: "USD",
+      payment_options: "card, mobilemoneyghana, ussd",
+      redirect_url: "http://127.0.0.1:8000/confirm_payment/"+cart_id,
+      meta: {
+        consumer_id: 23,
+        consumer_mac: "92a3-912ba-1192a",
+      },
+      customer: {
+        email: "rose@unsinkableship.com",
+        phone_number: "08102909304",
+        name: "{{request.user.username}}",
+      },
+      customizations: {
+        title: "My Shop",
+        description: "Buy with ease",
+        logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
+      },
+    });
+  }
+
+</script>
+
+</body>
+</html>

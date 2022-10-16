@@ -1,21 +1,16 @@
+import json
+
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.views import generic
 from django.contrib.auth.views import PasswordChangeView
 from rest_framework.reverse import reverse_lazy
-# from django.contrib.auth.forms import PasswordChangingForm
 from .forms import PasswordChangingForm
-from Main.serializers import UserSerializer
-from .models import Supplement, Ocena, Kategoria
-from .serializers import SupplementSerializer, OcenySerializer
-from django.http.response import HttpResponseNotAllowed, HttpResponse
-from rest_framework.authentication import TokenAuthentication
+from .models import Supplement, Ocena, Kategoria, Koszyk, ElementKoszyka
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm, EditProfileForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -50,7 +45,7 @@ def profil(request):
     return render(request, 'profil.html', dane)
 
 
-def stronaRejestracji(request):
+def strona_rejestracji(request):
     if request.user.is_authenticated:
         return redirect('index')
     else:
@@ -68,7 +63,7 @@ def stronaRejestracji(request):
     return render(request, 'rejestracja.html', context)
 
 
-def stronaLogowania(request):
+def strona_logowania(request):
     if request.user.is_authenticated:
         return redirect('index')
     else:
@@ -109,3 +104,21 @@ class PasswordsChangeView(PasswordChangeView):
 
 def zmienione_haslo(request):
     return render(request, 'zmienione_haslo.html', {})
+
+
+def koszyk(request):
+    context = {}
+    return render(request, "koszyk.html", context)
+
+
+def dodanie_do_koszyka(request):
+    data = json.loads(request.body)
+    supplement_id = data["id"]
+    supplement = Supplement.objects.get(id=supplement_id)
+
+    if request.user.is_authenticated:
+        cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+        cartitem, created = ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement)
+        cartitem.ilosc += 1
+        cartitem.save()
+    return JsonResponse("it is working", safe=False)

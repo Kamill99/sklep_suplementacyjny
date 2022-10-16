@@ -17,11 +17,12 @@
             <h5>{{ suplement_adres.opis|linebreaks }}</h5><hr>
             <h4><p class="font-italic">Rodzaj: {{ suplement_adres.rodzaj_suplementu }}</p></h4><hr>
             <h4><p class="font-italic">Pojemność: {{ suplement_adres.pojemnosc_suplementu }}</p></h4><hr>
-            <h4><button class="btn-success">Dodaj do koszyka</button> </h4>
+            <h4><button class="btn-success" value="{{ suplement_adres.id }}">Dodaj do koszyka</button> </h4>
         {% else %}
             <p>Produkt nie istnieje</p>
         {% endif %}
         {% endblock suplement %}
     </div>
+{#<script src="{% static 'js/script.js' %}"></script>#}
 </body>
 </html>
