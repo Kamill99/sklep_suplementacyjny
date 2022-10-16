@@ -107,7 +107,14 @@ def zmienione_haslo(request):
 
 
 def koszyk(request):
-    context = {}
+    cart = None
+    cartitems = []
+
+    if request.user.is_authenticated:
+        cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+        cartitems = cart.cartitems.all()
+
+    context = {"cart": cart, "items": cartitems}
     return render(request, "koszyk.html", context)
 
 

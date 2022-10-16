@@ -94,6 +94,18 @@ class Koszyk(models.Model):
         verbose_name = "Koszyk"
         verbose_name_plural = "Koszyk"
 
+    @property
+    def kompletna_kwota(self):
+        elementy_koszyka = self.cartitems.all()
+        cena = sum([produkt.kwota for produkt in elementy_koszyka])
+        return cena
+
+    # @property
+    # def liczba_produktow(self):
+    #     elementy_koszyka = self.cartitems.all()
+    #     ilosc = sum([produkt.ilosc for produkt in elementy_koszyka])
+    #     return ilosc
+
 
 class ElementKoszyka(models.Model):
     produkt = models.ForeignKey(Supplement, on_delete=models.CASCADE, related_name='items')
@@ -106,3 +118,9 @@ class ElementKoszyka(models.Model):
     class Meta:
         verbose_name = "Element koszyka"
         verbose_name_plural = "Elementy koszyka"
+
+    @property
+    def kwota(self):
+        cena = self.produkt.cena.split()
+        nowa_cena = int(cena[0]) * self.ilosc
+        return nowa_cena
