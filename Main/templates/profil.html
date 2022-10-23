@@ -35,7 +35,7 @@
 <body>
     <div class="row font-italic text-white">
         <div class="col-3 bg-warning d-none d-md-block">
-            <h1><span class="bi-basket"></span></h1>
+            <h1><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h1>
         </div>
         <div class="col-6 bg-warning d-none d-md-block">
             <h1> <a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h1>
@@ -53,7 +53,7 @@
     </div>
     <div class="row font-italic text-white">
         <div class="col-3 bg-warning d-md-none">
-            <h3><span class="bi-basket"></span></h3>
+            <h3><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h3>
         </div>
         <div class="col-6 bg-warning d-md-none">
             <h4>SKLEP Z SUPLEMENTAMI</h4>
@@ -72,7 +72,10 @@
     <div class="row font-italic">
         <div class="col-xs-4 col-sm-3">
             <a href="{% url 'profil' %}"><button class="btn btn-info"><h3>Dane użytkownika</h3></button></a><br><br>
-            <button class="btn btn-info"><h3>Historia zamówień</h3></button>
+            <button class="btn btn-info"><h3>Historia zamówień</h3></button><br><br>
+            {% if request.user.is_superuser %}
+                <a href="{% url 'admin:index' %}"><button class="btn btn-info"><h3>Panel Administratora</h3></button></a>
+            {% endif %}
         </div>
 
         <div class="col-xs-8 col-sm-9 container- bg-transparent">

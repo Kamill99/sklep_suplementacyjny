@@ -231,6 +231,10 @@ button{
     cursor: pointer;
 }
 
+.quantity_button{
+    background-color: #0c5460;
+}
+
 .pay-section{
     width: 100%;
     height: auto;

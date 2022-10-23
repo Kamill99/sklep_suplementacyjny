@@ -36,7 +36,7 @@
 <body>
     <div class="row font-italic text-white bg-light">
         <div class="col-3 bg-warning d-none d-md-block">
-            <h1><span class="bi-basket"></span></h1>
+            <h1><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h1>
         </div>
         <div class="col-6 bg-warning d-none d-md-block">
             <h1> <a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h1>
@@ -54,7 +54,7 @@
     </div>
     <div class="row font-italic text-white bg-light">
         <div class="col-3 bg-warning d-md-none">
-            <h3><span class="bi-basket"></span></h3>
+            <h3><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h3>
         </div>
         <div class="col-6 bg-warning d-md-none">
             <h4>SKLEP Z SUPLEMENTAMI</h4>
@@ -78,19 +78,25 @@
             <div class="name"><h4>Ilość</h4></div>
             <div class="name"><h4>Waluta</h4></div>
             <div class="name"><h4>Cena</h4></div>
+            <div class="name"><h4>Zwiększ ilość</h4></div>
+            <div class="name"><h4>Zmniejsz ilość</h4></div>
+            <div class="name"><h4>Usuń</h4></div>
         </div>
 
         <div class="itemContainer">
 
-            {% for item in items %}
+            {% for suplement in items %}
             <div class="item">
               <div class="iteminfo">
-                <p>{{item.produkt.nazwa}} - {{ item.produkt.producent }}</p>
+                <p>{{suplement.produkt.nazwa}} - {{ suplement.produkt.producent }}</p>
               </div>
 
-              <div class="name"><p>{{item.ilosc}}</p></div>
-              <div class="name"><p>{{item.produkt.cena}}</p></div>
-              <div class="name"><p>{{item.kwota}} zł</p></div>
+              <div class="name"><p>{{suplement.ilosc}}</p></div>
+              <div class="name"><p>{{suplement.produkt.cena}}</p></div>
+              <div class="name"><p>{{suplement.kwota}} zł</p></div>
+              <div class="name"><p><button class="btn btn-primary btn-sm">+</button></p></div>
+              <div class="name"><p><button class="btn btn-primary btn-sm">-</button></p></div>
+              <div class="name"><p><span class="bi bi-trash-fill"></span></p></div>
             </div>
 
             {% endfor %}
@@ -98,43 +104,43 @@
 
         <div class="pay-section">
         <h3>Całkowita kwota: {{cart.kompletna_kwota}} zł</h3>
-        <button onclick = "makePayment()" >Zapłać</button>
+        <button>Przejdź do płatności</button>
         </div>
     </div>
 
-    <script src="https://checkout.flutterwave.com/v3.js"></script>
-<script>
-
-let cart_total = "{{cart.total_price}}"
-let cart_id = "{{cart.id}}"
-
-
-  function makePayment() {
-    FlutterwaveCheckout({
-      public_key: "FLWPUBK_TEST-PUBLIC KEY",
-      tx_ref: "titanic-48981487343MDI0NzMx",
-      amount: cart_total,
-      currency: "USD",
-      payment_options: "card, mobilemoneyghana, ussd",
-      redirect_url: "http://127.0.0.1:8000/confirm_payment/"+cart_id,
-      meta: {
-        consumer_id: 23,
-        consumer_mac: "92a3-912ba-1192a",
-      },
-      customer: {
-        email: "rose@unsinkableship.com",
-        phone_number: "08102909304",
-        name: "{{request.user.username}}",
-      },
-      customizations: {
-        title: "My Shop",
-        description: "Buy with ease",
-        logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
-      },
-    });
-  }
-
-</script>
+{#    <script src="https://checkout.flutterwave.com/v3.js"></script>#}
+{#    <script>#}
+{##}
+{#    let cart_total = "{{cart.total_price}}"#}
+{#    let cart_id = "{{cart.id}}"#}
+{##}
+{##}
+{#    function makePayment() {#}
+{#      FlutterwaveCheckout({#}
+{#          public_key: "FLWPUBK_TEST-PUBLIC KEY",#}
+{#          tx_ref: "titanic-48981487343MDI0NzMx",#}
+{#          amount: cart_total,#}
+{#          currency: "PLN",#}
+{#          payment_options: "card, mobilemoneyghana, ussd",#}
+{#          redirect_url: "http://127.0.0.1:8000/confirm_payment/"+cart_id,#}
+{#          meta: {#}
+{#            consumer_id: 23,#}
+{#            consumer_mac: "92a3-912ba-1192a",#}
+{#          },#}
+{#          customer: {#}
+{#            email: "rose@unsinkableship.com",#}
+{#            phone_number: "08102909304",#}
+{#            name: "{{request.user.username}}",#}
+{#          },#}
+{#          customizations: {#}
+{#            title: "My Shop",#}
+{#            description: "Buy with ease",#}
+{#            logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",#}
+{#          },#}
+{#        });#}
+{#      }#}
+{##}
+{#    </script>#}
 
 </body>
 </html>

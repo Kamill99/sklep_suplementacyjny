@@ -12,7 +12,6 @@
         {% if kategoria_suplement %}
             {% for suplement in kategoria_suplement %}
                     <p><a href="/kategoria/{{ suplement.id }}" class="text-left"> {{ suplement.nazwa }} </a></p>
-{#                        - {{ suplement.producent }} <img style="height: 10%" src="{{suplement.foto.foto.url}}">#}
             {% endfor %}
         {% else %}
 

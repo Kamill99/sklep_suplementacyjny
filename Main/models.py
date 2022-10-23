@@ -100,12 +100,6 @@ class Koszyk(models.Model):
         cena = sum([produkt.kwota for produkt in elementy_koszyka])
         return cena
 
-    # @property
-    # def liczba_produktow(self):
-    #     elementy_koszyka = self.cartitems.all()
-    #     ilosc = sum([produkt.ilosc for produkt in elementy_koszyka])
-    #     return ilosc
-
 
 class ElementKoszyka(models.Model):
     produkt = models.ForeignKey(Supplement, on_delete=models.CASCADE, related_name='items')
