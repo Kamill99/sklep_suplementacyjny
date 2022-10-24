@@ -82,6 +82,14 @@
         </div>
 
         <div class="col-xs-8 col-sm-9 container- bg-transparent">
+            <form class="form-inline my-2 my-lg-0" action="szukaj">
+              <div class="input-group">
+                  <input name="q" type="text" class="form-control" placeholder="Szukaj"/>
+                  <div class="input-group-append">
+                    <button class="btn btn-dark" type="submit" id="button-addon2">Szukaj</button>
+                  </div>
+              </div>
+            </form>
             <br><h3>Witaj {{ request.user }}!</h3><br>
             <h5 class="font-italic">Witamy w aplikacji naszego sklepu. Zachęcamy do zapoznania się z szeroką ofertą produktów oraz do
                 wypełnienia ankiety, która pomoże Ci dobrać odpowiednie dla Ciebie suplementy.<br><br>

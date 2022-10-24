@@ -8,6 +8,7 @@
 </head>
 <body>
     <div class="container">
+{#        {% include 'messages.html' %}#}
         {% block suplement %}
         {% if suplement_adres %}
             <h1> {{ suplement_adres.nazwa }}</h1><hr>
@@ -17,7 +18,22 @@
             <h5>{{ suplement_adres.opis|linebreaks }}</h5><hr>
             <h4><p class="font-italic">Rodzaj: {{ suplement_adres.rodzaj_suplementu }}</p></h4><hr>
             <h4><p class="font-italic">Pojemność: {{ suplement_adres.pojemnosc_suplementu }}</p></h4><hr>
-            <h4><button class="btn-success" value="{{ suplement_adres.id }}">Dodaj do koszyka</button> </h4>
+            <form method="POST" action="">
+            {% csrf_token %}
+            <h4>
+                <p class="font-italic">Ilość:
+                    <label>
+                        <input type="number" class="form-control text-center" placeholder="1" name="ilosc" min="1">
+                    </label>
+                </p>
+            </h4><hr>
+                <h4><button type="submit" class="btn-success" value="{{ suplement_adres.id }}">Dodaj do koszyka</button> </h4>
+            </form>
+            {% for message in messages %}
+                {% if message %}
+                <p id="msg">{{ message }}</p>
+                {% endif %}
+            {% endfor %}
         {% else %}
             <p>Produkt nie istnieje</p>
         {% endif %}

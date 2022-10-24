@@ -12,6 +12,7 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('', index, name='index'),
     path('kategoria/<id>/', kategoria, name='kategoria'),
+    path('szukaj/', views.szuakj, name='szukaj'),
     path('suplement/<id>', suplement, name='supplement'),
     path('profil/', profil, name='profil'),
     path('rejestracja/', views.strona_rejestracji, name="rejestracja"),

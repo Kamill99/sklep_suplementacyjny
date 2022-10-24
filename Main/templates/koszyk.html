@@ -76,8 +76,8 @@
         <div class="heading">
             <div class="p_name"><h4>Nazwa produktu</h4></div>
             <div class="name"><h4>Ilość</h4></div>
-            <div class="name"><h4>Waluta</h4></div>
-            <div class="name"><h4>Cena</h4></div>
+            <div class="name"><h4>Cena za sztukę</h4></div>
+            <div class="name"><h4>Cena łączna</h4></div>
             <div class="name"><h4>Zwiększ ilość</h4></div>
             <div class="name"><h4>Zmniejsz ilość</h4></div>
             <div class="name"><h4>Usuń</h4></div>
@@ -94,8 +94,8 @@
               <div class="name"><p>{{suplement.ilosc}}</p></div>
               <div class="name"><p>{{suplement.produkt.cena}}</p></div>
               <div class="name"><p>{{suplement.kwota}} zł</p></div>
-              <div class="name"><p><button class="btn btn-primary btn-sm">+</button></p></div>
-              <div class="name"><p><button class="btn btn-primary btn-sm">-</button></p></div>
+              <div class="name"><p><button class="btn btn-primary btn-sm plus" value="{{ suplement.ilosc }}" onclick="plus({{ suplement.ilosc }})">+</button></p></div>
+              <div class="name"><p><button class="btn btn-primary btn-sm minus" value="{{ suplement.ilosc }}">-</button></p></div>
               <div class="name"><p><span class="bi bi-trash-fill"></span></p></div>
             </div>
 
@@ -107,40 +107,33 @@
         <button>Przejdź do płatności</button>
         </div>
     </div>
-
-{#    <script src="https://checkout.flutterwave.com/v3.js"></script>#}
-{#    <script>#}
-{##}
-{#    let cart_total = "{{cart.total_price}}"#}
-{#    let cart_id = "{{cart.id}}"#}
-{##}
-{##}
-{#    function makePayment() {#}
-{#      FlutterwaveCheckout({#}
-{#          public_key: "FLWPUBK_TEST-PUBLIC KEY",#}
-{#          tx_ref: "titanic-48981487343MDI0NzMx",#}
-{#          amount: cart_total,#}
-{#          currency: "PLN",#}
-{#          payment_options: "card, mobilemoneyghana, ussd",#}
-{#          redirect_url: "http://127.0.0.1:8000/confirm_payment/"+cart_id,#}
-{#          meta: {#}
-{#            consumer_id: 23,#}
-{#            consumer_mac: "92a3-912ba-1192a",#}
-{#          },#}
-{#          customer: {#}
-{#            email: "rose@unsinkableship.com",#}
-{#            phone_number: "08102909304",#}
-{#            name: "{{request.user.username}}",#}
-{#          },#}
-{#          customizations: {#}
-{#            title: "My Shop",#}
-{#            description: "Buy with ease",#}
-{#            logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",#}
-{#          },#}
-{#        });#}
-{#      }#}
-{##}
-{#    </script>#}
+<script>
+    {#function plus(e){#}
+    {#    let suplement_id = 1#}
+    {#    let data = {id:suplement_id}#}
+    {#    console.log(ilosc)#}
+    {#    ilosc += 1#}
+    {#    console.log(ilosc)#}
+    {#    return ilosc#}
+    }
+    function plus(e){
+    let suplement_id = 1
+    let url = "/koszyk/"
+    let data = {id:suplement_id}
+    fetch(url, {
+        method: "PUT",
+        headers: {"Content-Type":"application/json", 'X-CSRFToken': csrftoken},
+        body: JSON.stringify(data)
+    })
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data)
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+}
+</script>
 
 </body>
 </html>

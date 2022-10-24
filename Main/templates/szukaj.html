@@ -33,7 +33,7 @@
     </style>
 </head>
 <body>
-    <div class="row font-italic text-white">
+    <div class="row font-italic text-white bg-light">
         <div class="col-3 bg-warning d-none d-md-block">
             <h1><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h1>
         </div>
@@ -51,7 +51,7 @@
             </h4>
         </div>
     </div>
-    <div class="row font-italic text-white">
+    <div class="row font-italic text-white bg-light">
         <div class="col-3 bg-warning d-md-none">
             <h3><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h3>
         </div>
@@ -60,29 +60,19 @@
         </div>
         <div class="col-3 bg-warning d-md-none">
             <h4>
-                <a href="{% url 'profil' %}"><span class="bi-person"></span></a>
+                <span class="bi-person"></span>
                 {% if request.user.is_anonymous %}
-                    <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h4>
+                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button>
                 {% else %}
-                    <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button></h4>
+                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button>
                 {% endif %}
             </h4>
         </div>
     </div>
     <div class="row font-italic">
-        <div class="col-xs-4 col-sm-3">
-            <h3>Kategorie</h3>
-            {% for kat in kategorie %}
-                <p><a href="/kategoria/{{ kat.id }}" class="text-decoration-none">
-                    <button type="button" class="btn btn-outline-warning">
-                        {{ kat.nazwa }}
-                    </button>
-                </a></p>
-            {% endfor %}
-        </div>
 
-        <div class="col-xs-8 col-sm-9 container-">
-            <form class="form-inline my-2 my-lg-0" action="../../szukaj">
+        <div class="col-12 container- bg-transparent text-center">
+            <form class="form-inline my-2 my-lg-0 ml-2" action="../szukaj">
               <div class="input-group">
                   <input name="q" type="text" class="form-control" placeholder="Szukaj"/>
                   <div class="input-group-append">
@@ -90,9 +80,24 @@
                   </div>
               </div>
             </form>
-            {% block suplement %} {% endblock suplement %}
+            <span class="text-muted">Wyniki wyszukiwania dla: </span>{{ request.GET.q }}
         </div>
+        {% block suplement %}
+                <div class="row">
+                    {% for suplement in suplementy %}
+                        <div class="card col-md-3 col-sm-6 col-xs-12 bg-white text-center" style="min-height: 400px">
+                            <a href="/suplement/{{ suplement.id }}" class="text-left">
+                                <img class="card-img-top" src="{{suplement.foto.foto.url}}" style="height: 70%"><br>
+                                <div class="card-body text-center">
+                                    {{ suplement.nazwa }} - {{ suplement.producent }}<br>
+                                    {{ suplement.cena }}
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+
+        {% endblock %}
     </div>
-<script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

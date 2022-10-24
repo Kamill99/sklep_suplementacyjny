@@ -13,6 +13,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
 
+quantity = 0
+
+
 def index(request):
     kategorie = Kategoria.objects.all()
     dane = {'kategorie': kategorie}
@@ -33,6 +36,9 @@ def suplement(request, id):
     suplement_adres = Supplement.objects.get(pk=id)
     kategorie = Kategoria.objects.all()
     dane = {'suplement_adres': suplement_adres, 'kategorie': kategorie}
+    if request.method == 'POST':
+        global quantity
+        quantity = request.POST.get('ilosc')
     return render(request, 'suplement.html', dane)
 
 
@@ -122,10 +128,31 @@ def dodanie_do_koszyka(request):
     data = json.loads(request.body)
     supplement_id = data["id"]
     supplement = Supplement.objects.get(id=supplement_id)
+    suplement(request, id=supplement_id)
 
     if request.user.is_authenticated:
         cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
         cartitem, created = ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement)
-        cartitem.ilosc += 1
-        cartitem.save()
+        global quantity
+        ilosc = quantity
+        if not cartitem.ilosc:
+            if ilosc:
+                cartitem.ilosc += int(ilosc)
+                cartitem.save()
+                # messages.success(request, 'Produkt dodany do koszyka')
+            else:
+                cartitem.ilosc += 1
+                cartitem.save()
+                # messages.success(request, 'Produkt dodany do koszyka')
+        else:
+            pass
+            # messages.warning(request, 'Produkt jest już w koszyku')
     return JsonResponse("it is working", safe=False)
+
+
+def szuakj(request):
+    q = request.GET['q']
+    # kategoria_adres = Kategoria.objects.get(pk=id)
+    suplementy = Supplement.objects.filter(nazwa__icontains=q)
+    dane = {'suplementy': suplementy}
+    return render(request, 'szukaj.html', dane)
