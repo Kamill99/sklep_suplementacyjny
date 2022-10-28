@@ -128,10 +128,10 @@ def dodanie_do_koszyka(request):
     data = json.loads(request.body)
     supplement_id = data["id"]
     supplement = Supplement.objects.get(id=supplement_id)
-    suplement(request, id=supplement_id)
 
     if request.user.is_authenticated:
         cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+        suplement(request, id=supplement_id)
         cartitem, created = ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement)
         global quantity
         ilosc = quantity
@@ -152,7 +152,6 @@ def dodanie_do_koszyka(request):
 
 def szuakj(request):
     q = request.GET['q']
-    # kategoria_adres = Kategoria.objects.get(pk=id)
     suplementy = Supplement.objects.filter(nazwa__icontains=q)
     dane = {'suplementy': suplementy}
     return render(request, 'szukaj.html', dane)

@@ -8,7 +8,6 @@
 </head>
 <body>
     <div class="container">
-{#        {% include 'messages.html' %}#}
         {% block suplement %}
         {% if suplement_adres %}
             <h1> {{ suplement_adres.nazwa }}</h1><hr>
@@ -27,7 +26,7 @@
                     </label>
                 </p>
             </h4><hr>
-                <h4><button type="submit" class="btn-success" value="{{ suplement_adres.id }}">Dodaj do koszyka</button> </h4>
+                <h4><button type="submit" data-actions="add" class="btn-success dodaj" value="{{ suplement_adres.id }}">Dodaj do koszyka</button> </h4>
             </form>
             {% for message in messages %}
                 {% if message %}

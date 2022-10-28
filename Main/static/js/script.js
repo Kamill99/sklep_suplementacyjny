@@ -15,7 +15,7 @@ function getCookie(name) {
 const csrftoken = getCookie('csrftoken');
 
 
-let btns = document.querySelectorAll(".btn-success")
+let btns = document.querySelectorAll(".dodaj")
 
 btns.forEach(btn=>{
     btn.addEventListener("click", addToCart)
@@ -25,6 +25,7 @@ function addToCart(e){
     let suplement_id = e.target.value
     let url = "/dodanie_do_koszyka/"
     let data = {id:suplement_id}
+    console.log(suplement_id)
     fetch(url, {
         method: "POST",
         headers: {"Content-Type":"application/json", 'X-CSRFToken': csrftoken},

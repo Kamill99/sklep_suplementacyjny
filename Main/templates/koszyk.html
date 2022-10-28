@@ -114,25 +114,22 @@
     {#    console.log(ilosc)#}
     {#    ilosc += 1#}
     {#    console.log(ilosc)#}
-    {#    return ilosc#}
-    }
-    function plus(e){
-    let suplement_id = 1
-    let url = "/koszyk/"
-    let data = {id:suplement_id}
-    fetch(url, {
-        method: "PUT",
-        headers: {"Content-Type":"application/json", 'X-CSRFToken': csrftoken},
-        body: JSON.stringify(data)
-    })
-        .then(res=>res.json())
-        .then(data=>{
-            console.log(data)
-        })
-        .catch(error=>{
-            console.log(error)
-        })
-}
+    {#    return ilosc}#}
+    {#function plus(e){#}
+    {#let suplement_id = 1#}
+    {#let url = "/koszyk/"#}
+    {#let data = {id:suplement_id}#}
+    {#fetch(url, {#}
+    {#    method: "PUT",#}
+    {#    headers: {"Content-Type":"application/json", 'X-CSRFToken': csrftoken},#}
+    {#    body: JSON.stringify(data)})#}
+    {#    .then(res=>res.json())#}
+    {#    .then(data=>{#}
+    {#        console.log(data)#}
+    {#    })#}
+    {#    .catch(error=>{#}
+    {#        console.log(error)#}
+    {#    })#}
 </script>
 
 </body>
