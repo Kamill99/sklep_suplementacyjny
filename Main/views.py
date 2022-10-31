@@ -14,6 +14,7 @@ from django.contrib.auth import authenticate, login, logout
 
 
 quantity = 0
+change = 0
 
 
 def index(request):
@@ -119,7 +120,6 @@ def koszyk(request):
     if request.user.is_authenticated:
         cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
         cartitems = cart.cartitems.all()
-
     context = {"cart": cart, "items": cartitems}
     return render(request, "koszyk.html", context)
 
@@ -147,7 +147,36 @@ def dodanie_do_koszyka(request):
         else:
             pass
             # messages.warning(request, 'Produkt jest już w koszyku')
-    return JsonResponse("it is working", safe=False)
+    return JsonResponse("Dodawanie do koszyka", safe=False)
+
+
+def aktualizacja_koszyka_plus(request):
+    data = json.loads(request.body)
+    cart = Koszyk.objects.get(klient=request.user, zamowione=False)
+    cartitem = ElementKoszyka.objects.get(id=data["id"], koszyk=cart)
+    cartitem.ilosc += 1
+    cartitem.save()
+    return JsonResponse("Edycja koszyka", safe=False)
+
+
+def aktualizacja_koszyka_minus(request):
+    data = json.loads(request.body)
+    cart = Koszyk.objects.get(klient=request.user, zamowione=False)
+    cartitem = ElementKoszyka.objects.get(id=data["id"], koszyk=cart)
+    if cartitem.ilosc > 1:
+        cartitem.ilosc -= 1
+        cartitem.save()
+    return JsonResponse("Edycja koszyka", safe=False)
+
+
+def usuwanie_elementu(request):
+    data = json.loads(request.body)
+    cart = Koszyk.objects.get(klient=request.user, zamowione=False)
+    cartitem = ElementKoszyka.objects.get(id=data["id"], koszyk=cart)
+    cartitem.delete()
+    if not cart.cartitems:
+        cart.delete()
+    return JsonResponse("Edycja koszyka", safe=False)
 
 
 def szuakj(request):

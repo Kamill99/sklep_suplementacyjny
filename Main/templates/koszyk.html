@@ -75,7 +75,9 @@
 
         <div class="heading">
             <div class="p_name"><h4>Nazwa produktu</h4></div>
+            <div class="name"><h4>Zmniejsz</h4></div>
             <div class="name"><h4>Ilość</h4></div>
+            <div class="name"><h4>Zwiększ</h4></div>
             <div class="name"><h4>Cena za sztukę</h4></div>
             <div class="name"><h4>Cena łączna</h4></div>
             <div class="name"><h4>Usuń</h4></div>
@@ -88,11 +90,12 @@
               <div class="iteminfo">
                 <p>{{suplement.produkt.nazwa}} - {{ suplement.produkt.producent }}</p>
               </div>
-
-              <div class="name"><p>{{suplement.ilosc}}</p></div>
-              <div class="name"><p>{{suplement.produkt.cena}}</p></div>
-              <div class="name"><p>{{suplement.kwota}} zł</p></div>
-              <div class="name"><p><span class="bi bi-trash-fill"></span></p></div>
+                <div class="name"><p><button class="small mt-2 minus" value="{{ suplement.id }}">-</button></p></div>
+                <div class="name"><p>{{ suplement.ilosc }}</p></div>
+                <div class="name"><p><button class="small mt-2 plus" value="{{ suplement.id }}">+</button></p></div>
+                <div class="name"><p>{{suplement.produkt.cena}}</p></div>
+                <div class="name"><p>{{suplement.kwota}} zł</p></div>
+                <div class="name"><p><button class="bi bi-trash-fill trash" value="{{ suplement.id }}"></button></p></div>
             </div>
 
             {% endfor %}
@@ -104,28 +107,100 @@
         </div>
     </div>
 <script>
-    {#function plus(e){#}
-    {#    let suplement_id = 1#}
-    {#    let data = {id:suplement_id}#}
-    {#    console.log(ilosc)#}
-    {#    ilosc += 1#}
-    {#    console.log(ilosc)#}
-    {#    return ilosc}#}
-    {#function plus(e){#}
-    {#let suplement_id = 1#}
-    {#let url = "/koszyk/"#}
-    {#let data = {id:suplement_id}#}
-    {#fetch(url, {#}
-    {#    method: "PUT",#}
-    {#    headers: {"Content-Type":"application/json", 'X-CSRFToken': csrftoken},#}
-    {#    body: JSON.stringify(data)})#}
-    {#    .then(res=>res.json())#}
-    {#    .then(data=>{#}
-    {#        console.log(data)#}
-    {#    })#}
-    {#    .catch(error=>{#}
-    {#        console.log(error)#}
-    {#    })#}
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+
+    let plus_btns = document.querySelectorAll(".plus")
+
+    plus_btns.forEach(btn=>{
+        btn.addEventListener("click", plusQuantity)
+    })
+
+    let minus_btns = document.querySelectorAll(".minus")
+
+    minus_btns.forEach(btn=>{
+        btn.addEventListener("click", minusQuantity)
+    })
+
+    let trash_btns = document.querySelectorAll(".trash")
+
+    trash_btns.forEach(btn=>{
+        btn.addEventListener("click", trashSupplement)
+    })
+
+    function plusQuantity(e){
+        let suplement_id = e.target.value
+        console.log(e.target)
+        let url = "/aktualizacja_koszyka_plus/"
+        let data = {id:suplement_id}
+        fetch(url, {
+            method: "POST",
+            headers: {"Content-Type":"application/json", 'X-CSRFToken': csrftoken},
+            body: JSON.stringify(data)
+        })
+            .then(res=>res.json())
+            .then(data=>{
+                console.log(data)
+            })
+            .catch(error=>{
+                console.log(error)
+            })
+        location.reload()
+    }
+
+    function minusQuantity(e){
+        let suplement_id = e.target.value
+        console.log(e.target)
+        let url = "/aktualizacja_koszyka_minus/"
+        let data = {id:suplement_id}
+        fetch(url, {
+            method: "POST",
+            headers: {"Content-Type":"application/json", 'X-CSRFToken': csrftoken},
+            body: JSON.stringify(data)
+        })
+            .then(res=>res.json())
+            .then(data=>{
+                console.log(data)
+            })
+            .catch(error=>{
+                console.log(error)
+            })
+        location.reload()
+    }
+
+    function trashSupplement(e){
+        let suplement_id = e.target.value
+        console.log(e.target)
+        let url = "/usuwanie_elementu/"
+        let data = {id:suplement_id}
+        fetch(url, {
+            method: "POST",
+            headers: {"Content-Type":"application/json", 'X-CSRFToken': csrftoken},
+            body: JSON.stringify(data)
+        })
+            .then(res=>res.json())
+            .then(data=>{
+                console.log(data)
+            })
+            .catch(error=>{
+                console.log(error)
+            })
+        location.reload()
+    }
 </script>
 
 </body>
