@@ -86,18 +86,17 @@
         <div class="itemContainer">
 
             {% for suplement in items %}
-            <div class="item">
-              <div class="iteminfo">
-                <p>{{suplement.produkt.nazwa}} - {{ suplement.produkt.producent }}</p>
-              </div>
-                <div class="name"><p><button class="small mt-2 minus" value="{{ suplement.id }}">-</button></p></div>
-                <div class="name"><p>{{ suplement.ilosc }}</p></div>
-                <div class="name"><p><button class="small mt-2 plus" value="{{ suplement.id }}">+</button></p></div>
-                <div class="name"><p>{{suplement.produkt.cena}}</p></div>
-                <div class="name"><p>{{suplement.kwota}} zł</p></div>
-                <div class="name"><p><button class="bi bi-trash-fill trash" value="{{ suplement.id }}"></button></p></div>
-            </div>
-
+                    <div class="item">
+                      <div class="iteminfo">
+                        <p>{{suplement.produkt.nazwa}} - {{ suplement.produkt.producent }}</p>
+                      </div>
+                        <div class="name"><p><button class="small mt-2 minus" value="{{ suplement.id }}">-</button></p></div>
+                        <div class="name"><p>{{ suplement.ilosc }}</p></div>
+                        <div class="name"><p><button class="small mt-2 plus" value="{{ suplement.id }}">+</button></p></div>
+                        <div class="name"><p>{{suplement.produkt.cena}}</p></div>
+                        <div class="name"><p>{{suplement.kwota}} zł</p></div>
+                        <div class="name"><p><button class="bi bi-trash-fill trash" value="{{ suplement.id }}"></button></p></div>
+                    </div>
             {% endfor %}
         </div>
 

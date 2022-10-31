@@ -34,9 +34,13 @@
 </head>
 <body>
     <div class="row font-italic text-white bg-light">
+        {% if not request.user.is_anonymous %}
         <div class="col-3 bg-warning d-none d-md-block">
             <h1><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h1>
         </div>
+        {% elif request.user.is_anonymous %}
+            <div class="col-3 bg-warning d-none d-md-block"></div>
+        {% endif %}
         <div class="col-6 bg-warning d-none d-md-block">
             <h1> <a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h1>
         </div>
