@@ -17,6 +17,7 @@
             <h5>{{ suplement_adres.opis|linebreaks }}</h5><hr>
             <h4><p class="font-italic">Rodzaj: {{ suplement_adres.rodzaj_suplementu }}</p></h4><hr>
             <h4><p class="font-italic">Pojemność: {{ suplement_adres.pojemnosc_suplementu }}</p></h4><hr>
+            {% if not request.user.is_anonymous %}
             <form method="POST" action="">
             {% csrf_token %}
             <h4>
@@ -28,6 +29,7 @@
             </h4><hr>
                 <h4><button type="submit" data-action="add" class="btn-success dodaj" value="{{ suplement_adres.id }}">Dodaj do koszyka</button> </h4>
             </form>
+            {% endif %}
             {% for message in messages %}
                 {% if message %}
                 <p id="msg">{{ message }}</p>

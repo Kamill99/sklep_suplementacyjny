@@ -39,14 +39,14 @@
             <h1><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h1>
         </div>
         <div class="col-6 bg-warning d-none d-md-block">
-            <h1> <a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h1>
+            <h1><a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h1>
         </div>
         <div class="col-3 bg-warning d-none d-md-block">
             <h4>
-                <a href="{% url 'profil' %}"><span class="bi-person">{{ request.user }}</span></a>
                 {% if request.user.is_anonymous %}
                     <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h4>
                 {% else %}
+                    <a href="{% url 'profil' %}"><span class="bi-person">{{ request.user }}</span></a>
                     <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button></h4>
                 {% endif %}
             </h4>
@@ -57,14 +57,14 @@
             <h3><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h3>
         </div>
         <div class="col-6 bg-warning d-md-none">
-            <h4>SKLEP Z SUPLEMENTAMI</h4>
+            <h4><a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h4>
         </div>
         <div class="col-3 bg-warning d-md-none">
             <h4>
-                <span class="bi-person"></span>
                 {% if request.user.is_anonymous %}
                     <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button>
                 {% else %}
+                    <a href="{% url 'profil' %}"><span class="bi-person"></span></a>
                     <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button>
                 {% endif %}
             </h4>
@@ -95,7 +95,7 @@
                         <div class="name"><p><button class="small mt-2 plus" value="{{ suplement.id }}">+</button></p></div>
                         <div class="name"><p>{{suplement.produkt.cena}}</p></div>
                         <div class="name"><p>{{suplement.kwota}} zł</p></div>
-                        <div class="name"><p><button class="bi bi-trash-fill trash" value="{{ suplement.id }}"></button></p></div>
+                        <div class="name"><p><button class="bi bi-trash-fill trash mt-2" value="{{ suplement.id }}"></button></p></div>
                     </div>
             {% endfor %}
         </div>
