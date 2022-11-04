@@ -26,6 +26,7 @@ urlpatterns = [
     path('aktualizacja_koszyka_plus/', views.aktualizacja_koszyka_plus, name="aktualizacja_koszyka_plus"),
     path('aktualizacja_koszyka_minus/', views.aktualizacja_koszyka_minus, name="aktualizacja_koszyka_minus"),
     path('usuwanie_elementu/', views.usuwanie_elementu, name="usuwanie_elementu"),
+    path('pusty_koszyk/', views.pusty_koszyk, name="pusty_koszyk"),
  ]
 
 if settings.DEBUG:

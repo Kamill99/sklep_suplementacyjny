@@ -102,7 +102,8 @@
 
         <div class="pay-section">
         <h3>Całkowita kwota: {{cart.kompletna_kwota}} zł</h3>
-        <button>Przejdź do płatności</button>
+        <button class="bg-danger empty">Wyczyść koszyk</button>
+        <button class="bg-success">Dostawa i płatność</button>
         </div>
     </div>
 <script>
@@ -139,6 +140,12 @@
 
     trash_btns.forEach(btn=>{
         btn.addEventListener("click", trashSupplement)
+    })
+
+    let empty_btns = document.querySelectorAll(".empty")
+
+    empty_btns.forEach(btn=>{
+        btn.addEventListener("click", emptyCart)
     })
 
     function plusQuantity(e){
@@ -185,6 +192,26 @@
         let suplement_id = e.target.value
         console.log(e.target)
         let url = "/usuwanie_elementu/"
+        let data = {id:suplement_id}
+        fetch(url, {
+            method: "POST",
+            headers: {"Content-Type":"application/json", 'X-CSRFToken': csrftoken},
+            body: JSON.stringify(data)
+        })
+            .then(res=>res.json())
+            .then(data=>{
+                console.log(data)
+            })
+            .catch(error=>{
+                console.log(error)
+            })
+        location.reload()
+    }
+
+    function emptyCart(e){
+        let suplement_id = e.target.value
+        console.log(e.target)
+        let url = "/pusty_koszyk/"
         let data = {id:suplement_id}
         fetch(url, {
             method: "POST",

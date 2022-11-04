@@ -179,6 +179,13 @@ def usuwanie_elementu(request):
     return JsonResponse("Edycja koszyka", safe=False)
 
 
+def pusty_koszyk(request):
+    data = json.loads(request.body)
+    cart = Koszyk.objects.get(klient=request.user, zamowione=False)
+    cart.delete()
+    return JsonResponse("Pusty koszyk", safe=False)
+
+
 def szuakj(request):
     q = request.GET['q']
     suplementy = Supplement.objects.filter(nazwa__icontains=q)
