@@ -118,3 +118,17 @@ class ElementKoszyka(models.Model):
         cena = self.produkt.cena.split()
         nowa_cena = int(cena[0]) * self.ilosc
         return nowa_cena
+
+
+class Zamowienie(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
+    koszyk = models.ForeignKey(Koszyk, on_delete=models.CASCADE, related_name='cart')
+    zamowione = models.BooleanField(default=False)
+    data = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.id)
+
+    class Meta:
+        verbose_name = "Zamówienie"
+        verbose_name_plural = "Zamówienia"

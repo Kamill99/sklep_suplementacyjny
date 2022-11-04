@@ -191,3 +191,10 @@ def szuakj(request):
     suplementy = Supplement.objects.filter(nazwa__icontains=q)
     dane = {'suplementy': suplementy}
     return render(request, 'szukaj.html', dane)
+
+
+def zamowienie(request):
+    # if request.method == "POST":
+    #     if OrderForm.is_valid:
+    #         return render(request, 'index.html')
+    return render(request, 'zamowienie.html')

@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <meta charset="UTF-8">
+    <title>Sklep z suplementami</title>
+    <style>
+        body {
+            background-color: #ffffcc;
+            margin: 0;
+            padding: 0;
+        }
+        [class *= "col-"] {
+            background-color: #ffffcc;
+            text-align: center;
+            padding: 1%;
+        }
+        [class *= "container"] {
+            background-color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        .row {
+            margin: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="row font-italic text-white bg-light">
+        <div class="col-3 bg-warning d-none d-md-block">
+            <h1><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h1>
+        </div>
+        <div class="col-6 bg-warning d-none d-md-block">
+            <h1><a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h1>
+        </div>
+        <div class="col-3 bg-warning d-none d-md-block">
+            <h4>
+                {% if request.user.is_anonymous %}
+                    <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h4>
+                {% else %}
+                    <a href="{% url 'profil' %}"><span class="bi-person">{{ request.user }}</span></a>
+                    <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button></h4>
+                {% endif %}
+            </h4>
+        </div>
+    </div>
+    <div class="row font-italic text-white bg-light">
+        <div class="col-3 bg-warning d-md-none">
+            <h3><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h3>
+        </div>
+        <div class="col-6 bg-warning d-md-none">
+            <h4><a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h4>
+        </div>
+        <div class="col-3 bg-warning d-md-none">
+            <h4>
+                {% if request.user.is_anonymous %}
+                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button>
+                {% else %}
+                    <a href="{% url 'profil' %}"><span class="bi-person"></span></a>
+                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button>
+                {% endif %}
+            </h4>
+        </div>
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <h2 class="text-center mt-2">Dostawa i płatność</h2><br>
+        <div class="row text-center p-3">
+            <div class="col-4 border-dark text-center">
+                <span class="font-weight-bold">Dane</span><hr><br>
+                <div>
+                    <span class="text-left">Imię:</span><br>
+                    <input class="text-center form-control" type="text" value="{{ request.user.first_name }}" required><br><br>
+                    <span class="text-left">Nazwisko:</span><br>
+                    <input class="text-center form-control" type="text" value="{{ request.user.last_name }}" required><br><br>
+                    <span class="text-left">Numer telefonu:</span><br>
+                    <input class="text-center form-control" type="number" placeholder="Numer telefonu" minlength="3" required><br><br>
+                    <span class="text-left">Miejscowość:</span><br>
+                    <input class="text-center form-control" type="text" placeholder="Miejscowość" required><br><br>
+                    <span class="text-left">Numer domu:</span><br>
+                    <input class="text-center form-control" type="number" placeholder="Numer domu" required><br><br>
+                    <span class="text-left">Kod pocztowy:</span><br>
+                    <input class="text-center form-control" type="text" placeholder="Kod pocztowy" required><br><br>
+                </div>
+            </div>
+            <div class="col-4 border-dark">
+                <span class="font-weight-bold">Dostawa</span><hr><br>
+                <span class="font-weight-bold">Wybierz sposób dostarczenia przesyłki</span><br><br>
+                <input type="radio" id="kurier" name="dostawa" value="dostawa_kurier" required>
+                <label for="dostawa1">Dostawa kurierem(+15 zł)</label><br>
+                <input type="radio" id="sklep" name="dostawa" value="sklep">
+                <label for="dostawa2">Odbiór osobisty(0 zł)</label><br>
+            </div>
+            <div class="col-4 border-dark">
+                <span class="font-weight-bold">Płatność</span><hr><br>
+                <span class="font-weight-bold">Wybierz sposób płatności</span><br><br>
+                <input type="radio" id="przelew" name="rozliczenie" value="przelew" required>
+                <label for="rozliczenie1">Płatność z góry</label><br>
+                <input type="radio" id="pobranie" name="rozliczenie" value="pobranie">
+                <label for="rozliczenie1">Płatność przy odbiorze</label><br>
+            </div>
+        </div>
+        <div class="text-center">
+            <button class="bg-warning">
+                <a class="text-white" href="{% url 'koszyk' %}">Cofnij</a>
+            </button>
+            <button type="reset" class="bg-info">Wyczyść</button>
+            <button type="submit" class="bg-success">Dalej
+{#                <a class="text-white" href="{% url 'index' %}">Dalej</a>#}
+            </button>
+        </div>
+    </form>
+</body>
+</html>
