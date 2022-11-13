@@ -80,12 +80,18 @@
         </div>
 
         <div class="col-xs-8 col-sm-9 container- bg-transparent">
-            <br><h3 class="font-italic">Profil użytkownika</h3><br><hr>
-            <h5>Nazwa: {{ request.user.username }}</h5><hr>
-            <h5>Imię: {{ request.user.first_name }}</h5><hr>
-            <h5>Nazwisko: {{ request.user.last_name }}</h5><hr>
-            <h5>Email: {{ request.user.email }}</h5><hr>
-            <a href="{% url 'edycja_profilu' %}"><button class="btn btn-secondary">Edytuj</button></a><hr>
+            <br><h3 class="font-italic">Historia zamówień</h3><br><hr>
+            {% if orders %}
+                {% for order in orders %}
+                    <p><a href="/historia_zamowien/{{ order.id }}" class="text-decoration-none">
+                        <button type="button" class="btn btn-outline-warning">
+                            {{ order.id }}
+                        </button>
+                    </a></p>
+                {% endfor %}
+            {% else %}
+                <h4 class="font-italic text-info">Brak zamówień :(</h4>
+            {% endif %}
         </div>
     </div>
 </body>

@@ -244,5 +244,24 @@ def podsumowanie(request):
     cartitems = cart.cartitems.all()
     global delivery_cost
     total_cost = cart.kompletna_kwota + delivery_cost
+    delivery_cost = 0
     context = {"order": order, "cart": cart, "items": cartitems, "total_cost": total_cost}
     return render(request, 'podsumowanie.html', context)
+
+
+def historia_zamowien(request):
+    orders = Zamowienie.objects.all()
+    user_orders = []
+    for order in orders:
+        if order.koszyk.klient == request.user:
+            user_orders.append(order)
+    context = {"orders": user_orders}
+    return render(request, 'historia_zamowien.html', context)
+
+
+def historia_zamowien_id(request, id):
+    order = Zamowienie.objects.get(pk=id)
+    cart = order.koszyk
+    cartitems = cart.cartitems.all()
+    context = {"order": order, "cart": cart, "items": cartitems}
+    return render(request, 'historia_zamowien_id.html', context)

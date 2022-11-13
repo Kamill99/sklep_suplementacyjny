@@ -72,7 +72,8 @@
     <div class="row font-italic">
         <div class="col-xs-4 col-sm-3">
             <a href="{% url 'profil' %}"><button class="btn btn-info"><h3>Dane użytkownika</h3></button></a><br><br>
-            <button class="btn btn-info"><h3>Historia zamówień</h3></button><br><br>
+            <a href="{% url 'historia_zamowien' %}"><button class="btn btn-info"><h3>Historia zamówień</h3></button></a>
+            <br><br>
             {% if request.user.is_superuser %}
                 <a href={% url 'admin:index' %}><button class="btn btn-info"><h3>Panel Administratora</h3></button></a>
             {% endif %}

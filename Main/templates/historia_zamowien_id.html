@@ -80,12 +80,35 @@
         </div>
 
         <div class="col-xs-8 col-sm-9 container- bg-transparent">
-            <br><h3 class="font-italic">Profil użytkownika</h3><br><hr>
-            <h5>Nazwa: {{ request.user.username }}</h5><hr>
-            <h5>Imię: {{ request.user.first_name }}</h5><hr>
-            <h5>Nazwisko: {{ request.user.last_name }}</h5><hr>
-            <h5>Email: {{ request.user.email }}</h5><hr>
-            <a href="{% url 'edycja_profilu' %}"><button class="btn btn-secondary">Edytuj</button></a><hr>
+            {% for suplement in items %}
+                <div class="heading">
+                <div class="p_name"><h4 class="font-weight-bold">Nazwa produktu - {{suplement.produkt.nazwa}} - {{ suplement.produkt.producent }}</h4></div>
+                <div class="name"><h4>Ilość - {{ suplement.ilosc }}</h4></div>
+                <div class="name"><h4>Cena za sztukę - {{suplement.produkt.cena}}</h4></div>
+                <div class="name"><h4>Cena łączna - {{suplement.kwota}} zł</h4></div><hr>
+            {% endfor %}
+        </div>
+
+        <div class="itemContainer">
+            <div>
+                {% if cart %}
+                    <h4 class="font-weight-bold">Kwota zamówienia: {{ cart.kompletna_kwota }} zł</h4>
+                    <hr>
+                {% endif %}
+            </div>
+        </div>
+        <div class="text-center">
+            {% if order %}
+                <h3>Dane osobowe:</h3>
+                <h5>Imię: {{ order.imie }}</h5>
+                <h5>Nazwisko: {{ order.nazwisko }}</h5>
+                <h5>Numer telefonu: {{ order.numer_telefonu }}</h5>
+                <h5>Adres: {{ order.miasto }}</h5>
+                <h5>Kod pocztowy: {{ order.kod_pocztowy }}</h5>
+                <h5>Data złożenia zamówienia: {{ order.data }}</h5>
+                <button class="bg-info"><a class="text-white" href="{% url 'historia_zamowien' %}">Cofnij</a></button>
+                <hr>
+            {% endif %}
         </div>
     </div>
 </body>
