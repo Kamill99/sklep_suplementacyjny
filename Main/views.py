@@ -6,7 +6,7 @@ from django.views import generic
 from django.contrib.auth.views import PasswordChangeView
 from rest_framework.reverse import reverse_lazy
 from .forms import PasswordChangingForm
-from .models import Supplement, Ocena, Kategoria, Koszyk, ElementKoszyka, Zamowienie
+from .models import Supplement, Ocena, Kategoria, Koszyk, ElementKoszyka, Zamowienie, KodyRabatowe
 from django.shortcuts import render, redirect
 from .forms import CreateUserForm, EditProfileForm
 from django.contrib import messages
@@ -14,7 +14,7 @@ from django.contrib.auth import authenticate, login, logout
 
 
 quantity = tel_number = order_id = delivery_cost = 0
-name = surname = city = post = delivery = payment = ""
+name = surname = city = post = delivery = payment = discount_code = ""
 
 
 def index(request):
@@ -213,12 +213,19 @@ def zamowienie(request):
         delivery = request.POST.get('dostawa')
         global payment
         payment = request.POST.get('rozliczenie')
+        global discount_code
+        code = request.POST.get('kod')
         cart = Koszyk.objects.get(klient=request.user, zamowione=False)
+        kwota = cart.kompletna_kwota
         if name and surname and tel_number and city and post and delivery and payment:
             if 6 < len(tel_number) < 13:
                 if delivery == "dostawa_kurier":
                     global delivery_cost
                     delivery_cost = 15
+                discount_codes = KodyRabatowe.objects.all()
+                for code_name in discount_codes:
+                    if code_name.nazwa == code:
+                        kwota *= code_name.procent
                 order, created = Zamowienie.objects.get_or_create(koszyk=cart)
                 order.imie = name
                 order.nazwisko = surname
@@ -226,6 +233,8 @@ def zamowienie(request):
                 order.miasto = city
                 order.kod_pocztowy = post
                 order.zamowione = True
+                order.kwota = kwota + delivery_cost
+                order.kwota = round(order.kwota, 2)
                 order.save()
                 global order_id
                 order_id = order.id
@@ -242,10 +251,11 @@ def podsumowanie(request):
     order = Zamowienie.objects.get(id=order_id)
     cart = order.koszyk
     cartitems = cart.cartitems.all()
+    total_cost = order.kwota
     global delivery_cost
-    total_cost = cart.kompletna_kwota + delivery_cost
+    products_cost = order.kwota - delivery_cost
     delivery_cost = 0
-    context = {"order": order, "cart": cart, "items": cartitems, "total_cost": total_cost}
+    context = {"order": order, "cart": cart, "items": cartitems, "total_cost": total_cost, "cost": products_cost}
     return render(request, 'podsumowanie.html', context)
 
 

@@ -92,30 +92,28 @@
                     </div>
             {% endfor %}
             <div>
-            {% if cart %}
+            {% if order %}
                 <h4>Suma zamówienia</h4>
-                <h5>Kwota zamówienia: {{ cart.kompletna_kwota }} zł</h5>
+                <h5>Kwota zamówienia: {{ cost }} zł</h5>
                 {% if total_cost %}
                     <h5>Kwota wraz z dostawą: {{ total_cost }} zł</h5>
                 {% endif %}
                 <hr>
-            {% endif %}
+            </div>
+            </div>
+            <div class="text-center">
+                    <h3>Dane osobowe:</h3>
+                    <h5>Imię: {{ order.imie }}</h5>
+                    <h5>Nazwisko: {{ order.nazwisko }}</h5>
+                    <h5>Numer telefonu: {{ order.numer_telefonu }}</h5>
+                    <h5>Adres: {{ order.miasto }}</h5>
+                    <h5>Kod pocztowy: {{ order.kod_pocztowy }}</h5>
+                    <h5>Data złożenia zamówienia: {{ order.data }}</h5>
+                    <button class="bg-success"><a class="text-white" href="{% url 'index' %}">Strona główna</a></button>
+                    <hr>
+                {% endif %}
             </div>
         </div>
-        <div class="text-center">
-            {% if order %}
-                <h3>Dane osobowe:</h3>
-                <h5>Imię: {{ order.imie }}</h5>
-                <h5>Nazwisko: {{ order.nazwisko }}</h5>
-                <h5>Numer telefonu: {{ order.numer_telefonu }}</h5>
-                <h5>Adres: {{ order.miasto }}</h5>
-                <h5>Kod pocztowy: {{ order.kod_pocztowy }}</h5>
-                <h5>Data złożenia zamówienia: {{ order.data }}</h5>
-                <button class="bg-success"><a class="text-white" href="{% url 'index' %}">Strona główna</a></button>
-                <hr>
-            {% endif %}
-        </div>
-    </div>
 
 </body>
 </html>

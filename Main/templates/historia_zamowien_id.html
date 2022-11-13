@@ -91,8 +91,8 @@
 
         <div class="itemContainer">
             <div>
-                {% if cart %}
-                    <h4 class="font-weight-bold">Kwota zamówienia: {{ cart.kompletna_kwota }} zł</h4>
+                {% if order %}
+                    <h4 class="font-weight-bold">Kwota zamówienia wraz z dostawą: {{ order.kwota }} zł</h4>
                     <hr>
                 {% endif %}
             </div>

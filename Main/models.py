@@ -129,6 +129,7 @@ class Zamowienie(models.Model):
     kod_pocztowy = models.CharField(max_length=50)
     koszyk = models.ForeignKey(Koszyk, on_delete=models.CASCADE, related_name='cart')
     zamowione = models.BooleanField(default=False)
+    kwota = models.FloatField(default=100)
     data = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -137,3 +138,15 @@ class Zamowienie(models.Model):
     class Meta:
         verbose_name = "Zamówienie"
         verbose_name_plural = "Zamówienia"
+
+
+class KodyRabatowe(models.Model):
+    nazwa = models.CharField(max_length=20)
+    procent = models.FloatField(default=0.9)
+
+    def __str__(self):
+        return self.nazwa
+
+    class Meta:
+        verbose_name = "Kod rabatowy"
+        verbose_name_plural = "Kody rabatowe"
