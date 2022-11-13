@@ -11,6 +11,8 @@ from django.shortcuts import render, redirect
 from .forms import CreateUserForm, EditProfileForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 quantity = tel_number = order_id = delivery_cost = 0
@@ -63,9 +65,7 @@ def strona_rejestracji(request):
                 form.save()
                 user = form.cleaned_data.get('username')
                 messages.success(request, 'Konto zostało założone, witamy ' + user)
-
                 return redirect('login')
-
     context = {'form': form}
     return render(request, 'rejestracja.html', context)
 
@@ -241,6 +241,15 @@ def zamowienie(request):
                 cart.zamowione = True
                 cart.save()
                 if payment == "pobranie":
+                    send_mail(
+                        'Zamówienie',
+                        "Dziękujemy za złożenie zamówienia! \n" 
+                        "Twoje zamówienie o numerze " + str(order.id) + " jest w trakcie realizacji.\n"
+                        "Koszt zamówienia: " + str(order.kwota) +
+                        " zł. \nPozdrawiamy, SKLEP Z SUPLEMENTAMI!",
+                        'settings.EMAIL_HOST_USER',
+                        [request.user.email],
+                        fail_silently=False)
                     return redirect('podsumowanie')
             else:
                 return redirect("numer_telefonu")
