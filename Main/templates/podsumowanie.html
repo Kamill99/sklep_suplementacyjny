@@ -70,49 +70,52 @@
             </h4>
         </div>
     </div>
-    <form method="POST">
-        {% csrf_token %}
-        <h2 class="text-center mt-2">Dostawa i płatność</h2><br>
-        <div class="row text-center p-3">
-            <div class="col-4 border-dark text-center">
-                <span class="font-weight-bold">Dane</span><hr><br>
-                <div>
-                    <span class="text-left">Imię:</span><br>
-                    <input class="text-center form-control" type="text" value="{{ request.user.first_name }}" name="nazwa" required><br><br>
-                    <span class="text-left">Nazwisko:</span><br>
-                    <input class="text-center form-control" type="text" value="{{ request.user.last_name }}" name="nazwisko" required><br><br>
-                    <span class="text-left">Numer telefonu:</span><br>
-                    <input class="text-center form-control" type="number" placeholder="Numer telefonu" name="numer_tel" minlength="3" required><br><br>
-                    <span class="text-left">Miejscowość i numer domu:</span><br>
-                    <input class="text-center form-control" type="text" placeholder="Miejscowość i numer domu" name="miasto" required><br><br>
-                    <span class="text-left">Kod pocztowy:</span><br>
-                    <input class="text-center form-control" type="text" placeholder="Kod pocztowy" name="kod_pocztowy" required><br><br>
-                </div>
-            </div>
-            <div class="col-4 border-dark">
-                <span class="font-weight-bold">Dostawa</span><hr><br>
-                <span class="font-weight-bold">Wybierz sposób dostarczenia przesyłki</span><br><br>
-                <input type="radio" id="kurier" name="dostawa" value="dostawa_kurier" required>
-                <label for="dostawa1">Dostawa kurierem na podany adres(+15 zł)</label><br>
-                <input type="radio" id="sklep" name="dostawa" value="sklep">
-                <label for="dostawa2">Odbiór osobisty(0 zł)</label><br>
-            </div>
-            <div class="col-4 border-dark">
-                <span class="font-weight-bold">Płatność</span><hr><br>
-                <span class="font-weight-bold">Wybierz sposób płatności</span><br><br>
-                <input type="radio" id="przelew" name="rozliczenie" value="przelew" required>
-                <label for="rozliczenie1">Płatność z góry</label><br>
-                <input type="radio" id="pobranie" name="rozliczenie" value="pobranie">
-                <label for="rozliczenie1">Płatność przy odbiorze</label><br>
+    <div class="text-center p-3">
+        <h2>Dziękujemy za złożenie zamówienia!</h2>
+        <div class="heading">
+            <div class="p_name"><h4>Nazwa produktu</h4></div>
+            <div class="name"><h4>Ilość</h4></div>
+            <div class="name"><h4>Cena za sztukę</h4></div>
+            <div class="name"><h4>Cena łączna</h4></div>
+        </div>
+
+        <div class="itemContainer">
+
+            {% for suplement in items %}
+                    <div class="item">
+                      <div class="iteminfo">
+                        <p>{{suplement.produkt.nazwa}} - {{ suplement.produkt.producent }}</p>
+                      </div>
+                        <div class="name"><p>{{ suplement.ilosc }}</p></div>
+                        <div class="name"><p>{{suplement.produkt.cena}}</p></div>
+                        <div class="name"><p>{{suplement.kwota}} zł</p></div>
+                    </div>
+            {% endfor %}
+            <div>
+            {% if cart %}
+                <h4>Suma zamówienia</h4>
+                <h5>Kwota zamówienia: {{ cart.kompletna_kwota }} zł</h5>
+                {% if total_cost %}
+                    <h5>Kwota wraz z dostawą: {{ total_cost }} zł</h5>
+                {% endif %}
+                <hr>
+            {% endif %}
             </div>
         </div>
         <div class="text-center">
-            <button class="bg-warning">
-                <a class="text-white" href="{% url 'koszyk' %}">Cofnij</a>
-            </button>
-            <button type="reset" class="bg-info">Wyczyść</button>
-            <button type="submit" class="bg-success">Zatwierdź</button>
+            {% if order %}
+                <h3>Dane osobowe:</h3>
+                <h5>Imię: {{ order.imie }}</h5>
+                <h5>Nazwisko: {{ order.nazwisko }}</h5>
+                <h5>Numer telefonu: {{ order.numer_telefonu }}</h5>
+                <h5>Adres: {{ order.miasto }}</h5>
+                <h5>Kod pocztowy: {{ order.kod_pocztowy }}</h5>
+                <h5>Data złożenia zamówienia: {{ order.data }}</h5>
+                <button class="bg-success"><a class="text-white" href="{% url 'index' %}">Strona główna</a></button>
+                <hr>
+            {% endif %}
         </div>
-    </form>
+    </div>
+
 </body>
 </html>

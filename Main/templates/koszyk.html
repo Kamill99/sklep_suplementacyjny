@@ -72,7 +72,10 @@
     </div>
     <div class="text-center p-3">
         <h2>Koszyk</h2>
-
+    {% if not items %}
+        <br><h3 class="font-italic text-info">Koszyk jest pusty :(</h3>
+    {% endif %}
+    {% if items %}
         <div class="heading">
             <div class="p_name"><h4>Nazwa produktu</h4></div>
             <div class="name"><h4>Zmniejsz</h4></div>
@@ -82,7 +85,6 @@
             <div class="name"><h4>Cena łączna</h4></div>
             <div class="name"><h4>Usuń</h4></div>
         </div>
-
         <div class="itemContainer">
 
             {% for suplement in items %}
@@ -105,6 +107,7 @@
         <button class="bg-danger empty">Wyczyść koszyk</button>
         <button class="bg-success"><a class="text-white" href="{% url 'zamowienie' %}">Dostawa i płatność</a></button>
         </div>
+    {% endif %}
     </div>
 <script>
     function getCookie(name) {

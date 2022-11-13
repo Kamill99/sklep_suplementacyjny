@@ -122,6 +122,11 @@ class ElementKoszyka(models.Model):
 
 class Zamowienie(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
+    imie = models.CharField(max_length=50)
+    nazwisko = models.CharField(max_length=50)
+    numer_telefonu = models.CharField(max_length=12)
+    miasto = models.CharField(max_length=50)
+    kod_pocztowy = models.CharField(max_length=50)
     koszyk = models.ForeignKey(Koszyk, on_delete=models.CASCADE, related_name='cart')
     zamowione = models.BooleanField(default=False)
     data = models.DateTimeField(auto_now_add=True)

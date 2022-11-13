@@ -6,15 +6,15 @@ from django.views import generic
 from django.contrib.auth.views import PasswordChangeView
 from rest_framework.reverse import reverse_lazy
 from .forms import PasswordChangingForm
-from .models import Supplement, Ocena, Kategoria, Koszyk, ElementKoszyka
+from .models import Supplement, Ocena, Kategoria, Koszyk, ElementKoszyka, Zamowienie
 from django.shortcuts import render, redirect
 from .forms import CreateUserForm, EditProfileForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
 
-quantity = 0
-change = 0
+quantity = tel_number = order_id = delivery_cost = 0
+name = surname = city = post = delivery = payment = ""
 
 
 def index(request):
@@ -193,8 +193,56 @@ def szuakj(request):
     return render(request, 'szukaj.html', dane)
 
 
+def numer_telefonu(request):
+    return render(request, 'numer_telefonu.html')
+
+
 def zamowienie(request):
-    # if request.method == "POST":
-    #     if OrderForm.is_valid:
-    #         return render(request, 'index.html')
+    if request.method == "POST":
+        global name
+        name = request.POST.get('nazwa')
+        global surname
+        surname = request.POST.get('nazwisko')
+        global tel_number
+        tel_number = request.POST.get('numer_tel')
+        global city
+        city = request.POST.get('miasto')
+        global post
+        post = request.POST.get('kod_pocztowy')
+        global delivery
+        delivery = request.POST.get('dostawa')
+        global payment
+        payment = request.POST.get('rozliczenie')
+        cart = Koszyk.objects.get(klient=request.user, zamowione=False)
+        if name and surname and tel_number and city and post and delivery and payment:
+            if 6 < len(tel_number) < 13:
+                if delivery == "dostawa_kurier":
+                    global delivery_cost
+                    delivery_cost = 15
+                order, created = Zamowienie.objects.get_or_create(koszyk=cart)
+                order.imie = name
+                order.nazwisko = surname
+                order.numer_telefonu = tel_number
+                order.miasto = city
+                order.kod_pocztowy = post
+                order.zamowione = True
+                order.save()
+                global order_id
+                order_id = order.id
+                cart.zamowione = True
+                cart.save()
+                if payment == "pobranie":
+                    return redirect('podsumowanie')
+            else:
+                return redirect("numer_telefonu")
     return render(request, 'zamowienie.html')
+
+
+def podsumowanie(request):
+    order = Zamowienie.objects.get(id=order_id)
+    cart = order.koszyk
+    cartitems = cart.cartitems.all()
+    global delivery_cost
+    total_cost = cart.kompletna_kwota + delivery_cost
+    context = {"order": order, "cart": cart, "items": cartitems, "total_cost": total_cost}
+    return render(request, 'podsumowanie.html', context)
