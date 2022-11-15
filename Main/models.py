@@ -131,6 +131,7 @@ class Zamowienie(models.Model):
     zamowione = models.BooleanField(default=False)
     kwota = models.FloatField(default=100)
     data = models.DateTimeField(auto_now_add=True)
+    zrealizowane = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.id)

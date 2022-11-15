@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <meta charset="UTF-8">
+    <title>Sklep z suplementami</title>
+    <style>
+        body {
+            background-color: #ffffcc;
+            margin: 0;
+            padding: 0;
+        }
+        [class *= "col-"] {
+            background-color: #ffffcc;
+            text-align: center;
+            padding: 1%;
+        }
+        [class *= "container"] {
+            background-color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        .row {
+            margin: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="row font-italic text-white bg-light">
+        <div class="col-3 bg-warning d-none d-md-block">
+            <h1><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h1>
+        </div>
+        <div class="col-6 bg-warning d-none d-md-block">
+            <h1><a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h1>
+        </div>
+        <div class="col-3 bg-warning d-none d-md-block">
+            <h4>
+                {% if request.user.is_anonymous %}
+                    <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h4>
+                {% else %}
+                    <a href="{% url 'profil' %}"><span class="bi-person">{{ request.user }}</span></a>
+                    <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button></h4>
+                {% endif %}
+            </h4>
+        </div>
+    </div>
+    <div class="row font-italic text-white bg-light">
+        <div class="col-3 bg-warning d-md-none">
+            <h3><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h3>
+        </div>
+        <div class="col-6 bg-warning d-md-none">
+            <h4><a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h4>
+        </div>
+        <div class="col-3 bg-warning d-md-none">
+            <h4>
+                {% if request.user.is_anonymous %}
+                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button>
+                {% else %}
+                    <a href="{% url 'profil' %}"><span class="bi-person"></span></a>
+                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button>
+                {% endif %}
+            </h4>
+        </div>
+    </div>
+    <h2 class="text-center mt-2">Strona z podanym adresem jest niedostępna</h2><br>
+    <div class="text-center">
+        <button class="bg-warning">
+            <a class="text-white" href="{% url 'index' %}">Strona główna</a>
+        </button>
+    </div>
+</body>
+</html>

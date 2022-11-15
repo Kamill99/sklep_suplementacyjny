@@ -186,6 +186,10 @@ def pusty_koszyk(request):
     return JsonResponse("Pusty koszyk", safe=False)
 
 
+def brak_koszyka(request):
+    return render(request, 'brak_koszyka.html')
+
+
 def szuakj(request):
     q = request.GET['q']
     suplementy = Supplement.objects.filter(nazwa__icontains=q)
@@ -198,6 +202,10 @@ def numer_telefonu(request):
 
 
 def zamowienie(request):
+    cart = Koszyk.objects.get(klient=request.user, zamowione=False)
+    cartitems = cart.cartitems.all()
+    if not cartitems:
+        return render(request, 'brak_koszyka.html')
     if request.method == "POST":
         global name
         name = request.POST.get('nazwa')
