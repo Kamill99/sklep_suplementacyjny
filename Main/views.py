@@ -244,6 +244,12 @@ def zamowienie(request):
                 order.kwota = kwota + delivery_cost
                 order.kwota = round(order.kwota, 2)
                 order.save()
+                message = ""
+                for element in cartitems:
+                    product = "Produkt: " + element.produkt.nazwa + "\n"
+                    product = product + ('Ilość: ' + str(element.ilosc) + "\n")
+                    product = product + ("Cena za sztukę: " + element.produkt.cena + "\n \n")
+                    message = message + product
                 global order_id
                 order_id = order.id
                 cart.zamowione = True
@@ -252,9 +258,11 @@ def zamowienie(request):
                     send_mail(
                         'Zamówienie',
                         "Dziękujemy za złożenie zamówienia! \n" 
-                        "Twoje zamówienie o numerze " + str(order.id) + " jest w trakcie realizacji.\n"
-                        "Koszt zamówienia: " + str(order.kwota) +
-                        " zł. \nPozdrawiamy, SKLEP Z SUPLEMENTAMI!",
+                        "Twoje zamówienie o numerze " + str(order.id) + " jest w trakcie realizacji.\n \n"
+                        + str(message) + "\n"
+                        "Koszt dostawy: " + str(delivery_cost) + "\n"
+                        "Koszt zamówienia: " + str(order.kwota) + " zł. \n"
+                        "Pozdrawiamy, SKLEP Z SUPLEMENTAMI!",
                         'settings.EMAIL_HOST_USER',
                         [request.user.email],
                         fail_silently=False)
