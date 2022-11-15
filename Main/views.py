@@ -252,24 +252,32 @@ def zamowienie(request):
                     message = message + product
                 global order_id
                 order_id = order.id
-                cart.zamowione = True
-                cart.save()
+                # cart.zamowione = True
+                # cart.save()
                 if payment == "pobranie":
+                    cart.zamowione = True
+                    cart.save()
                     send_mail(
                         'Zamówienie',
                         "Dziękujemy za złożenie zamówienia! \n" 
                         "Twoje zamówienie o numerze " + str(order.id) + " jest w trakcie realizacji.\n \n"
                         + str(message) + "\n"
                         "Koszt dostawy: " + str(delivery_cost) + "\n"
-                        "Koszt zamówienia: " + str(order.kwota) + " zł. \n"
+                        "Koszt zamówienia łącznie z rabatami: " + str(order.kwota) + " zł. \n"
                         "Pozdrawiamy, SKLEP Z SUPLEMENTAMI!",
                         'settings.EMAIL_HOST_USER',
                         [request.user.email],
                         fail_silently=False)
                     return redirect('podsumowanie')
+                else:
+                    return redirect('rozliczenie')
             else:
                 return redirect("numer_telefonu")
     return render(request, 'zamowienie.html')
+
+
+def rozliczenie(request):
+    return render(request, 'rozliczenie.html')
 
 
 def podsumowanie(request):
