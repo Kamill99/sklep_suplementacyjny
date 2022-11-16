@@ -31,6 +31,7 @@ urlpatterns = [
     path('zamowienie/', views.zamowienie, name="zamowienie"),
     path('numer_telefonu/', views.numer_telefonu, name="numer_telefonu"),
     path('rozliczenie/', views.rozliczenie, name="rozliczenie"),
+    path('udane_rozliczenie/', views.udane_rozliczenie, name="udane_rozliczenie"),
     path('podsumowanie/', views.podsumowanie, name="podsumowanie"),
     path('historia_zamowien/', views.historia_zamowien, name="historia_zamowien"),
     path('historia_zamowien/<id>', views.historia_zamowien_id, name="historia_zamowien_id"),

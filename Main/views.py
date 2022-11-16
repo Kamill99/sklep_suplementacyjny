@@ -252,8 +252,6 @@ def zamowienie(request):
                     message = message + product
                 global order_id
                 order_id = order.id
-                # cart.zamowione = True
-                # cart.save()
                 if payment == "pobranie":
                     cart.zamowione = True
                     cart.save()
@@ -277,13 +275,69 @@ def zamowienie(request):
 
 
 def rozliczenie(request):
-    return render(request, 'rozliczenie.html')
+    global order_id
+    try:
+        order = Zamowienie.objects.get(id=order_id)
+        cart = Koszyk.objects.get(klient=request.user, zamowione=False)
+        cartitems = cart.cartitems.all()
+        if not cartitems:
+            return render(request, 'brak_koszyka.html')
+    except:
+        return render(request, 'brak_koszyka.html')
+    context = {"order": order}
+    return render(request, 'rozliczenie.html', context)
+
+
+def udane_rozliczenie(request):
+    global order_id
+    try:
+        order = Zamowienie.objects.get(id=order_id)
+        cart = order.koszyk
+        cartitems = cart.cartitems.all()
+        if not cartitems:
+            return render(request, 'brak_koszyka.html')
+    except:
+        return render(request, 'brak_koszyka.html')
+    cart.zamowione = True
+    cart.save()
+    order.zamowione = True
+    order.save()
+    total_cost = order.kwota
+    global delivery_cost
+    products_cost = order.kwota - delivery_cost
+    delivery_cost = 0
+    context = {"order": order, "cart": cart, "items": cartitems, "total_cost": total_cost, "cost": products_cost}
+    message = ""
+    for element in cartitems:
+        product = "Produkt: " + element.produkt.nazwa + "\n"
+        product = product + ('Ilość: ' + str(element.ilosc) + "\n")
+        product = product + ("Cena za sztukę: " + element.produkt.cena + "\n \n")
+        message = message + product
+    send_mail(
+        'Zamówienie',
+        "Dziękujemy za złożenie i opłacenie zamówienia! \n"
+        "Twoje zamówienie o numerze " + str(order.id) + " jest w trakcie realizacji.\n \n"
+        + str(message) + "\n"
+                         "Koszt dostawy: " + str(delivery_cost) + "\n"
+                                                                  "Koszt zamówienia łącznie z rabatami: " + str(
+            order.kwota) + " zł. \n"
+                           "Pozdrawiamy, SKLEP Z SUPLEMENTAMI!",
+        'settings.EMAIL_HOST_USER',
+        [request.user.email],
+        fail_silently=False)
+    return render(request, 'udane_rozliczenie.html', context)
 
 
 def podsumowanie(request):
-    order = Zamowienie.objects.get(id=order_id)
-    cart = order.koszyk
-    cartitems = cart.cartitems.all()
+    global order_id
+    try:
+        order = Zamowienie.objects.get(id=order_id)
+        cart = order.koszyk
+        cartitems = cart.cartitems.all()
+        if not cartitems:
+            return render(request, 'brak_koszyka.html')
+    except:
+        return render(request, 'brak_koszyka.html')
     total_cost = order.kwota
     global delivery_cost
     products_cost = order.kwota - delivery_cost

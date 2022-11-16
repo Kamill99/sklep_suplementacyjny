@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <meta charset="UTF-8">
+    <title>Sklep z suplementami</title>
+    <style>
+        body {
+            background-color: #ffffcc;
+            margin: 0;
+            padding: 0;
+        }
+        [class *= "col-"] {
+            background-color: #ffffcc;
+            text-align: center;
+            padding: 1%;
+        }
+        [class *= "container"] {
+            background-color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        .row {
+            margin: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="row font-italic text-white bg-light">
+        <div class="col-3 bg-warning d-none d-md-block">
+            <h1><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h1>
+        </div>
+        <div class="col-6 bg-warning d-none d-md-block">
+            <h1><a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h1>
+        </div>
+        <div class="col-3 bg-warning d-none d-md-block">
+            <h4>
+                {% if request.user.is_anonymous %}
+                    <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h4>
+                {% else %}
+                    <a href="{% url 'profil' %}"><span class="bi-person">{{ request.user }}</span></a>
+                    <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button></h4>
+                {% endif %}
+            </h4>
+        </div>
+    </div>
+    <div class="row font-italic text-white bg-light">
+        <div class="col-3 bg-warning d-md-none">
+            <h3><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h3>
+        </div>
+        <div class="col-6 bg-warning d-md-none">
+            <h4><a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h4>
+        </div>
+        <div class="col-3 bg-warning d-md-none">
+            <h4>
+                {% if request.user.is_anonymous %}
+                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button>
+                {% else %}
+                    <a href="{% url 'profil' %}"><span class="bi-person"></span></a>
+                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button>
+                {% endif %}
+            </h4>
+        </div>
+    </div>
+    <div class="text-center p-3">
+        <h2>Dziękujemy za złożenie zamówienia!</h2>
+        <h3>Zamówienie pomyślnie opłacone</h3>
+        <div class="heading">
+            <div class="p_name"><h4>Nazwa produktu</h4></div>
+            <div class="name"><h4>Ilość</h4></div>
+            <div class="name"><h4>Cena za sztukę</h4></div>
+            <div class="name"><h4>Cena łączna</h4></div>
+        </div>
+
+        <div class="itemContainer">
+
+            {% for suplement in items %}
+                    <div class="item">
+                      <div class="iteminfo">
+                        <p>{{suplement.produkt.nazwa}} - {{ suplement.produkt.producent }}</p>
+                      </div>
+                        <div class="name"><p>{{ suplement.ilosc }}</p></div>
+                        <div class="name"><p>{{suplement.produkt.cena}}</p></div>
+                        <div class="name"><p>{{suplement.kwota}} zł</p></div>
+                    </div>
+            {% endfor %}
+            <div>
+            {% if order %}
+                <h4>Suma zamówienia</h4>
+                <h5>Kwota zamówienia: {{ cost }} zł</h5>
+                {% if total_cost %}
+                    <h5>Kwota wraz z dostawą: {{ total_cost }} zł</h5>
+                {% endif %}
+                <hr>
+            </div>
+            </div>
+            <div class="text-center">
+                    <h3>Dane osobowe:</h3>
+                    <h5>Imię: {{ order.imie }}</h5>
+                    <h5>Nazwisko: {{ order.nazwisko }}</h5>
+                    <h5>Numer telefonu: {{ order.numer_telefonu }}</h5>
+                    <h5>Adres: {{ order.miasto }}</h5>
+                    <h5>Kod pocztowy: {{ order.kod_pocztowy }}</h5>
+                    <h5>Data złożenia zamówienia: {{ order.data }}</h5>
+                    <button class="bg-success"><a class="text-white" href="{% url 'index' %}">Strona główna</a></button>
+                    <hr>
+                {% endif %}
+            </div>
+        </div>
+
+</body>
+</html>

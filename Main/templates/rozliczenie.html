@@ -72,50 +72,77 @@
     </div>
     <div class="text-center p-3">
         <h2>Opłata zamówienia</h2>
+        <h4>Koszt: {{ order.kwota }} zł</h4>
         <div id="paypal-button-container"></div>
 
-        <script src="https://www.paypal.com/sdk/js?client-id=AXlkYzDq92cNWbmnkBCq8pJnOLzbQOTbaDXgSFA0E-4PSIafnMFY5XEeD8EVZDx_6p7tJFxftuRjD3Cl&currency=PLN&disable-funding=credit"></script>
+        <script src="https://www.paypal.com/sdk/js?client-id=AXlkYzDq92cNWbmnkBCq8pJnOLzbQOTbaDXgSFA0E-4PSIafnMFY5XEeD8EVZDx_6p7tJFxftuRjD3Cl&currency=PLN"></script>
 
         <script>
-        // Render the PayPal button into #paypal-button-container
-        paypal.Buttons({
-
-            style: {
-                color:  'blue',
-                shape:  'pill',
-                label:  'pay',
-                height: 40
-            },
-
-            // Set up the transaction
-            createOrder: function(data, actions) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: '88.44'
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
                         }
-                    }]
-                });
-            },
-
-            // Finalize the transaction
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(orderData) {
-                    // Successful capture! For demo purposes:
-                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                    var transaction = orderData.purchase_units[0].payments.captures[0];
-                    alert('Transakcja zakończona sukcesem'+ transaction.status + ': ' + transaction.id + '\n\n');
-
-                    // Replace the above to show a success message within this page, e.g.
-                    // const element = document.getElementById('paypal-button-container');
-                    // element.innerHTML = '';
-                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-                    // Or go to another URL:  actions.redirect('thank_you.html');
-                });
+                    }
+                }
+                return cookieValue;
             }
+            const csrftoken = getCookie('csrftoken');
+
+            let totalPrice = "{{order.kwota}}".replace(",", ".");
+            let orderId = "{{order.kwota}}";
+
+            function completeOrder(){
+                let url = "{% url 'udane_rozliczenie' %}"
+                fetch(url, {
+                    method: 'POST',
+                    headers:{
+                        'Content-type': 'application/json',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body: JSON.stringify({'orderId':orderId})
+                })
+            }
+            // Render the PayPal button into #paypal-button-container
+            paypal.Buttons({
+
+                style: {
+                    color:  'blue',
+                    shape:  'pill',
+                    label:  'pay',
+                    height: 40
+                },
+
+                // Set up the transaction
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: totalPrice
+                            }
+                        }]
+                    });
+                },
+
+                // Finalize the transaction
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(orderData) {
+                        // Successful capture! For demo purposes:
+                        completeOrder()
+                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                        var transaction = orderData.purchase_units[0].payments.captures[0];
+                        alert('Transakcja zakończona sukcesem, numer transakcji: ' + transaction.id + '\n');
+                        document.location.href = "{% url 'udane_rozliczenie' %}";
+                    });
+                }
 
 
-        }).render('#paypal-button-container');
+            }).render('#paypal-button-container');
     </script>
 
     </div>
