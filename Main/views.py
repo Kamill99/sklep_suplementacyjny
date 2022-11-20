@@ -6,13 +6,12 @@ from django.views import generic
 from django.contrib.auth.views import PasswordChangeView
 from rest_framework.reverse import reverse_lazy
 from .forms import PasswordChangingForm
-from .models import Supplement, Ocena, Kategoria, Koszyk, ElementKoszyka, Zamowienie, KodyRabatowe
+from .models import Supplement, Ocena, Kategoria, Koszyk, ElementKoszyka, Zamowienie, KodyRabatowe, Producent, Foto
 from django.shortcuts import render, redirect
 from .forms import CreateUserForm, EditProfileForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
-from django.conf import settings
 
 
 quantity = tel_number = order_id = delivery_cost = 0
@@ -21,7 +20,9 @@ name = surname = city = post = delivery = payment = discount_code = ""
 
 def index(request):
     kategorie = Kategoria.objects.all()
-    dane = {'kategorie': kategorie}
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
+    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
     return render(request, 'main.html', dane)
 
 
@@ -33,6 +34,16 @@ def kategoria(request, id):
             'kategoria_suplement': kategoria_suplement,
             'kategorie': kategorie}
     return render(request, 'kategoria_suplement.html', dane)
+
+
+def producent(request, id):
+    producent_adres = Producent.objects.get(pk=id)
+    producent_suplementy = Supplement.objects.filter(producent=producent_adres)
+    producenci = Producent.objects.all()
+    data = {'producent_adres': producent_adres,
+            'producent_suplementy': producent_suplementy,
+            'producenci': producenci}
+    return render(request, 'producenci.html', data)
 
 
 def suplement(request, id):

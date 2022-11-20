@@ -1,5 +1,4 @@
 from rest_framework import routers
-from Main import views
 from Main.views import *
 from django.urls import path
 from django.conf import settings
@@ -12,6 +11,7 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('', index, name='index'),
     path('kategoria/<id>/', kategoria, name='kategoria'),
+    path('producent/<id>/', producent, name='producent'),
     path('szukaj/', views.szuakj, name='szukaj'),
     path('suplement/<id>', suplement, name='supplement'),
     path('profil/', profil, name='profil'),

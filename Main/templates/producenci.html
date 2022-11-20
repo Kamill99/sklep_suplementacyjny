@@ -9,9 +9,10 @@
 <body>
     <div class="container">
         {% block suplement %}
-            {% if kategoria_suplement %}
+
+            {% if producent_suplementy %}
                 <div class="row">
-                    {% for suplement in kategoria_suplement %}
+                    {% for suplement in producent_suplementy %}
                         <div class="card col-md-4 col-sm-6 col-xs-12 bg-white text-center" style="min-height: 400px">
                             <a href="/suplement/{{ suplement.id }}" class="text-left">
                                 <img class="card-img-top" src="{{suplement.foto.foto.url}}" style="height: 70%"><br>
