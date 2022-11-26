@@ -221,16 +221,6 @@ p{
     object-fit: cover;
 }
 
-button{
-    padding: 10px 10px 10px 10px;
-    border-radius: 10px;
-    background-color: #6050DC;
-    color: white;
-    width: 100px;
-    border: none;
-    cursor: pointer;
-}
-
 .quantity_button{
     background-color: #0c5460;
 }

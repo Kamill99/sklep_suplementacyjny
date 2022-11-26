@@ -3,72 +3,140 @@
 <html lang="pl">
 <head>
     {% load static %}
+    <link rel="stylesheet" href="../../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/style.css">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <title>Sklep z suplementami</title>
-    <style>
-        body {
-            background-color: #ffffcc;
-            margin: 0;
-            padding: 0;
-        }
-        [class *= "col-"] {
-            background-color: #ffffcc;
-            text-align: center;
-            padding: 1%;
-        }
-        [class *= "container"] {
-            background-color: white;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-        }
-        .row {
-            margin: 0;
-        }
-
-    </style>
 </head>
 <body>
-    <div class="row font-italic text-white bg-light">
-        <div class="col-3 bg-warning d-none d-md-block">
+    <div class="row text-white m-0">
+        <div class="col-1 d-none d-md-block header">
+            <a href="{% url 'index' %}"><img src="{{logo.foto.url}}" style="height: 50px"><br></a>
+        </div>
+        <div class="col-3 d-none d-md-block header">
+            <form class="form-inline my-2 my-lg-0" action="../../szukaj">
+                  <div class="input-group">
+                      <input name="q" type="text" class="form-control" placeholder="Szukaj"/>
+                      <div class="input-group-append">
+                        <button class="btn btn-dark" type="submit" id="button-addon2">Szukaj</button>
+                      </div>
+                  </div>
+                </form>
+        </div>
+        <div class="col-2 d-none d-md-block header">
+            <div class="dropdown">
+              <button class="btn dropdown-toggle kategorie text-white font-weight-bold" type="button" id="kategorie" data-bs-toggle="dropdown" aria-expanded="false">
+                  Kategorie
+              </button>
+              <div class="dropdown-menu" aria-labelledby="kategorie">
+                  {% for kat in kategorie %}
+                <p>
+                    <a class="dropdown-item" href="/kategoria/{{ kat.id }}">{{ kat.nazwa }}</a>
+                </p>
+            {% endfor %}
+              </div>
+            </div>
+        </div>
+        <div class="col-2 d-none d-md-block header align-items-center">
+            <div class="dropdown">
+              <button class="btn dropdown-toggle text-white font-weight-bold" type="button" id="producenci" data-bs-toggle="dropdown" aria-expanded="false">
+                Producenci
+              </button>
+              <div class="dropdown-menu" aria-labelledby="producenci">
+                  {% for producent in producenci %}
+                <p>
+                    <a class="dropdown-item" href="/producent/{{ producent.id }}">{{ producent.nazwa }}</a>
+                </p>
+            {% endfor %}
+              </div>
+            </div>
+        </div>
+        {% if not request.user.is_anonymous %}
+        <div class="col-1 d-none d-md-block header">
             <h1><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h1>
         </div>
-        <div class="col-6 bg-warning d-none d-md-block">
-            <h1><a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h1>
+        {% else %}
+            <div class="col-1 d-none d-md-block header"></div>
+        {% endif %}
+        <div class="col-1 d-none d-md-block header text-right">
+            <h4>
+                {% if not request.user.is_anonymous %}
+                    <h5><a href="{% url 'profil' %}"><span class="bi-person">{{ request.user }}</span></a></h5>
+                {% endif %}
+            </h4>
         </div>
-        <div class="col-3 bg-warning d-none d-md-block">
+        <div class="col-2 d-none d-md-block header">
+                {% if not request.user.is_anonymous %}
+                    <h4><button class="btn-success btn-sm"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button></h4>
+                {% else %}
+                    <h5><button class="btn-success btn-sm"><a class="text-white text-decoration-none" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h5>
+                {% endif %}
+        </div>
+    </div>
+    <div class="row text-white m-0">
+        <div class="col-1 d-md-none header">
+            <a href="{% url 'index' %}"><img src="{{logo.foto.url}}" style="height: 40px"><br></a>
+        </div>
+        {% if not request.user.is_anonymous %}
+        <div class="col-2 d-md-none header">
+            <h3><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h3>
+        </div>
+        {% else %}
+        <div class="col-2 d-md-none header"></div>
+        {% endif %}
+        <div class="col-3 d-md-none header">
+            <div class="dropdown">
+              <button class="btn btn-sm dropdown-toggle kategorie text-white font-weight-bold" type="button" id="kategorie" data-bs-toggle="dropdown" aria-expanded="false">
+                Kategorie
+              </button>
+              <div class="dropdown-menu" aria-labelledby="kategorie">
+                  {% for kat in kategorie %}
+                <p>
+                    <a class="dropdown-item" href="/kategoria/{{ kat.id }}">{{ kat.nazwa }}</a>
+                </p>
+            {% endfor %}
+              </div>
+            </div>
+        </div>
+        <div class="col-3 d-md-none header">
+            <div class="dropdown align-items-center">
+              <button class="btn btn-sm dropdown-toggle text-white font-weight-bold" type="button" id="producenci" data-bs-toggle="dropdown" aria-expanded="false">
+                Producenci
+              </button>
+              <div class="dropdown-menu" aria-labelledby="producenci">
+                  {% for producent in producenci %}
+                <p>
+                    <a class="dropdown-item" href="/producent/{{ producent.id }}">{{ producent.nazwa }}</a>
+                </p>
+            {% endfor %}
+              </div>
+            </div>
+        </div>
+        <div class="col-3 d-md-none header">
             <h4>
                 {% if request.user.is_anonymous %}
-                    <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h4>
+                    <button class="btn-success btn-sm"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button>
                 {% else %}
-                    <a href="{% url 'profil' %}"><span class="bi-person">{{ request.user }}</span></a>
-                    <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button></h4>
+                    <a href="{% url 'profil' %}"><span class="bi-person"></span></a>
+                    <button class="btn-success btn-sm"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button>
                 {% endif %}
             </h4>
         </div>
     </div>
-    <div class="row font-italic text-white bg-light">
-        <div class="col-3 bg-warning d-md-none">
-            <h3><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h3>
-        </div>
-        <div class="col-6 bg-warning d-md-none">
-            <h4><a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h4>
-        </div>
-        <div class="col-3 bg-warning d-md-none">
-            <h4>
-                {% if request.user.is_anonymous %}
-                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button>
-                {% else %}
-                    <a href="{% url 'profil' %}"><span class="bi-person"></span></a>
-                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button>
-                {% endif %}
-            </h4>
-        </div>
+    <div class="col-12 d-md-none header">
+        <form class="form-inline my-2 my-lg-0" action="../../szukaj">
+          <div class="input-group">
+              <input name="q" type="text" class="form-control" placeholder="Szukaj"/>
+              <div class="input-group-append">
+                <button class="btn btn-dark" type="submit" id="button-addon2">Szukaj</button>
+              </div>
+          </div>
+        </form>
     </div>
     <div class="text-center p-3">
         <h2>Dziękujemy za złożenie zamówienia!</h2>
@@ -109,11 +177,15 @@
                     <h5>Adres: {{ order.miasto }}</h5>
                     <h5>Kod pocztowy: {{ order.kod_pocztowy }}</h5>
                     <h5>Data złożenia zamówienia: {{ order.data }}</h5>
-                    <button class="bg-success"><a class="text-white" href="{% url 'index' %}">Strona główna</a></button>
+                    <button class="btn btn-success"><a class="text-white" href="{% url 'index' %}">Strona główna</a></button>
                     <hr>
                 {% endif %}
             </div>
-        </div>
-
+    </div>
+    <br><br><br><br><br>
+    <div class="footer text-center fixed-bottom">
+        <br>Sklep Suplementacyjny <br>
+        ul. Suplementacyjna 2/3 Rzeszów<br><br>
+    </div>
 </body>
 </html>

@@ -3,90 +3,28 @@
 <html lang="pl">
 <head>
     {% load static %}
+    <link rel="stylesheet" href="../../static/css/main.css">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <title>Sklep z suplementami</title>
-    <style>
-        body {
-            background-color: #ffffcc;
-            margin: 0;
-            padding: 0;
-        }
-        [class *= "col-"] {
-            background-color: #ffffcc;
-            text-align: center;
-            padding: 1%;
-        }
-        [class *= "container"] {
-            background-color: white;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-        }
-        .row {
-            margin: 0;
-        }
-
-    </style>
 </head>
 <body>
-    <div class="row font-italic text-white">
-        <div class="col-3 bg-warning d-none d-md-block">
-            <h1><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h1>
-        </div>
-        <div class="col-6 bg-warning d-none d-md-block">
-            <h1><a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h1>
-        </div>
-        <div class="col-3 bg-warning d-none d-md-block">
-                <h4>
-                    {% if request.user.is_anonymous %}
-                        <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h4>
-                    {% else %}
-                        <a href="{% url 'profil' %}"><span class="bi-person">{{ request.user }}</span></a>
-                        <h4><button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button></h4>
-                    {% endif %}
-                </h4>
-        </div>
-    </div>
-    <div class="row font-italic text-white">
-        <div class="col-3 bg-warning d-md-none">
-            <h3><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h3>
-        </div>
-        <div class="col-6 bg-warning d-md-none">
-            <h4><a class="text-white" href="{% url 'index' %}"> SKLEP Z SUPLEMENTAMI </a></h4>
-        </div>
-        <div class="col-3 bg-warning d-md-none">
-            <h4>
-                {% if request.user.is_anonymous %}
-                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button>
-                {% else %}
-                    <a href="{% url 'profil' %}"><span class="bi-person"></span></a>
-                    <button class="btn-success"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button>
-                {% endif %}
-            </h4>
-        </div>
-    </div>
     <div class="row font-italic">
-        <div class="col-xs-4 col-sm-3">
-            <a href="{% url 'profil' %}"><button class="btn btn-info"><h3>Dane użytkownika</h3></button></a><br><br>
-            <a href="{% url 'historia_zamowien' %}"><button class="btn btn-info"><h3>Historia zamówień</h3></button></a>
-            <br><br>
-            {% if request.user.is_superuser %}
-                <a href={% url 'admin:index' %}><button class="btn btn-info"><h3>Panel Administratora</h3></button></a>
-            {% endif %}
-        </div>
-
-        <div class="col-xs-8 col-sm-9 container- bg-transparent">
+        <div class="col-12 container- bg-transparent">
             <br><h3 class="font-italic">Zmiana hasła</h3><br><hr>
             <div class="form-group">
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button class="btn btn-secondary">Zmień hasło</button>
+                    <button class="btn btn-info">Zmień hasło</button>
                 </form>
+                <br><button class="btn btn-warning">
+                <a class="text-white" href="{% url 'edycja_profilu' %}">Cofnij</a>
+                </button>
             </div>
         </div>
     </div>

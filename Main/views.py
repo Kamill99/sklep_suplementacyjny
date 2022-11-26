@@ -67,7 +67,11 @@ def profil(request):
     imie = User.first_name
     nazwisko = User.last_name
     mail = User.email
-    dane = {'nazwa': nazwa, 'imie': imie, 'nazwisko': nazwisko, 'mail': mail}
+    kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
+    dane = {'nazwa': nazwa, 'imie': imie, 'nazwisko': nazwisko, 'mail': mail,
+            'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
     return render(request, 'profil.html', dane)
 
 
@@ -204,21 +208,36 @@ def pusty_koszyk(request):
 
 
 def brak_koszyka(request):
-    return render(request, 'brak_koszyka.html')
+    kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
+    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    return render(request, 'brak_koszyka.html', dane)
 
 
 def szuakj(request):
     q = request.GET['q']
     suplementy = Supplement.objects.filter(nazwa__icontains=q)
-    dane = {'suplementy': suplementy}
+    kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
+    dane = {'suplementy': suplementy, 'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
     return render(request, 'szukaj.html', dane)
 
 
 def numer_telefonu(request):
-    return render(request, 'numer_telefonu.html')
+    kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
+    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    return render(request, 'numer_telefonu.html', dane)
 
 
 def zamowienie(request):
+    kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
+    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
     cart = Koszyk.objects.get(klient=request.user, zamowione=False)
     cartitems = cart.cartitems.all()
     if not cartitems:
@@ -288,11 +307,14 @@ def zamowienie(request):
                     return redirect('rozliczenie')
             else:
                 return redirect("numer_telefonu")
-    return render(request, 'zamowienie.html')
+    return render(request, 'zamowienie.html', dane)
 
 
 def rozliczenie(request):
     global order_id
+    kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
     try:
         order = Zamowienie.objects.get(id=order_id)
         cart = Koszyk.objects.get(klient=request.user, zamowione=False)
@@ -301,12 +323,15 @@ def rozliczenie(request):
             return render(request, 'brak_koszyka.html')
     except:
         return render(request, 'brak_koszyka.html')
-    context = {"order": order}
+    context = {"order": order, 'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
     return render(request, 'rozliczenie.html', context)
 
 
 def udane_rozliczenie(request):
     global order_id
+    kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
     try:
         order = Zamowienie.objects.get(id=order_id)
         cart = order.koszyk
@@ -323,7 +348,8 @@ def udane_rozliczenie(request):
     global delivery_cost
     products_cost = order.kwota - delivery_cost
     delivery_cost = 0
-    context = {"order": order, "cart": cart, "items": cartitems, "total_cost": total_cost, "cost": products_cost}
+    context = {"order": order, "cart": cart, "items": cartitems, "total_cost": total_cost, "cost": products_cost,
+               'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
     message = ""
     for element in cartitems:
         product = "Produkt: " + element.produkt.nazwa + "\n"
@@ -347,6 +373,9 @@ def udane_rozliczenie(request):
 
 def podsumowanie(request):
     global order_id
+    kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
     try:
         order = Zamowienie.objects.get(id=order_id)
         cart = order.koszyk
@@ -359,17 +388,21 @@ def podsumowanie(request):
     global delivery_cost
     products_cost = order.kwota - delivery_cost
     delivery_cost = 0
-    context = {"order": order, "cart": cart, "items": cartitems, "total_cost": total_cost, "cost": products_cost}
+    context = {"order": order, "cart": cart, "items": cartitems, "total_cost": total_cost, "cost": products_cost,
+               'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
     return render(request, 'podsumowanie.html', context)
 
 
 def historia_zamowien(request):
     orders = Zamowienie.objects.all()
     user_orders = []
+    kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
     for order in orders:
         if order.koszyk.klient == request.user:
             user_orders.append(order)
-    context = {"orders": user_orders}
+    context = {"orders": user_orders, 'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
     return render(request, 'historia_zamowien.html', context)
 
 
@@ -377,5 +410,9 @@ def historia_zamowien_id(request, id):
     order = Zamowienie.objects.get(pk=id)
     cart = order.koszyk
     cartitems = cart.cartitems.all()
-    context = {"order": order, "cart": cart, "items": cartitems}
+    kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
+    context = {"order": order, "cart": cart, "items": cartitems, 'kategorie': kategorie,
+               'producenci': producenci, 'logo': logo}
     return render(request, 'historia_zamowien_id.html', context)
