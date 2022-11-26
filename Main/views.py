@@ -23,7 +23,6 @@ def index(request):
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
     dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
-    print(dane)
     return render(request, 'main.html', dane)
 
 
@@ -36,7 +35,6 @@ def kategoria(request, id):
     dane = {'kategoria_adres': kategoria_adres,
             'kategoria_suplement': kategoria_suplement,
             'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
-    print(dane)
     return render(request, 'kategoria_suplement.html', dane)
 
 
@@ -55,7 +53,9 @@ def producent(request, id):
 def suplement(request, id):
     suplement_adres = Supplement.objects.get(pk=id)
     kategorie = Kategoria.objects.all()
-    dane = {'suplement_adres': suplement_adres, 'kategorie': kategorie}
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
+    dane = {'suplement_adres': suplement_adres, 'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
     if request.method == 'POST':
         global quantity
         quantity = request.POST.get('ilosc')
