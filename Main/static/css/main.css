@@ -1,0 +1,30 @@
+        body {
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
+        [class *= "col-"] {
+            background-color: white;
+            text-align: center;
+            padding: 1%;
+        }
+        [class *= "container"] {
+            background-color: white;
+            text-align: center;
+            padding: 0;
+            width: 100%;
+        }
+        .row {
+            margin: 0;
+        }
+        .header, .kategorie {
+            background-color: yellowgreen;
+            color: white;
+            font-weight: bold;
+            font-size: large;
+        }
+        .footer {
+            background-color: yellowgreen;
+            color: white;
+            font-weight: bold;
+        }

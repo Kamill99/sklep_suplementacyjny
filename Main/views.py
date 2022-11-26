@@ -23,6 +23,7 @@ def index(request):
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
     dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    print(dane)
     return render(request, 'main.html', dane)
 
 
@@ -30,9 +31,12 @@ def kategoria(request, id):
     kategoria_adres = Kategoria.objects.get(pk=id)
     kategoria_suplement = Supplement.objects.filter(kategoria=kategoria_adres)
     kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
     dane = {'kategoria_adres': kategoria_adres,
             'kategoria_suplement': kategoria_suplement,
-            'kategorie': kategorie}
+            'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    print(dane)
     return render(request, 'kategoria_suplement.html', dane)
 
 
@@ -40,9 +44,11 @@ def producent(request, id):
     producent_adres = Producent.objects.get(pk=id)
     producent_suplementy = Supplement.objects.filter(producent=producent_adres)
     producenci = Producent.objects.all()
+    kategorie = Kategoria.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
     data = {'producent_adres': producent_adres,
             'producent_suplementy': producent_suplementy,
-            'producenci': producenci}
+            'producenci': producenci, 'kategorie': kategorie, 'logo': logo}
     return render(request, 'producenci.html', data)
 
 
