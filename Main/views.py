@@ -137,11 +137,14 @@ def zmienione_haslo(request):
 def koszyk(request):
     cart = None
     cartitems = []
+    kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
 
     if request.user.is_authenticated:
         cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
         cartitems = cart.cartitems.all()
-    context = {"cart": cart, "items": cartitems}
+    context = {"cart": cart, "items": cartitems, 'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
     return render(request, "koszyk.html", context)
 
 
