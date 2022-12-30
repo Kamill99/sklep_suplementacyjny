@@ -58,7 +58,7 @@
         </div>
         {% if not request.user.is_anonymous %}
         <div class="col-1 d-none d-md-block header">
-            <h1><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h1>
+            <h1><a href="{% url 'koszyk' %}"><span class="bi-basket text-white"></span></a></h1>
         </div>
         {% else %}
             <div class="col-1 d-none d-md-block header"></div>
@@ -66,7 +66,7 @@
         <div class="col-1 d-none d-md-block header text-right">
             <h4>
                 {% if not request.user.is_anonymous %}
-                    <h5><a href="{% url 'profil' %}"><span class="bi-person">{{ request.user }}</span></a></h5>
+                    <h5><a href="{% url 'profil' %}"><span class="bi-person text-white">{{ request.user }}</span></a></h5>
                 {% endif %}
             </h4>
         </div>
@@ -84,7 +84,7 @@
         </div>
         {% if not request.user.is_anonymous %}
         <div class="col-2 d-md-none header">
-            <h3><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h3>
+            <h3><a href="{% url 'koszyk' %}"><span class="bi-basket text-white"></span></a></h3>
         </div>
         {% else %}
         <div class="col-2 d-md-none header"></div>
@@ -122,7 +122,7 @@
                 {% if request.user.is_anonymous %}
                     <button class="btn-success btn-sm"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button>
                 {% else %}
-                    <a href="{% url 'profil' %}"><span class="bi-person"></span></a>
+                    <a href="{% url 'profil' %}"><span class="bi-person text-white"></span></a>
                     <button class="btn-success btn-sm"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button>
                 {% endif %}
             </h4>
@@ -146,9 +146,9 @@
         {% if items %}
             <div class="row">
                 <div class="col-3 bg-info text-white"><h4>Produkt</h4></div>
-                <div class="col-3 bg-info text-white"><h4>Ilość</h4></div>
+                <div class="col-4 bg-info text-white"><h4>Ilość</h4></div>
                 <div class="col-3 bg-info text-white"><h4>Cena za sztukę - łączna</h4></div>
-                <div class="col-3 bg-info text-white"><h4>Usuń</h4></div>
+                <div class="col-2 bg-info text-white"><h4>Usuń</h4></div>
             </div>
         <div class="itemContainer">
 
@@ -157,13 +157,13 @@
                       <div class="col-3 font-weight-bold align-middle">
                         <p>{{suplement.produkt.nazwa}} - {{ suplement.produkt.producent }}</p>
                       </div>
-                        <div class="col-3">
-                            <p><button class="btn-sm btn-primary plus" value="{{ suplement.id }}">+</button><br>
-                            {{ suplement.ilosc }}<br>
-                            <button class="btn-sm btn-warning minus text-white" value="{{ suplement.id }}">-</button></p>
+                        <div class="col-4">
+                            <p><button class="btn btn-danger minus text-white" value="{{ suplement.id }}">-</button>
+                            {{ suplement.ilosc }}
+                            <button class="btn btn-success plus" value="{{ suplement.id }}">+</button></p>
                         </div>
                         <div class="col-3 font-weight-bold"><p>{{suplement.produkt.cena}} - {{ suplement.kwota }} zł</p></div>
-                        <div class="col-3"><p><button class="btn btn-danger bi bi-trash-fill trash" value="{{ suplement.id }}"></button></p></div>
+                        <div class="col-2"><p><button class="btn btn-danger bi bi-trash-fill trash" value="{{ suplement.id }}"></button></p></div>
                     </div><hr>
             {% endfor %}
         </div>

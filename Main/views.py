@@ -21,8 +21,10 @@ name = surname = city = post = delivery = payment = discount_code = ""
 def index(request):
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
+    popularne_suplementy = [Supplement.objects.get(id=1), Supplement.objects.get(id=11), Supplement.objects.get(id=14)]
     logo = Foto.objects.get(nazwa="Logo")
-    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo,
+            'popularne_suplementy': popularne_suplementy}
     return render(request, 'main.html', dane)
 
 
@@ -296,11 +298,10 @@ def zamowienie(request):
                     cart.save()
                     send_mail(
                         'Zamówienie',
-                        "Dziękujemy za złożenie zamówienia! \n" 
+                        "Dziękujemy za złożenie zamówienia! \n"
                         "Twoje zamówienie o numerze " + str(order.id) + " jest w trakcie realizacji.\n \n"
                         + str(message) + "\n"
-                        "Koszt dostawy: " + str(delivery_cost) + "\n"
-                        "Koszt zamówienia łącznie z rabatami: " + str(order.kwota) + " zł. \n"
+                        "Całkowity koszt zamówienia: " + str(order.kwota) + " zł. \n"
                         "Pozdrawiamy, SKLEP Z SUPLEMENTAMI!",
                         'settings.EMAIL_HOST_USER',
                         [request.user.email],
@@ -364,8 +365,7 @@ def udane_rozliczenie(request):
         "Dziękujemy za złożenie i opłacenie zamówienia! \n"
         "Twoje zamówienie o numerze " + str(order.id) + " jest w trakcie realizacji.\n \n"
         + str(message) + "\n"
-                         "Koszt dostawy: " + str(delivery_cost) + "\n"
-                                                                  "Koszt zamówienia łącznie z rabatami: " + str(
+        "Całkowity koszt zamówienia: " + str(
             order.kwota) + " zł. \n"
                            "Pozdrawiamy, SKLEP Z SUPLEMENTAMI!",
         'settings.EMAIL_HOST_USER',

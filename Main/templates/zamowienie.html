@@ -57,7 +57,7 @@
         </div>
         {% if not request.user.is_anonymous %}
         <div class="col-1 d-none d-md-block header">
-            <h1><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h1>
+            <h1><a href="{% url 'koszyk' %}"><span class="bi-basket text-white"></span></a></h1>
         </div>
         {% else %}
             <div class="col-1 d-none d-md-block header"></div>
@@ -65,7 +65,7 @@
         <div class="col-1 d-none d-md-block header text-right">
             <h4>
                 {% if not request.user.is_anonymous %}
-                    <h5><a href="{% url 'profil' %}"><span class="bi-person">{{ request.user }}</span></a></h5>
+                    <h5><a href="{% url 'profil' %}"><span class="bi-person text-white">{{ request.user }}</span></a></h5>
                 {% endif %}
             </h4>
         </div>
@@ -83,7 +83,7 @@
         </div>
         {% if not request.user.is_anonymous %}
         <div class="col-2 d-md-none header">
-            <h3><a href="{% url 'koszyk' %}"><span class="bi-basket"></span></a></h3>
+            <h3><a href="{% url 'koszyk' %}"><span class="bi-basket text-white"></span></a></h3>
         </div>
         {% else %}
         <div class="col-2 d-md-none header"></div>
@@ -121,7 +121,7 @@
                 {% if request.user.is_anonymous %}
                     <button class="btn-success btn-sm"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button>
                 {% else %}
-                    <a href="{% url 'profil' %}"><span class="bi-person"></span></a>
+                    <a href="{% url 'profil' %}"><span class="bi-person text-white"></span></a>
                     <button class="btn-success btn-sm"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button>
                 {% endif %}
             </h4>
@@ -139,7 +139,7 @@
     </div>
     <form method="POST">
         {% csrf_token %}
-        <h2 class="text-center mt-2">Dostawa i płatność</h2><br>
+        <h2 class="text-center mt-2 font-weight-bold">DOSTAWA I PŁATNOŚĆ</h2><br>
         <div class="row text-center p-3 m-0">
             <div class="col-md-4 col-sm-6 col-xs-12 border-dark text-center">
                 <span class="font-weight-bold">Dane</span><hr><br>
