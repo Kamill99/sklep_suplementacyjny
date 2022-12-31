@@ -21,7 +21,7 @@ name = surname = city = post = delivery = payment = discount_code = ""
 def index(request):
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
-    popularne_suplementy = [Supplement.objects.get(id=1), Supplement.objects.get(id=11), Supplement.objects.get(id=14)]
+    popularne_suplementy = [Supplement.objects.get(id=1), Supplement.objects.get(id=37), Supplement.objects.get(id=33)]
     logo = Foto.objects.get(nazwa="Logo")
     dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo,
             'popularne_suplementy': popularne_suplementy}

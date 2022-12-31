@@ -3,6 +3,7 @@
 <html lang="pl">
 <head>
     {% load static %}
+    <link rel="shortcut icon" href="../../media/images/Logo.png">
     <link rel="stylesheet" href="../static/css/main.css">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
@@ -138,7 +139,90 @@
         </form>
     </div>
     <div class="col-12">
-        <h3>POMOC W DOBORZE SUPLEMENTÓW</h3>
+        <form method="POST">
+        {% csrf_token %}
+        <h2 class="text-center mt-2 font-weight-bold">POMOC W DOBORZE SUPLEMENTÓW</h2><br>
+        <div class="row text-center p-3 m-0">
+            <div class="col-md-4 col-sm-6 col-xs-12 border-dark">
+                <span class="font-weight-bold">Dieta</span><hr><br>
+                <span class="font-weight-bold">Jaką dietę stosujesz?</span><br><br>
+                <input type="radio" id="wegetarian" name="dieta" value="wegetarian" required>
+                <label for="dieta1">Dieta wegetariańska</label><br>
+                <input type="radio" id="wegan" name="dieta" value="wegan">
+                <label for="dieta2">Dieta wegańska</label><br>
+                <input type="radio" id="brak_diety" name="dieta" value="brak_diety">
+                <label for="dieta3">Żadna z powyższych</label><br>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 border-dark">
+                <span class="font-weight-bold">Praca umysłu - wsparcie</span><hr><br>
+                <span class="font-weight-bold">Chcesz poprawić koncentrację?</span><br><br>
+                <input type="radio" id="koncentracja_tak" name="koncentracja" value="koncentracja_tak" required>
+                <label for="koncentracja_tak">Tak</label><br>
+                <input type="radio" id="koncentracja_nie" name="koncentracja" value="koncentracja_nie">
+                <label for="koncentracja_nie">Nie</label><br>
+
+                <span class="font-weight-bold">Potrzebujesz poprawy jakości snu?</span><br><br>
+                <input type="radio" id="sen_tak" name="sen" value="sen_tak" required>
+                <label for="sen_tak">Tak</label><br>
+                <input type="radio" id="sen_nie" name="sen" value="sen_nie">
+                <label for="sen_nie">Nie</label><br>
+
+                <span class="font-weight-bold">Chcesz wspomóc pamięć?</span><br><br>
+                <input type="radio" id="pamiec_tak" name="pamiec" value="pamiec_tak" required>
+                <label for="pamiec_tak">Tak</label><br>
+                <input type="radio" id="pamiec_nie" name="pamiec" value="pamiec_nie">
+                <label for="pamiec_nie">Nie</label><br>
+
+                <span class="font-weight-bold">Masz problemy ze stresem?</span><br><br>
+                <input type="radio" id="stres_tak" name="stres" value="stres_tak" required>
+                <label for="stres_tak">Tak</label><br>
+                <input type="radio" id="stres_nie" name="stres" value="stres_nie">
+                <label for="stres_nie">Nie</label><br>
+
+                <span class="font-weight-bold">Zastrzyk energii będzie potrzebny?</span><br><br>
+                <input type="radio" id="pobudzenie_tak" name="pobudzenie" value="pobudzenie_tak" required>
+                <label for="pobudzenie_tak">Tak</label><br>
+                <input type="radio" id="pobudzenie_nie" name="pobudzenie" value="pobudzenie_nie">
+                <label for="pobudzenie_nie">Nie</label><br>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 border-dark">
+                <span class="font-weight-bold">Zdrowie fizyczne - wsparcie</span><hr><br>
+                <span class="font-weight-bold">Potrzebujesz wsparcia dla oczu i wzroku?</span><br><br>
+                <input type="radio" id="wzrok_tak" name="wzrok" value="wzrok_tak" required>
+                <label for="wzrok_tak">Tak</label><br>
+                <input type="radio" id="wzrok_nie" name="wzrok" value="wzrok_nie">
+                <label for="wzrok_nie">Nie</label><br>
+
+                <span class="font-weight-bold">Zależy Ci na wzmocnieniu odporności?</span><br><br>
+                <input type="radio" id="odpornosc_tak" name="odpornosc" value="odpornosc_tak" required>
+                <label for="odpornosc_tak">Tak</label><br>
+                <input type="radio" id="odpornosc_nie" name="odpornosc" value="odpornosc_nie">
+                <label for="odpornosc_nie">Nie</label><br>
+
+                <span class="font-weight-bold">Chcesz wspomóc pracę serca?</span><br><br>
+                <input type="radio" id="serce_tak" name="serce" value="serce_tak" required>
+                <label for="serce_tak">Tak</label><br>
+                <input type="radio" id="serce_nie" name="serce" value="serce_nie">
+                <label for="serce_nie">Nie</label><br>
+
+                <span class="font-weight-bold">Sprawność stawów do poprawy?</span><br><br>
+                <input type="radio" id="stawy_tak" name="stawy" value="stawy_tak" required>
+                <label for="stawy_tak">Tak</label><br>
+                <input type="radio" id="stawy_nie" name="stawy" value="stawy_nie">
+                <label for="stawy_nie">Nie</label><br>
+
+                <span class="font-weight-bold">Masz problemy z trawieniem?</span><br><br>
+                <input type="radio" id="trawienie_tak" name="trawienie" value="trawienie_tak" required>
+                <label for="trawienie_tak">Tak</label><br>
+                <input type="radio" id="trawienie_nie" name="trawienie" value="trawienie_nie">
+                <label for="trawienie_nie">Nie</label><br>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="reset" class="btn btn-info">Wyczyść</button>
+            <button type="submit" class="btn btn-success">Zatwierdź</button>
+        </div>
+    </form>
     </div>
     <br><br><br><br><br><br>
     <div class="row footer text-center fixed-bottom overflow-auto">
