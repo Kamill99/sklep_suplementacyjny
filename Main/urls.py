@@ -10,6 +10,7 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     path('', index, name='index'),
+    path('ankieta/', ankieta, name='ankieta'),
     path('kategoria/<id>/', kategoria, name='kategoria'),
     path('producent/<id>/', producent, name='producent'),
     path('szukaj/', views.szuakj, name='szukaj'),

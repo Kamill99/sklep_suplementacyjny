@@ -28,6 +28,13 @@ def index(request):
     return render(request, 'main.html', dane)
 
 
+def ankieta(request):
+    kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
+    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    return render(request, 'ankieta.html', dane)
+
 def kategoria(request, id):
     kategoria_adres = Kategoria.objects.get(pk=id)
     kategoria_suplement = Supplement.objects.filter(kategoria=kategoria_adres)
