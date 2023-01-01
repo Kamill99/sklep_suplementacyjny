@@ -6,16 +6,106 @@ from django.views import generic
 from django.contrib.auth.views import PasswordChangeView
 from rest_framework.reverse import reverse_lazy
 from .forms import PasswordChangingForm
-from .models import Supplement, Ocena, Kategoria, Koszyk, ElementKoszyka, Zamowienie, KodyRabatowe, Producent, Foto
+from .models import Supplement, Kategoria, Koszyk, ElementKoszyka, Zamowienie, KodyRabatowe, Producent, Foto
 from django.shortcuts import render, redirect
 from .forms import CreateUserForm, EditProfileForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
-
+from owlready2 import *
 
 quantity = tel_number = order_id = delivery_cost = 0
 name = surname = city = post = delivery = payment = discount_code = ""
+
+onto = get_ontology("C:\\Users\\user\\Desktop\\suplementy\\suplementy.owl")
+onto.load()
+suplementy = []
+ashwagandha = berberyna = cynk = kofeina = kolagen = luteina = magnez = melatonina = cbd = omega = rhodiola = \
+    wapn = witamina_a = witamina_b = witamina_c = witamina_d = None
+suplementy_klasa = []
+ashwagandha_klasa = "untitled-ontology-15.Ashwagandha"
+berberyna_klasa = "untitled-ontology-15.Berberyna"
+cynk_klasa = "untitled-ontology-15.Cynk"
+kofeina_klasa = "untitled-ontology-15.Kofeina-tabletki"
+kolagen_klasa = "untitled-ontology-15.Kolagen"
+luteina_klasa = "untitled-ontology-15.Luteina"
+magnez_klasa = "untitled-ontology-15.Magnez"
+melatonina_klasa = "untitled-ontology-15.Melatonina"
+cbd_klasa = "untitled-ontology-15.Olejek_CBD"
+omega_klasa = "untitled-ontology-15.Omega_3"
+rhodiola_klasa = "untitled-ontology-15.Rhodiola_Rosea"
+wapn_klasa = "untitled-ontology-15.Wapń"
+witamina_a_klasa = "untitled-ontology-15.Witamina_A"
+witamina_b_klasa = "untitled-ontology-15.Witamina_B12"
+witamina_c_klasa = "untitled-ontology-15.Witamina_C"
+witamina_d_klasa = "untitled-ontology-15.Witamina_D"
+suplementy_klasa.append(ashwagandha_klasa)
+suplementy_klasa.append(berberyna_klasa)
+suplementy_klasa.append(cynk_klasa)
+suplementy_klasa.append(kofeina_klasa)
+suplementy_klasa.append(kolagen_klasa)
+suplementy_klasa.append(luteina_klasa)
+suplementy_klasa.append(magnez_klasa)
+suplementy_klasa.append(melatonina_klasa)
+suplementy_klasa.append(cbd_klasa)
+suplementy_klasa.append(omega_klasa)
+suplementy_klasa.append(rhodiola_klasa)
+suplementy_klasa.append(wapn_klasa)
+suplementy_klasa.append(witamina_a_klasa)
+suplementy_klasa.append(witamina_b_klasa)
+suplementy_klasa.append(witamina_c_klasa)
+suplementy_klasa.append(witamina_d_klasa)
+for klasa in onto.classes():
+    if str(klasa) == ashwagandha_klasa:
+        ashwagandha = klasa
+        suplementy.append(ashwagandha)
+    elif str(klasa) == berberyna_klasa:
+        berberyna = klasa
+        suplementy.append(berberyna)
+    elif str(klasa) == cynk_klasa:
+        cynk = klasa
+        suplementy.append(cynk)
+    elif str(klasa) == kofeina_klasa:
+        kofeina = klasa
+        suplementy.append(kofeina)
+    elif str(klasa) == kolagen_klasa:
+        kolagen = klasa
+        suplementy.append(kolagen)
+    elif str(klasa) == luteina_klasa:
+        luteina = klasa
+        suplementy.append(luteina)
+    elif str(klasa) == magnez_klasa:
+        magnez = klasa
+        suplementy.append(magnez)
+    elif str(klasa) == melatonina_klasa:
+        melatonina = klasa
+        suplementy.append(melatonina)
+    elif str(klasa) == cbd_klasa:
+        cbd = klasa
+        suplementy.append(cbd)
+    elif str(klasa) == omega_klasa:
+        omega = klasa
+        suplementy.append(omega)
+    elif str(klasa) == rhodiola_klasa:
+        rhodiola = klasa
+        suplementy.append(rhodiola)
+    elif str(klasa) == wapn_klasa:
+        wapn = klasa
+        suplementy.append(wapn)
+    elif str(klasa) == witamina_a_klasa:
+        witamina_a = klasa
+        suplementy.append(witamina_a)
+    elif str(klasa) == witamina_b_klasa:
+        witamina_b = klasa
+        suplementy.append(witamina_b)
+    elif str(klasa) == witamina_c_klasa:
+        witamina_c = klasa
+        suplementy.append(witamina_c)
+    elif str(klasa) == witamina_d_klasa:
+        witamina_d = klasa
+        suplementy.append(witamina_d)
+
+trawienie = "untitled-ontology-15.przeznaczenie.some(untitled-ontology-15.Trawienie)"
 
 
 def index(request):
@@ -25,6 +115,20 @@ def index(request):
     logo = Foto.objects.get(nazwa="Logo")
     dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo,
             'popularne_suplementy': popularne_suplementy}
+    # berberyna = "untitled-ontology-15.Berberyna"
+    # suplementy = "untitled-ontology-15.Suplement"
+    # global klasa_berberyna
+    # global klasa_suplement
+    # for p in onto.classes():
+    #     if str(p) == berberyna:
+    # print("Jest")
+    # klasa_berberyna = p
+    # if str(p) == suplementy:
+    # print("Jest suplement")
+    # klasa_suplement = p
+    # print(issubclass(klasa_berberyna, klasa_suplement)) #działa
+    # print(list(klasa_suplement.subclasses())) # wypisuje obiekty pod daną klasą
+    # print(klasa_berberyna.is_a) # wypisuje połączenia tego obiektu
     return render(request, 'main.html', dane)
 
 
@@ -32,8 +136,18 @@ def ankieta(request):
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
+    if request.method == "POST":
+        trawienie_polecenia = request.POST.get('trawienie')
+        if trawienie_polecenia == "trawienie_tak":
+            global trawienie
+            for suplement in suplementy:
+                for wskazanie in suplement.is_a:
+                    if str(wskazanie) == trawienie:
+                        polecenie = str(suplement)
+                        print(polecenie[21:])
     dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
     return render(request, 'ankieta.html', dane)
+
 
 def kategoria(request, id):
     kategoria_adres = Kategoria.objects.get(pk=id)
@@ -308,8 +422,8 @@ def zamowienie(request):
                         "Dziękujemy za złożenie zamówienia! \n"
                         "Twoje zamówienie o numerze " + str(order.id) + " jest w trakcie realizacji.\n \n"
                         + str(message) + "\n"
-                        "Całkowity koszt zamówienia: " + str(order.kwota) + " zł. \n"
-                        "Pozdrawiamy, SKLEP Z SUPLEMENTAMI!",
+                                         "Całkowity koszt zamówienia: " + str(order.kwota) + " zł. \n"
+                                                                                             "Pozdrawiamy, SKLEP Z SUPLEMENTAMI!",
                         'settings.EMAIL_HOST_USER',
                         [request.user.email],
                         fail_silently=False)
@@ -372,7 +486,7 @@ def udane_rozliczenie(request):
         "Dziękujemy za złożenie i opłacenie zamówienia! \n"
         "Twoje zamówienie o numerze " + str(order.id) + " jest w trakcie realizacji.\n \n"
         + str(message) + "\n"
-        "Całkowity koszt zamówienia: " + str(
+                         "Całkowity koszt zamówienia: " + str(
             order.kwota) + " zł. \n"
                            "Pozdrawiamy, SKLEP Z SUPLEMENTAMI!",
         'settings.EMAIL_HOST_USER',
