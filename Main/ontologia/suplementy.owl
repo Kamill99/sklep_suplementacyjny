@@ -1,445 +1,681 @@
-@prefix : <http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15> .
-
-<http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15> rdf:type owl:Ontology .
-
-#################################################################
-#    Object Properties
-#################################################################
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju
-:jestRodzaju rdf:type owl:ObjectProperty ,
-                      owl:FunctionalProperty ;
-             rdfs:domain :Suplement ;
-             rdfs:range :Rodzaj .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie
-:przeznaczenie rdf:type owl:ObjectProperty ,
-                        owl:FunctionalProperty ;
-               rdfs:domain :Suplement ;
-               rdfs:range :Przeznaczenie .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#zawiera
-:zawiera rdf:type owl:ObjectProperty ,
-                  owl:FunctionalProperty ;
-         rdfs:domain :Suplement ;
-         rdfs:range :Sklad .
-
-
-#################################################################
-#    Classes
-#################################################################
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Ashwagandha
-:Ashwagandha rdf:type owl:Class ;
-             rdfs:subClassOf :Suplement ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty :jestRodzaju ;
-                               owl:someValuesFrom :Zdrowie
-                             ] ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty :przeznaczenie ;
-                               owl:someValuesFrom :Koncentracja
-                             ] ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty :przeznaczenie ;
-                               owl:someValuesFrom :Stres
-                             ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Berberyna
-:Berberyna rdf:type owl:Class ;
-           rdfs:subClassOf :Suplement ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :jestRodzaju ;
-                             owl:someValuesFrom :Zdrowie
-                           ] ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :przeznaczenie ;
-                             owl:someValuesFrom :Trawienie
-                           ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Cynk
-:Cynk rdf:type owl:Class ;
-      rdfs:subClassOf :Suplement ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :jestRodzaju ;
-                        owl:someValuesFrom :Minerały
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :przeznaczenie ;
-                        owl:someValuesFrom :DlaWegan
-                      ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegan
-:DlaWegan rdf:type owl:Class ;
-          rdfs:subClassOf :Przeznaczenie .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegetarian
-:DlaWegetarian rdf:type owl:Class ;
-               rdfs:subClassOf :Przeznaczenie .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Kofeina
-:Kofeina rdf:type owl:Class ;
-         rdfs:subClassOf :Sklad .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Kofeina-tabletki
-:Kofeina-tabletki rdf:type owl:Class ;
-                  rdfs:subClassOf :Suplement ,
-                                  [ rdf:type owl:Restriction ;
-                                    owl:onProperty :jestRodzaju ;
-                                    owl:someValuesFrom :Zdrowie
-                                  ] ,
-                                  [ rdf:type owl:Restriction ;
-                                    owl:onProperty :przeznaczenie ;
-                                    owl:someValuesFrom :Pobudzenie
-                                  ] ,
-                                  [ rdf:type owl:Restriction ;
-                                    owl:onProperty :zawiera ;
-                                    owl:someValuesFrom :Kofeina
-                                  ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Kolagen
-:Kolagen rdf:type owl:Class ;
-         rdfs:subClassOf :Suplement ,
-                         [ rdf:type owl:Restriction ;
-                           owl:onProperty :jestRodzaju ;
-                           owl:someValuesFrom :Zdrowie
-                         ] ,
-                         [ rdf:type owl:Restriction ;
-                           owl:onProperty :przeznaczenie ;
-                           owl:someValuesFrom :Stawy
-                         ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Koncentracja
-:Koncentracja rdf:type owl:Class ;
-              rdfs:subClassOf :Przeznaczenie .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#LepszySen
-:LepszySen rdf:type owl:Class ;
-           rdfs:subClassOf :Przeznaczenie .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Luteina
-:Luteina rdf:type owl:Class ;
-         rdfs:subClassOf :Suplement ,
-                         [ rdf:type owl:Restriction ;
-                           owl:onProperty :jestRodzaju ;
-                           owl:someValuesFrom :Zdrowie
-                         ] ,
-                         [ rdf:type owl:Restriction ;
-                           owl:onProperty :przeznaczenie ;
-                           owl:someValuesFrom :OczyIWzrok
-                         ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Magnez
-:Magnez rdf:type owl:Class ;
-        rdfs:subClassOf :Suplement ,
-                        [ rdf:type owl:Restriction ;
-                          owl:onProperty :jestRodzaju ;
-                          owl:someValuesFrom :Minerały
-                        ] ,
-                        [ rdf:type owl:Restriction ;
-                          owl:onProperty :przeznaczenie ;
-                          owl:someValuesFrom :DlaWegetarian
-                        ] ,
-                        [ rdf:type owl:Restriction ;
-                          owl:onProperty :przeznaczenie ;
-                          owl:someValuesFrom :Pamięć
-                        ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Melatonina
-:Melatonina rdf:type owl:Class ;
-            rdfs:subClassOf :Suplement ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :jestRodzaju ;
-                              owl:someValuesFrom :Zdrowie
-                            ] ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :przeznaczenie ;
-                              owl:someValuesFrom :LepszySen
-                            ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Minerały
-:Minerały rdf:type owl:Class ;
-          rdfs:subClassOf :Rodzaj .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#OczyIWzrok
-:OczyIWzrok rdf:type owl:Class ;
-            rdfs:subClassOf :Przeznaczenie .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Odporność
-:Odporność rdf:type owl:Class ;
-           rdfs:subClassOf :Przeznaczenie .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Olejek_CBD
-:Olejek_CBD rdf:type owl:Class ;
-            rdfs:subClassOf :Suplement ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :jestRodzaju ;
-                              owl:someValuesFrom :Zdrowie
-                            ] ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :przeznaczenie ;
-                              owl:someValuesFrom :Odporność
-                            ] ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :przeznaczenie ;
-                              owl:someValuesFrom :PracaSerca
-                            ] ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :przeznaczenie ;
-                              owl:someValuesFrom :Stres
-                            ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Omega_3
-:Omega_3 rdf:type owl:Class ;
-         rdfs:subClassOf :Suplement ,
-                         [ rdf:type owl:Restriction ;
-                           owl:onProperty :jestRodzaju ;
-                           owl:someValuesFrom :Zdrowie
-                         ] ,
-                         [ rdf:type owl:Restriction ;
-                           owl:onProperty :przeznaczenie ;
-                           owl:someValuesFrom :DlaWegetarian
-                         ] ,
-                         [ rdf:type owl:Restriction ;
-                           owl:onProperty :przeznaczenie ;
-                           owl:someValuesFrom :Pamięć
-                         ] ,
-                         [ rdf:type owl:Restriction ;
-                           owl:onProperty :przeznaczenie ;
-                           owl:someValuesFrom :PracaSerca
-                         ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Pamięć
-:Pamięć rdf:type owl:Class ;
-        rdfs:subClassOf :Przeznaczenie .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Pobudzenie
-:Pobudzenie rdf:type owl:Class ;
-            rdfs:subClassOf :Przeznaczenie .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#PracaSerca
-:PracaSerca rdf:type owl:Class ;
-            rdfs:subClassOf :Przeznaczenie .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie
-:Przeznaczenie rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Rhodiola_Rosea
-:Rhodiola_Rosea rdf:type owl:Class ;
-                rdfs:subClassOf :Suplement ,
-                                [ rdf:type owl:Restriction ;
-                                  owl:onProperty :jestRodzaju ;
-                                  owl:someValuesFrom :Zdrowie
-                                ] ,
-                                [ rdf:type owl:Restriction ;
-                                  owl:onProperty :przeznaczenie ;
-                                  owl:someValuesFrom :Pamięć
-                                ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Rodzaj
-:Rodzaj rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Sklad
-:Sklad rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Stawy
-:Stawy rdf:type owl:Class ;
-       rdfs:subClassOf :Przeznaczenie .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Stres
-:Stres rdf:type owl:Class ;
-       rdfs:subClassOf :Przeznaczenie .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement
-:Suplement rdf:type owl:Class ;
-           rdfs:subClassOf [ rdf:type owl:Restriction ;
-                             owl:onProperty :jestRodzaju ;
-                             owl:someValuesFrom :Rodzaj
-                           ] ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :przeznaczenie ;
-                             owl:someValuesFrom :Przeznaczenie
-                           ] ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :zawiera ;
-                             owl:someValuesFrom :Sklad
-                           ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Trawienie
-:Trawienie rdf:type owl:Class ;
-           rdfs:subClassOf :Przeznaczenie .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Wapń
-:Wapń rdf:type owl:Class ;
-      rdfs:subClassOf :Suplement ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :jestRodzaju ;
-                        owl:someValuesFrom :Minerały
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :przeznaczenie ;
-                        owl:someValuesFrom :DlaWegetarian
-                      ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witamina_A
-:Witamina_A rdf:type owl:Class ;
-            rdfs:subClassOf :Suplement ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :jestRodzaju ;
-                              owl:someValuesFrom :Witaminy
-                            ] ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :przeznaczenie ;
-                              owl:someValuesFrom :DlaWegetarian
-                            ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witamina_B12
-:Witamina_B12 rdf:type owl:Class ;
-              rdfs:subClassOf :Suplement ,
-                              [ rdf:type owl:Restriction ;
-                                owl:onProperty :jestRodzaju ;
-                                owl:someValuesFrom :Witaminy
-                              ] ,
-                              [ rdf:type owl:Restriction ;
-                                owl:onProperty :przeznaczenie ;
-                                owl:someValuesFrom :DlaWegan
-                              ] ,
-                              [ rdf:type owl:Restriction ;
-                                owl:onProperty :przeznaczenie ;
-                                owl:someValuesFrom :DlaWegetarian
-                              ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witamina_C
-:Witamina_C rdf:type owl:Class ;
-            rdfs:subClassOf :Suplement ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :jestRodzaju ;
-                              owl:someValuesFrom :Witaminy
-                            ] ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :przeznaczenie ;
-                              owl:someValuesFrom :Odporność
-                            ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witamina_D
-:Witamina_D rdf:type owl:Class ;
-            rdfs:subClassOf :Suplement ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :jestRodzaju ;
-                              owl:someValuesFrom :Witaminy
-                            ] ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :przeznaczenie ;
-                              owl:someValuesFrom :DlaWegan
-                            ] ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :przeznaczenie ;
-                              owl:someValuesFrom :DlaWegetarian
-                            ] .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witaminy
-:Witaminy rdf:type owl:Class ;
-          rdfs:subClassOf :Rodzaj .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Zdrowie
-:Zdrowie rdf:type owl:Class ;
-         rdfs:subClassOf :Rodzaj .
-
-
-###  http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Żelazo
-:Żelazo rdf:type owl:Class ;
-        rdfs:subClassOf :Suplement ,
-                        [ rdf:type owl:Restriction ;
-                          owl:onProperty :jestRodzaju ;
-                          owl:someValuesFrom :Minerały
-                        ] ,
-                        [ rdf:type owl:Restriction ;
-                          owl:onProperty :przeznaczenie ;
-                          owl:someValuesFrom :DlaWegan
-                        ] ,
-                        [ rdf:type owl:Restriction ;
-                          owl:onProperty :przeznaczenie ;
-                          owl:someValuesFrom :DlaWegetarian
-                        ] .
-
-
-#################################################################
-#    General axioms
-#################################################################
-
-[ rdf:type owl:AllDisjointClasses ;
-  owl:members ( :DlaWegan
-                :DlaWegetarian
-                :LepszySen
-                :OczyIWzrok
-                :Odporność
-                :Pamięć
-                :PracaSerca
-                :Stawy
-                :Stres
-                :Trawienie
-              )
-] .
-
-
-[ rdf:type owl:AllDisjointClasses ;
-  owl:members ( :Minerały
-                :Witaminy
-                :Zdrowie
-              )
-] .
-
-
-[ rdf:type owl:AllDisjointClasses ;
-  owl:members ( :Przeznaczenie
-                :Rodzaj
-                :Sklad
-                :Suplement
-              )
-] .
-
-
-###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#"
+     xml:base="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/suplementy"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Rodzaj"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#zawiera -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#zawiera">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Sklad"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Ashwagandha -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Ashwagandha">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Zdrowie"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Koncentracja"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Stres"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Berberyna -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Berberyna">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Zdrowie"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Trawienie"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Cynk -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Cynk">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Minerały"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegan"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegan -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegan">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegetarian -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegetarian">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Kofeina -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Kofeina">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Sklad"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Kofeina-tabletki -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Kofeina-tabletki">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Zdrowie"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Pobudzenie"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#zawiera"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Kofeina"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Kolagen -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Kolagen">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Zdrowie"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Stawy"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Koncentracja -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Koncentracja">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#LepszySen -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#LepszySen">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Luteina -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Luteina">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Zdrowie"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#OczyIWzrok"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Magnez -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Magnez">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Minerały"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegetarian"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Pamięć"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Melatonina -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Melatonina">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Zdrowie"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#LepszySen"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Minerały -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Minerały">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Rodzaj"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#OczyIWzrok -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#OczyIWzrok">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Odporność -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Odporność">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Olejek_CBD -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Olejek_CBD">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Zdrowie"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Odporność"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#PracaSerca"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Stres"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Omega_3 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Omega_3">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Zdrowie"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegetarian"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Pamięć"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#PracaSerca"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Pamięć -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Pamięć">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Pobudzenie -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Pobudzenie">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#PracaSerca -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#PracaSerca">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Rhodiola_Rosea -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Rhodiola_Rosea">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Zdrowie"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Pamięć"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Rodzaj -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Rodzaj"/>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Sklad -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Sklad"/>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Stawy -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Stawy">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Stres -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Stres">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Rodzaj"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#zawiera"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Sklad"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Trawienie -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Trawienie">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Wapń -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Wapń">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Minerały"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegetarian"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witamina_A -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witamina_A">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witaminy"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegetarian"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witamina_B12 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witamina_B12">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witaminy"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegan"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegetarian"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witamina_C -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witamina_C">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witaminy"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Odporność"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witamina_D -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witamina_D">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witaminy"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegan"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegetarian"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witaminy -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witaminy">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Rodzaj"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Zdrowie -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Zdrowie">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Rodzaj"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Żelazo -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Żelazo">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#jestRodzaju"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Minerały"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegan"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#przeznaczenie"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegetarian"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegan"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#DlaWegetarian"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#LepszySen"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#OczyIWzrok"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Odporność"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Pamięć"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#PracaSerca"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Stawy"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Stres"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Trawienie"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Minerały"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Witaminy"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Zdrowie"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Przeznaczenie"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Rodzaj"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Sklad"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/user/ontologies/2022/11/untitled-ontology-15#Suplement"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

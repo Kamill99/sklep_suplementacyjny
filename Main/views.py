@@ -17,7 +17,7 @@ from owlready2 import *
 quantity = tel_number = order_id = delivery_cost = 0
 name = surname = city = post = delivery = payment = discount_code = ""
 
-onto = get_ontology("C:\\Users\\user\\Desktop\\suplementy\\suplementy.owl")
+onto = get_ontology("Main/ontologia/suplementy.owl")
 onto.load()
 suplementy = []
 ashwagandha = berberyna = cynk = kofeina = kolagen = luteina = magnez = melatonina = cbd = omega = rhodiola = \
