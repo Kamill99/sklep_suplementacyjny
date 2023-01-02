@@ -21,7 +21,10 @@ onto = get_ontology("C:\\Users\\user\\Desktop\\suplementy\\suplementy.owl")
 onto.load()
 suplementy = []
 ashwagandha = berberyna = cynk = kofeina = kolagen = luteina = magnez = melatonina = cbd = omega = rhodiola = \
-    wapn = witamina_a = witamina_b = witamina_c = witamina_d = None
+    wapn = witamina_a = witamina_b = witamina_c = witamina_d = zelazo = None
+trawienie_suplementy = koncentracja_suplementy = stres_suplementy = wegan_suplementy = \
+    wegetarian_suplementy = pobudzenie_suplementy = stawy_suplementy = sen_suplementy = wzrok_suplementy = \
+    pamiec_suplementy = odpornosc_suplementy = serce_suplementy = None
 suplementy_klasa = []
 ashwagandha_klasa = "untitled-ontology-15.Ashwagandha"
 berberyna_klasa = "untitled-ontology-15.Berberyna"
@@ -39,6 +42,7 @@ witamina_a_klasa = "untitled-ontology-15.Witamina_A"
 witamina_b_klasa = "untitled-ontology-15.Witamina_B12"
 witamina_c_klasa = "untitled-ontology-15.Witamina_C"
 witamina_d_klasa = "untitled-ontology-15.Witamina_D"
+zelazo_klasa = "untitled-ontology-15.Żelazo"
 suplementy_klasa.append(ashwagandha_klasa)
 suplementy_klasa.append(berberyna_klasa)
 suplementy_klasa.append(cynk_klasa)
@@ -55,6 +59,7 @@ suplementy_klasa.append(witamina_a_klasa)
 suplementy_klasa.append(witamina_b_klasa)
 suplementy_klasa.append(witamina_c_klasa)
 suplementy_klasa.append(witamina_d_klasa)
+suplementy_klasa.append(zelazo_klasa)
 for klasa in onto.classes():
     if str(klasa) == ashwagandha_klasa:
         ashwagandha = klasa
@@ -104,7 +109,21 @@ for klasa in onto.classes():
     elif str(klasa) == witamina_d_klasa:
         witamina_d = klasa
         suplementy.append(witamina_d)
+    elif str(klasa) == zelazo_klasa:
+        zelazo = klasa
+        suplementy.append(zelazo)
 
+wegan = "untitled-ontology-15.przeznaczenie.some(untitled-ontology-15.DlaWegan)"
+wegetarian = "untitled-ontology-15.przeznaczenie.some(untitled-ontology-15.DlaWegetarian)"
+koncentracja = "untitled-ontology-15.przeznaczenie.some(untitled-ontology-15.Koncentracja)"
+sen = "untitled-ontology-15.przeznaczenie.some(untitled-ontology-15.LepszySen)"
+wzrok = "untitled-ontology-15.przeznaczenie.some(untitled-ontology-15.OczyIWzrok)"
+odpornosc = "untitled-ontology-15.przeznaczenie.some(untitled-ontology-15.Odporność)"
+pamiec = "untitled-ontology-15.przeznaczenie.some(untitled-ontology-15.Pamięć)"
+pobudzenie = "untitled-ontology-15.przeznaczenie.some(untitled-ontology-15.Pobudzenie)"
+serce = "untitled-ontology-15.przeznaczenie.some(untitled-ontology-15.PracaSerca)"
+stawy = "untitled-ontology-15.przeznaczenie.some(untitled-ontology-15.Stawy)"
+stres = "untitled-ontology-15.przeznaczenie.some(untitled-ontology-15.Stres)"
 trawienie = "untitled-ontology-15.przeznaczenie.some(untitled-ontology-15.Trawienie)"
 
 
@@ -115,20 +134,6 @@ def index(request):
     logo = Foto.objects.get(nazwa="Logo")
     dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo,
             'popularne_suplementy': popularne_suplementy}
-    # berberyna = "untitled-ontology-15.Berberyna"
-    # suplementy = "untitled-ontology-15.Suplement"
-    # global klasa_berberyna
-    # global klasa_suplement
-    # for p in onto.classes():
-    #     if str(p) == berberyna:
-    # print("Jest")
-    # klasa_berberyna = p
-    # if str(p) == suplementy:
-    # print("Jest suplement")
-    # klasa_suplement = p
-    # print(issubclass(klasa_berberyna, klasa_suplement)) #działa
-    # print(list(klasa_suplement.subclasses())) # wypisuje obiekty pod daną klasą
-    # print(klasa_berberyna.is_a) # wypisuje połączenia tego obiektu
     return render(request, 'main.html', dane)
 
 
@@ -137,16 +142,370 @@ def ankieta(request):
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
     if request.method == "POST":
-        trawienie_polecenia = request.POST.get('trawienie')
-        if trawienie_polecenia == "trawienie_tak":
+        dieta_ankieta = request.POST.get('dieta')
+        koncentracja_ankieta = request.POST.get('koncentracja')
+        sen_ankieta = request.POST.get('sen')
+        pamiec_ankieta = request.POST.get('pamiec')
+        stres_ankieta = request.POST.get('stres')
+        pobudzenie_ankieta = request.POST.get('pobudzenie')
+        wzrok_ankieta = request.POST.get('wzrok')
+        odpornosc_ankieta = request.POST.get('odpornosc')
+        serce_ankieta = request.POST.get('serce')
+        stawy_ankieta = request.POST.get('stawy')
+        trawienie_ankieta = request.POST.get('trawienie')
+        if dieta_ankieta == "wegan":
+            global wegan_suplementy
+            wegan_suplementy = []
+            global wegan
+            for suplement in suplementy:
+                for wskazanie in suplement.is_a:
+                    if str(wskazanie) == wegan:
+                        polecenie = str(suplement)
+                        wegan_suplementy.append(polecenie[21:].replace("_", " "))
+        else:
+            wegan_suplementy = None
+        if dieta_ankieta == "wegetarian":
+            global wegetarian_suplementy
+            wegetarian_suplementy = []
+            global wegetarian
+            for suplement in suplementy:
+                for wskazanie in suplement.is_a:
+                    if str(wskazanie) == wegetarian:
+                        polecenie = str(suplement)
+                        wegetarian_suplementy.append(polecenie[21:].replace("_", " "))
+        else:
+            wegetarian_suplementy = None
+        if koncentracja_ankieta == "koncentracja_tak":
+            global koncentracja_suplementy
+            koncentracja_suplementy = []
+            global koncentracja
+            for suplement in suplementy:
+                for wskazanie in suplement.is_a:
+                    if str(wskazanie) == koncentracja:
+                        polecenie = str(suplement)
+                        koncentracja_suplementy.append(polecenie[21:].replace("_", " "))
+        else:
+            koncentracja_suplementy = None
+        if sen_ankieta == "sen_tak":
+            global sen_suplementy
+            sen_suplementy = []
+            global sen
+            for suplement in suplementy:
+                for wskazanie in suplement.is_a:
+                    if str(wskazanie) == sen:
+                        polecenie = str(suplement)
+                        sen_suplementy.append(polecenie[21:].replace("_", " "))
+        else:
+            sen_suplementy = None
+        if pamiec_ankieta == "pamiec_tak":
+            global pamiec_suplementy
+            pamiec_suplementy = []
+            global pamiec
+            for suplement in suplementy:
+                for wskazanie in suplement.is_a:
+                    if str(wskazanie) == pamiec:
+                        polecenie = str(suplement)
+                        pamiec_suplementy.append(polecenie[21:].replace("_", " "))
+        else:
+            pamiec_suplementy = None
+        if stres_ankieta == "stres_tak":
+            global stres_suplementy
+            stres_suplementy = []
+            global stres
+            for suplement in suplementy:
+                for wskazanie in suplement.is_a:
+                    if str(wskazanie) == stres:
+                        polecenie = str(suplement)
+                        stres_suplementy.append(polecenie[21:].replace("_", " "))
+        else:
+            stres_suplementy = None
+        if pobudzenie_ankieta == "pobudzenie_tak":
+            global pobudzenie_suplementy
+            pobudzenie_suplementy = []
+            global pobudzenie
+            for suplement in suplementy:
+                for wskazanie in suplement.is_a:
+                    if str(wskazanie) == pobudzenie:
+                        polecenie = str(suplement)
+                        pobudzenie_suplementy.append(polecenie[21:].replace("_", " "))
+        else:
+            stres_suplementy = None
+        if wzrok_ankieta == "wzrok_tak":
+            global wzrok_suplementy
+            wzrok_suplementy = []
+            global wzrok
+            for suplement in suplementy:
+                for wskazanie in suplement.is_a:
+                    if str(wskazanie) == wzrok:
+                        polecenie = str(suplement)
+                        wzrok_suplementy.append(polecenie[21:].replace("_", " "))
+        else:
+            wzrok_suplementy = None
+        if odpornosc_ankieta == "odpornosc_tak":
+            global odpornosc_suplementy
+            odpornosc_suplementy = []
+            global odpornosc
+            for suplement in suplementy:
+                for wskazanie in suplement.is_a:
+                    if str(wskazanie) == odpornosc:
+                        polecenie = str(suplement)
+                        odpornosc_suplementy.append(polecenie[21:].replace("_", " "))
+        else:
+            odpornosc_suplementy = None
+        if serce_ankieta == "serce_tak":
+            global serce_suplementy
+            serce_suplementy = []
+            global serce
+            for suplement in suplementy:
+                for wskazanie in suplement.is_a:
+                    if str(wskazanie) == serce:
+                        polecenie = str(suplement)
+                        serce_suplementy.append(polecenie[21:].replace("_", " "))
+        else:
+            serce_suplementy = None
+        if stawy_ankieta == "stawy_tak":
+            global stawy_suplementy
+            stawy_suplementy = []
+            global stawy
+            for suplement in suplementy:
+                for wskazanie in suplement.is_a:
+                    if str(wskazanie) == stawy:
+                        polecenie = str(suplement)
+                        stawy_suplementy.append(polecenie[21:].replace("_", " "))
+        else:
+            stawy_suplementy = None
+        if trawienie_ankieta == "trawienie_tak":
+            global trawienie_suplementy
+            trawienie_suplementy = []
             global trawienie
             for suplement in suplementy:
                 for wskazanie in suplement.is_a:
                     if str(wskazanie) == trawienie:
                         polecenie = str(suplement)
-                        print(polecenie[21:])
+                        trawienie_suplementy.append(polecenie[21:].replace("_", " "))
+        else:
+            trawienie_suplementy = None
+        return redirect('wyniki')
     dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
     return render(request, 'ankieta.html', dane)
+
+
+def wyniki(request):
+    kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
+    if request.method == "POST":
+        polecane_koszyk = request.POST.get('koszyk_polecane')
+        if polecane_koszyk == "sfd":
+            cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+            supplement = Supplement.objects.get(id=36)
+            ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if wegan_suplementy:
+                supplement = Supplement.objects.get(id=25)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=11)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=36)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=34)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if wegetarian_suplementy:
+                supplement = Supplement.objects.get(id=18)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=21)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=32)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=11)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=36)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=34)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if koncentracja_suplementy:
+                supplement = Supplement.objects.get(id=40)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if sen_suplementy:
+                supplement = Supplement.objects.get(id=16)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if pamiec_suplementy:
+                supplement = Supplement.objects.get(id=18)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=21)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=49)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if stres_suplementy:
+                supplement = Supplement.objects.get(id=40)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=46)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if odpornosc_suplementy:
+                supplement = Supplement.objects.get(id=46)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=1)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if serce_suplementy:
+                supplement = Supplement.objects.get(id=46)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=21)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if trawienie_suplementy:
+                supplement = Supplement.objects.get(id=58)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            return redirect('koszyk')
+        elif polecane_koszyk == "allnutrition":
+            cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+            supplement = Supplement.objects.get(id=37)
+            ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if wegan_suplementy:
+                supplement = Supplement.objects.get(id=37)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if wegetarian_suplementy:
+                supplement = Supplement.objects.get(id=28)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=22)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=31)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=37)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if sen_suplementy:
+                supplement = Supplement.objects.get(id=43)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if pamiec_suplementy:
+                supplement = Supplement.objects.get(id=28)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=22)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=50)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if pobudzenie_suplementy:
+                supplement = Supplement.objects.get(id=53)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if wzrok_suplementy:
+                supplement = Supplement.objects.get(id=47)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if odpornosc_suplementy:
+                supplement = Supplement.objects.get(id=13)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if serce_suplementy:
+                supplement = Supplement.objects.get(id=22)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if stawy_suplementy:
+                supplement = Supplement.objects.get(id=56)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if trawienie_suplementy:
+                supplement = Supplement.objects.get(id=59)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            return redirect('koszyk')
+        elif polecane_koszyk == "kfd":
+            cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+            supplement = Supplement.objects.get(id=2)
+            ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if wegan_suplementy:
+                supplement = Supplement.objects.get(id=27)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=39)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=2)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if wegetarian_suplementy:
+                supplement = Supplement.objects.get(id=30)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=24)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=39)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if koncentracja_suplementy:
+                supplement = Supplement.objects.get(id=42)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if sen_suplementy:
+                supplement = Supplement.objects.get(id=45)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if pamiec_suplementy:
+                supplement = Supplement.objects.get(id=30)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=24)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=52)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if stres_suplementy:
+                supplement = Supplement.objects.get(id=42)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if pobudzenie_suplementy:
+                supplement = Supplement.objects.get(id=55)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if odpornosc_suplementy:
+                supplement = Supplement.objects.get(id=19)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if serce_suplementy:
+                supplement = Supplement.objects.get(id=24)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            return redirect('koszyk')
+        elif polecane_koszyk == "olimp":
+            cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+            if wegan_suplementy:
+                supplement = Supplement.objects.get(id=26)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=38)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=35)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if wegetarian_suplementy:
+                supplement = Supplement.objects.get(id=29)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=23)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=33)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=12)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=38)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=35)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if koncentracja_suplementy:
+                supplement = Supplement.objects.get(id=41)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if sen_suplementy:
+                supplement = Supplement.objects.get(id=44)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if pamiec_suplementy:
+                supplement = Supplement.objects.get(id=29)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=23)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+                supplement = Supplement.objects.get(id=51)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if stres_suplementy:
+                supplement = Supplement.objects.get(id=41)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if pobudzenie_suplementy:
+                supplement = Supplement.objects.get(id=54)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if wzrok_suplementy:
+                supplement = Supplement.objects.get(id=48)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if odpornosc_suplementy:
+                supplement = Supplement.objects.get(id=20)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if serce_suplementy:
+                supplement = Supplement.objects.get(id=23)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            if stawy_suplementy:
+                supplement = Supplement.objects.get(id=57)
+                ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
+            return redirect('koszyk')
+        elif polecane_koszyk == "nie":
+            return redirect('index')
+    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'wegetarian': wegetarian_suplementy,
+            'wegan': wegan_suplementy, 'koncentracja': koncentracja_suplementy, 'sen': sen_suplementy,
+            'pamiec': pamiec_suplementy, 'stres': stres_suplementy, 'pobudzenie': pobudzenie_suplementy,
+            'wzrok': wzrok_suplementy, 'odpornosc': odpornosc_suplementy, 'serce': serce_suplementy,
+            'stawy': stawy_suplementy, 'trawienie': trawienie_suplementy}
+    return render(request, 'wyniki.html', dane)
+
 
 
 def kategoria(request, id):

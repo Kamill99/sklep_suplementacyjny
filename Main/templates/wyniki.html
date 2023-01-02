@@ -4,7 +4,7 @@
 <head>
     {% load static %}
     <link rel="shortcut icon" href="../../media/images/Logo.png">
-    <link rel="stylesheet" href="../../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/main.css">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
@@ -19,7 +19,7 @@
             <a href="{% url 'index' %}"><img src="{{logo.foto.url}}" style="height: 50px"><br></a>
         </div>
         <div class="col-3 d-none d-md-block header">
-            <form class="form-inline my-2 my-lg-0" action="../../szukaj">
+            <form class="form-inline my-2 my-lg-0" action="szukaj">
                   <div class="input-group">
                       <input name="q" type="text" class="form-control" placeholder="Szukaj"/>
                       <div class="input-group-append">
@@ -35,10 +35,10 @@
               </button>
               <div class="dropdown-menu" aria-labelledby="kategorie">
                   {% for kat in kategorie %}
-                    <p>
-                        <a class="dropdown-item" href="/kategoria/{{ kat.id }}">{{ kat.nazwa }}</a>
-                    </p>
-                  {% endfor %}
+                <p>
+                    <a class="dropdown-item" href="/kategoria/{{ kat.id }}">{{ kat.nazwa }}</a>
+                </p>
+            {% endfor %}
               </div>
             </div>
         </div>
@@ -129,7 +129,7 @@
         </div>
     </div>
     <div class="col-12 d-md-none header">
-        <form class="form-inline my-2 my-lg-0" action="../../szukaj">
+        <form class="form-inline my-2 my-lg-0" action="szukaj">
           <div class="input-group">
               <input name="q" type="text" class="form-control" placeholder="Szukaj"/>
               <div class="input-group-append">
@@ -138,26 +138,111 @@
           </div>
         </form>
     </div>
-    <div class="container mb-5">
-        {% block suplement %}
-            {% if kategoria_suplement %}
-                <div class="row">
-                    {% for suplement in kategoria_suplement %}
-                        <div class="card col-md-4 col-sm-6 col-xs-12 bg-white text-center" style="min-height: 400px">
-                            <a href="/suplement/{{ suplement.id }}" class="text-left">
-                                <img class="card-img-top" src="{{suplement.foto.foto.url}}" style="height: 70%"><br>
-                                <div class="card-body text-center">
-                                    {{ suplement.nazwa }} - {{ suplement.producent }}<br>
-                                    {{ suplement.cena }}
-                                </div>
-                            </a>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% else %}
-            {% endif %}
-        {% endblock %}
+    <div class="col-12">
+        <br><h3>POLECANE SUPLEMENTY DLA CIEBIE</h3><br><hr>
+        {% if wegetarian %}
+            <h4>Stosując dietę wegetariańską warto zakupić</h4>
+            {% for polecane in wegetarian %}
+                    <span class="font-italic font-weight-bold">~{{ polecane }}~</span>
+            {% endfor %}
+            <hr>
+        {% endif %}
+        {% if wegan %}
+            <h4>Braki w diecie wegańskiej pomogą uzupełnić</h4>
+            {% for polecane in wegan %}
+                    <span class="font-italic font-weight-bold">~{{ polecane }}~</span>
+            {% endfor %}
+            <hr>
+        {% endif %}
+        {% if koncentracja %}
+            <h4>Na poprawę koncentracji dobrze wpłynie</h4>
+            {% for polecane in koncentracja %}
+                    <span class="font-italic font-weight-bold">~{{ polecane }}~</span>
+            {% endfor %}
+            <hr>
+        {% endif %}
+        {% if sen %}
+            <h4>O lepszy sen zadba</h4>
+            {% for polecane in sen %}
+                    <span class="font-italic font-weight-bold">~{{ polecane }}~</span>
+            {% endfor %}
+            <hr>
+        {% endif %}
+        {% if pamiec %}
+            <h4>Na problemy z pamięcią najlepszym wyborem jest</h4>
+            {% for polecane in pamiec %}
+                    <span class="font-italic font-weight-bold">~{{ polecane }}~</span>
+            {% endfor %}
+            <hr>
+        {% endif %}
+        {% if stres %}
+            <h4>W walce ze stresem pomogą</h4>
+            {% for polecane in stres %}
+                    <span class="font-italic font-weight-bold">~{{ polecane }}~</span>
+            {% endfor %}
+            <hr>
+        {% endif %}
+        {% if pobudzenie %}
+            <h4>Zastrzyk energii dostarczy</h4>
+            {% for polecane in pobudzenie %}
+                    <span class="font-italic font-weight-bold">~{{ polecane }}~</span>
+            {% endfor %}
+            <hr>
+        {% endif %}
+        {% if wzrok %}
+            <h4>Aby zadbać o swój wzrok warto zaopatrzyć się w </h4>
+            {% for polecane in wzrok %}
+                    <span class="font-italic font-weight-bold">~{{ polecane }}~</span>
+            {% endfor %}
+            <hr>
+        {% endif %}
+        {% if odpornosc %}
+            <h4>Aby poprawić odporność sięgnij po</h4>
+            {% for polecane in odpornosc %}
+                    <span class="font-italic font-weight-bold">~{{ polecane }}~</span>
+            {% endfor %}
+            <hr>
+        {% endif %}
+        {% if serce %}
+            <h4>Lepszą pracę serca zapewni</h4>
+            {% for polecane in serce %}
+                    <span class="font-italic font-weight-bold">~{{ polecane }}~</span>
+            {% endfor %}
+            <hr>
+        {% endif %}
+        {% if stawy %}
+            <h4>Zdrowsze stawy zapewnia</h4>
+            {% for polecane in stawy %}
+                    <span class="font-italic font-weight-bold">~{{ polecane }}~</span>
+            {% endfor %}
+            <hr>
+        {% endif %}
+        {% if trawienie %}
+            <h4>Na poprawę trawienia sprawdzi się</h4>
+            {% for polecane in trawienie %}
+                    <span class="font-italic font-weight-bold">~{{ polecane }}~</span>
+            {% endfor %}
+            <hr>
+        {% endif %}
+        <h4>Dla każdego w okresie jesień-zima</h4>
+        <span class="font-italic font-weight-bold">~Witamina D~</span><hr>
+        <form method="POST">
+        {% csrf_token %}
+            <h4>Dodać do koszyka polecane produkty od wybranego producenta?</h4>
+            <input type="radio" id="sfd" name="koszyk_polecane" value="sfd" required>
+            <label for="sfd">SFD</label><br>
+            <input type="radio" id="allnutrition" name="koszyk_polecane" value="allnutrition">
+            <label for="allnutrition">ALLNUTRITION</label><br>
+            <input type="radio" id="kfd" name="koszyk_polecane" value="kfd" required>
+            <label for="kfd">KFD</label><br>
+            <input type="radio" id="olimp" name="koszyk_polecane" value="olimp">
+            <label for="olimp">OLIMP</label><br>
+            <input type="radio" id="nie" name="koszyk_polecane" value="nie">
+            <label for="nie">Nie</label><br>
+            <button type="submit" class="btn btn-success">Zatwierdź</button>
+        </form>
     </div>
+    <br><br><br><br><br><br>
     <div class="row footer text-center fixed-bottom overflow-auto">
         <div class="footer col-md-4 col-sm-4 col-xs-12 text-center">
             <a href="{% url 'ankieta' %}"><span class="text-white">POMOC W DOBORZE SUPLEMENTÓW!</span></a>
