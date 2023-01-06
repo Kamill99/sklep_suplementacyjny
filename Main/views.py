@@ -229,7 +229,7 @@ def ankieta(request):
                         polecenie = str(suplement)
                         pobudzenie_suplementy.append(polecenie[21:].replace("_", " "))
         else:
-            stres_suplementy = None
+            pobudzenie_suplementy = None
         if wzrok_ankieta == "wzrok_tak":
             global wzrok_suplementy
             wzrok_suplementy = []
