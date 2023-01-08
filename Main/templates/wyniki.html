@@ -228,21 +228,23 @@
         {% endif %}
         <h4>Dla każdego w okresie jesień-zima</h4>
         <span class="font-italic font-weight-bold">~Witamina D~</span><hr>
-        <form method="POST">
-        {% csrf_token %}
-            <h4>Dodać do koszyka polecane produkty od wybranego producenta?</h4>
-            <input type="radio" id="sfd" name="koszyk_polecane" value="sfd" required>
-            <label for="sfd">SFD</label><br>
-            <input type="radio" id="allnutrition" name="koszyk_polecane" value="allnutrition">
-            <label for="allnutrition">ALLNUTRITION</label><br>
-            <input type="radio" id="kfd" name="koszyk_polecane" value="kfd" required>
-            <label for="kfd">KFD</label><br>
-            <input type="radio" id="olimp" name="koszyk_polecane" value="olimp">
-            <label for="olimp">OLIMP</label><br>
-            <input type="radio" id="nie" name="koszyk_polecane" value="nie">
-            <label for="nie">Nie</label><br>
-            <button type="submit" class="btn btn-success">Zatwierdź</button>
-        </form>
+        {% if not request.user.is_anonymous %}
+            <form method="POST">
+            {% csrf_token %}
+                <h4>Dodać do koszyka polecane produkty od wybranego producenta?</h4>
+                <input type="radio" id="sfd" name="koszyk_polecane" value="sfd" required>
+                <label for="sfd">SFD</label><br>
+                <input type="radio" id="allnutrition" name="koszyk_polecane" value="allnutrition">
+                <label for="allnutrition">ALLNUTRITION</label><br>
+                <input type="radio" id="kfd" name="koszyk_polecane" value="kfd" required>
+                <label for="kfd">KFD</label><br>
+                <input type="radio" id="olimp" name="koszyk_polecane" value="olimp">
+                <label for="olimp">OLIMP</label><br>
+                <input type="radio" id="nie" name="koszyk_polecane" value="nie">
+                <label for="nie">Nie</label><br>
+                <button type="submit" class="btn btn-success">Zatwierdź</button>
+            </form>
+        {% endif %}
     </div>
     <br><br><br><br><br><br>
     <div class="row footer text-center fixed-bottom">

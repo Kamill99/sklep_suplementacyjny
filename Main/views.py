@@ -14,7 +14,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
 from owlready2 import *
-from django.views.decorators.cache import cache_control
 
 quantity = tel_number = order_id = delivery_cost = 0
 name = surname = city = post = delivery = payment = discount_code = ""
@@ -517,7 +516,6 @@ def wyniki(request):
             'wzrok': wzrok_suplementy, 'odpornosc': odpornosc_suplementy, 'serce': serce_suplementy,
             'stawy': stawy_suplementy, 'trawienie': trawienie_suplementy}
     return render(request, 'wyniki.html', dane)
-
 
 
 def kategoria(request, id):
