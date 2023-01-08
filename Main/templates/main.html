@@ -16,160 +16,200 @@
 <body>
     <div class="row text-white m-0">
         <div class="col-1 d-none d-md-block header">
-            <a href="{% url 'index' %}"><img src="{{logo.foto.url}}" style="height: 50px"><br></a>
+            <a href="{% url 'index' %}"><img src="{{logo.foto.url}}" style="height: 5vh"><br></a>
         </div>
         <div class="col-3 d-none d-md-block header">
             <form class="form-inline my-2 my-lg-0" action="szukaj">
-                  <div class="input-group">
-                      <input name="q" type="text" class="form-control" placeholder="Szukaj"/>
-                      <div class="input-group-append">
-                        <button class="btn btn-dark" type="submit" id="button-addon2">Szukaj</button>
+                  <div class="input-group p-0">
+                      <input name="q" type="text" class="form-control" placeholder="Szukaj" style="font-size: 1.5vh;"/>
+                      <div class="input-group-append p-0">
+                        <button class="btn btn-dark bi bi-search" type="submit" id="button-addon2" style="font-size: 1.5vh"></button>
                       </div>
                   </div>
-                </form>
+            </form>
         </div>
         <div class="col-2 d-none d-md-block header">
             <div class="dropdown">
-              <button class="btn dropdown-toggle kategorie text-white font-weight-bold" type="button" id="kategorie" data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="btn dropdown-toggle kategorie text-white font-weight-bold" type="button" id="kategorie"
+                      style="font-size: 2vh" data-bs-toggle="dropdown" aria-expanded="false">
                   Kategorie
               </button>
               <div class="dropdown-menu" aria-labelledby="kategorie">
                   {% for kat in kategorie %}
-                <p>
-                    <a class="dropdown-item" href="/kategoria/{{ kat.id }}">{{ kat.nazwa }}</a>
-                </p>
-            {% endfor %}
+                    <p>
+                        <a class="dropdown-item" href="/kategoria/{{ kat.id }}" style="font-size: 3vh">{{ kat.nazwa }}</a>
+                    </p>
+                  {% endfor %}
               </div>
             </div>
         </div>
-        <div class="col-2 d-none d-md-block header align-items-center">
+        <div class="col-3 d-none d-md-block header align-items-center">
             <div class="dropdown">
-              <button class="btn dropdown-toggle text-white font-weight-bold" type="button" id="producenci" data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="btn dropdown-toggle text-white font-weight-bold" type="button" id="producenci"
+                      style="font-size: 2vh" data-bs-toggle="dropdown" aria-expanded="false">
                 Producenci
               </button>
               <div class="dropdown-menu" aria-labelledby="producenci">
-                  {% for producent in producenci %}
-                <p>
-                    <a class="dropdown-item" href="/producent/{{ producent.id }}">{{ producent.nazwa }}</a>
-                </p>
-            {% endfor %}
+                    {% for producent in producenci %}
+                        <p>
+                            <a class="dropdown-item" href="/producent/{{ producent.id }}" style="font-size: 3vh">{{ producent.nazwa }}</a>
+                        </p>
+                    {% endfor %}
               </div>
             </div>
         </div>
-        {% if not request.user.is_anonymous %}
         <div class="col-1 d-none d-md-block header">
-            <h1><a href="{% url 'koszyk' %}"><span class="bi-basket text-white"></span></a></h1>
+            {% if not request.user.is_anonymous %}
+                <h1 style="font-size: 4vh"><a href="{% url 'koszyk' %}"><span class="bi-basket text-white"></span></a></h1>
+            {% endif %}
         </div>
-        {% else %}
-            <div class="col-1 d-none d-md-block header"></div>
-        {% endif %}
         <div class="col-1 d-none d-md-block header text-right">
-            <h4>
-                {% if not request.user.is_anonymous %}
-                    <h5><a href="{% url 'profil' %}"><span class="bi-person text-white">{{ request.user }}</span></a></h5>
-                {% endif %}
-            </h4>
+            {% if not request.user.is_anonymous %}
+                <h5 style="font-size: 4vh"><a href="{% url 'profil' %}"><span class="bi-person text-white"></span></a></h5>
+            {% endif %}
         </div>
-        <div class="col-2 d-none d-md-block header">
+        <div class="col-1 d-none d-md-block header">
                 {% if not request.user.is_anonymous %}
-                    <h4><button class="btn-success btn-sm"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button></h4>
+                    <a class="text-white" href="{% url 'wylogowanie' %}"><button class="btn-danger btn-sm bi bi-box-arrow-right" style="font-size: 1.5vh"></button></a>
                 {% else %}
-                    <h5><button class="btn-success btn-sm"><a class="text-white text-decoration-none" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h5>
+                    <h5><button class="btn-success btn-sm" style="font-size: 1.5vh"><a class="text-white text-decoration-none" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h5>
                 {% endif %}
         </div>
     </div>
-    <div class="row text-white m-0">
-        <div class="col-1 d-md-none header">
-            <a href="{% url 'index' %}"><img src="{{logo.foto.url}}" style="height: 40px"><br></a>
+    <div class="row text-white m-0" style="height: 15vh">
+        <div class="col-2 d-md-none header p-0">
+            <a href="{% url 'index' %}"><img src="{{logo.foto.url}}" style="height: 10vh"><br></a>
         </div>
-        {% if not request.user.is_anonymous %}
+        <div class="col-4 d-md-none header">
+            {% if not request.user.is_anonymous %}
+                <h3 style="font-size: 10vh"><a href="{% url 'koszyk' %}"><span class="bi-basket text-white"></span></a></h3>
+            {% endif %}
+        </div>
         <div class="col-2 d-md-none header">
-            <h3><a href="{% url 'koszyk' %}"><span class="bi-basket text-white"></span></a></h3>
+            {% if not request.user.is_anonymous %}
+                <a href="{% url 'profil' %}"><h4 class="bi-person text-white" style="font-size: 10vh"></h4></a>
+            {% endif %}
         </div>
-        {% else %}
-        <div class="col-2 d-md-none header"></div>
-        {% endif %}
+        <div class="col-4 d-md-none header">
+            {% if request.user.is_anonymous %}
+                <a class="text-white" href="{% url 'wylogowanie' %}"><button class="btn-success btn-sm bi bi-door-open" style="font-size: 2vh"></button></a>
+            {% else %}
+                <a class="text-white" href="{% url 'wylogowanie' %}"><button class="btn-danger btn btn-sm bi bi-box-arrow-right" style="font-size: 3vh"></button></a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row m-0">
+        <div class="col-6 d-md-none header">
+            <form class="form-inline my-2 my-lg-0" action="szukaj">
+                <div class="input-group">
+                    <input name="q" type="text" class="form-control" placeholder="Szukaj" style="font-size: 3vh"/>
+                    <div class="input-group-append">
+                        <button class="btn btn-dark bi bi-search" type="submit" id="button-addon2" style="font-size: 3vh"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
         <div class="col-3 d-md-none header">
             <div class="dropdown">
-              <button class="btn btn-sm dropdown-toggle kategorie text-white font-weight-bold" type="button" id="kategorie" data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="btn btn-sm dropdown-toggle kategorie text-white font-weight-bold p-0" type="button"
+                      style="font-size: 3vh" id="kategorie" data-bs-toggle="dropdown" aria-expanded="false">
                 Kategorie
               </button>
               <div class="dropdown-menu" aria-labelledby="kategorie">
                   {% for kat in kategorie %}
-                <p>
-                    <a class="dropdown-item" href="/kategoria/{{ kat.id }}">{{ kat.nazwa }}</a>
-                </p>
-            {% endfor %}
+                    <p>
+                        <a class="dropdown-item" href="/kategoria/{{ kat.id }}" style="height: 2vh">{{ kat.nazwa }}</a>
+                    </p>
+                {% endfor %}
               </div>
             </div>
         </div>
         <div class="col-3 d-md-none header">
             <div class="dropdown align-items-center">
-              <button class="btn btn-sm dropdown-toggle text-white font-weight-bold" type="button" id="producenci" data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="btn btn-sm dropdown-toggle text-white font-weight-bold" type="button" id="producenci"
+                      style="font-size: 3vh" data-bs-toggle="dropdown" aria-expanded="false">
                 Producenci
               </button>
               <div class="dropdown-menu" aria-labelledby="producenci">
                   {% for producent in producenci %}
-                <p>
-                    <a class="dropdown-item" href="/producent/{{ producent.id }}">{{ producent.nazwa }}</a>
-                </p>
-            {% endfor %}
+                    <p>
+                        <a class="dropdown-item" href="/producent/{{ producent.id }}" style="font-size: 2vh">{{ producent.nazwa }}</a>
+                    </p>
+                    {% endfor %}
               </div>
             </div>
         </div>
-        <div class="col-3 d-md-none header">
-            <h4>
-                {% if request.user.is_anonymous %}
-                    <button class="btn-success btn-sm"><a class="text-white" href="{% url 'wylogowanie' %}">Zaloguj</a></button>
-                {% else %}
-                    <a href="{% url 'profil' %}"><span class="bi-person text-white"></span></a>
-                    <button class="btn-success btn-sm"><a class="text-white" href="{% url 'wylogowanie' %}">Wyloguj</a></button>
-                {% endif %}
-            </h4>
-        </div>
-    </div>
-    <div class="col-12 d-md-none header">
-        <form class="form-inline my-2 my-lg-0" action="szukaj">
-          <div class="input-group">
-              <input name="q" type="text" class="form-control" placeholder="Szukaj"/>
-              <div class="input-group-append">
-                <button class="btn btn-dark" type="submit" id="button-addon2">Szukaj</button>
-              </div>
-          </div>
-        </form>
     </div>
     <div class="col-12">
-        <br><h3>Witamy na stronie sklepu!</h3><br>
-        <h5 class="font-italic">Zapraszamy do uzupełnienia ankiety, która pomoże w doborze suplementów
-            (lewy dolny róg strony)</h5><br>
-        <br><h4>Najpopularniejsze produkty</h4><br>
-        <div class="row">
-            {% for suplement in popularne_suplementy %}
-                <div class="card col-md-4 col-sm-12 col-xs-12 bg-white text-center" style="min-height: 400px">
-                    <a href="/suplement/{{ suplement.id }}" class="text-left">
-                        <img class="card-img-top" src="{{suplement.foto.foto.url}}" style="height: 70%"><br>
-                        <div class="card-body text-center">
-                            {{ suplement.nazwa }} - {{ suplement.producent }}<br>
-                            {{ suplement.cena }}
+        <br><h3 style="font-size: 3vh">Witamy na stronie sklepu!</h3><br>
+        <h5 class="font-italic" style="font-size: 3vh">
+            Zapraszamy do uzupełnienia ankiety, która pomoże w doborze suplementów (link na dole strony)<br><br>
+        </h5>
+        <br><h4 style="font-size: 3vh">Najpopularniejsze produkty</h4><br>
+        <div class="row p-0">
+            <div class="col-1"></div>
+                <div class="col-10 text-center">
+                    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                {% if witamina_c %}
+                                    <a href="/suplement/{{ witamina_c.id }}" class="text-left">
+                                        <img class="card-img-top" src="{{witamina_c.foto.foto.url}}" style="height: 43vh; width: 30vw"><br>
+                                        <div class="card-body text-center">
+                                            <h6 style="font-size: 2vw">
+                                                {{ witamina_c.nazwa }} - {{ witamina_c.producent }}<br>
+                                                {{ witamina_c.cena }}
+                                            </h6>
+                                        </div>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        <div class="carousel-item">
+                        {% if witamina_d %}
+                            <a href="/suplement/{{ witamina_d.id }}" class="text-left">
+                                <img class="card-img-top" src="{{witamina_d.foto.foto.url}}" style="height: 50vh; width: 30vw"><br>
+                                <div class="card-body text-center">
+                                    <h6 style="font-size: 2vw">
+                                        {{ witamina_d.nazwa }} - {{ witamina_d.producent }}<br>
+                                        {{ witamina_d.cena }}
+                                    </h6>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
+                        {% endif %}
+                        {% if zelazo %}
+                            <div class="carousel-item">
+                            <a href="/suplement/{{ zelazo.id }}" class="text-left">
+                                <img class="card-img-top" src="{{zelazo.foto.foto.url}}" style="height: 50vh; width: 40vw"><br>
+                                <div class="card-body text-center">
+                                    <h6 style="font-size: 2vw">
+                                        {{ zelazo.nazwa }} - {{ zelazo.producent }}<br>
+                                        {{ zelazo.cena }}
+                                    </h6>
+                                </div>
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+            </div>
     </div>
-    <br><br><br><br><br><br>
-    <div class="row footer text-center fixed-bottom overflow-auto">
-        <div class="footer col-md-4 col-sm-4 col-xs-12 text-center">
-            <a href="{% url 'ankieta' %}"><span class="text-white">POMOC W DOBORZE SUPLEMENTÓW!</span></a>
-        </div>
-        <div class="footer col-md-4 col-sm-4 col-xs-12 text-center">
-            Sklep Suplementacyjny<br>
-            ul. Suplementacyjna 2/3 Rzeszów
-        </div>
-        <div class="footer col-md-4 col-sm-4 col-xs-12 text-center">
-            <span class="bi-envelope text-white"> sklepsuplementacyjny@gmail.com</span><br>
-            <span class="bi-telephone"> 121-212-121</span>
+    <br><br><br><br><br><br><br><br>
+    <div class="row footer text-center fixed-bottom">
+        <div class="col-12 footer text-center p-0" style="height: 5vh;">
+            <h5 style="font-size: 2vh;"><a href="{% url 'ankieta' %}" style="color:white;">->Ankieta<-</a>
+                <a href="{% url 'kontakt' %}" style="color:white;">->Kontakt<-</a></h5>
         </div>
     </div>
 </body>
 </html>
+{#        <div class="footer col-md-4 col-sm-4 col-xs-12 text-center">#}
+{#            <a href="{% url 'ankieta' %}"><span class="text-white">POMOC W DOBORZE SUPLEMENTÓW!</span></a>#}
+{#        </div>#}
+{#        <div class="footer col-md-4 col-sm-4 col-xs-12 text-center">#}
+{#            Sklep Suplementacyjny<br>#}
+{#            ul. Suplementacyjna 2/3 Rzeszów#}
+{#        </div>#}
+{#        <div class="footer col-md-4 col-sm-4 col-xs-12 text-center">#}
+{#            <span class="bi-envelope text-white"> sklepsuplementacyjny@gmail.com</span><br>#}
+{#            <span class="bi-telephone"> 121-212-121</span>#}
+{#        </div>#}

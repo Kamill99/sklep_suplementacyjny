@@ -1,5 +1,6 @@
 import json
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views import generic
@@ -13,6 +14,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
 from owlready2 import *
+from django.views.decorators.cache import cache_control
 
 quantity = tel_number = order_id = delivery_cost = 0
 name = surname = city = post = delivery = payment = discount_code = ""
@@ -130,11 +132,21 @@ trawienie = "untitled-ontology-15.przeznaczenie.some(untitled-ontology-15.Trawie
 def index(request):
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
-    popularne_suplementy = [Supplement.objects.get(id=1), Supplement.objects.get(id=37), Supplement.objects.get(id=33)]
+    witamina_c = Supplement.objects.get(id=1)
+    witamina_d = Supplement.objects.get(id=37)
+    zelazo = Supplement.objects.get(id=33)
     logo = Foto.objects.get(nazwa="Logo")
     dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo,
-            'popularne_suplementy': popularne_suplementy}
+            'witamina_c': witamina_c, 'witamina_d': witamina_d, 'zelazo': zelazo}
     return render(request, 'main.html', dane)
+
+
+def kontakt(request):
+    kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
+    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    return render(request, 'kontakt.html', dane)
 
 
 def ankieta(request):
@@ -544,6 +556,7 @@ def suplement(request, id):
     return render(request, 'suplement.html', dane)
 
 
+@login_required(login_url='/login/')
 def profil(request):
     nazwa = User.username
     imie = User.first_name
@@ -612,10 +625,12 @@ class PasswordsChangeView(PasswordChangeView):
     success_url = reverse_lazy('zmienione_haslo')
 
 
+@login_required(login_url='/login/')
 def zmienione_haslo(request):
     return render(request, 'zmienione_haslo.html', {})
 
 
+@login_required(login_url='/login/')
 def koszyk(request):
     cart = None
     cartitems = []
@@ -630,6 +645,7 @@ def koszyk(request):
     return render(request, "koszyk.html", context)
 
 
+@login_required(login_url='/login/')
 def dodanie_do_koszyka(request):
     data = json.loads(request.body)
     supplement_id = data["id"]
@@ -645,17 +661,13 @@ def dodanie_do_koszyka(request):
             if ilosc:
                 cartitem.ilosc += int(ilosc)
                 cartitem.save()
-                # messages.success(request, 'Produkt dodany do koszyka')
             else:
                 cartitem.ilosc += 1
                 cartitem.save()
-                # messages.success(request, 'Produkt dodany do koszyka')
-        else:
-            pass
-            # messages.warning(request, 'Produkt jest już w koszyku')
     return JsonResponse("Dodawanie do koszyka", safe=False)
 
 
+@login_required(login_url='/login/')
 def aktualizacja_koszyka_plus(request):
     data = json.loads(request.body)
     cart = Koszyk.objects.get(klient=request.user, zamowione=False)
@@ -665,6 +677,7 @@ def aktualizacja_koszyka_plus(request):
     return JsonResponse("Edycja koszyka", safe=False)
 
 
+@login_required(login_url='/login/')
 def aktualizacja_koszyka_minus(request):
     data = json.loads(request.body)
     cart = Koszyk.objects.get(klient=request.user, zamowione=False)
@@ -675,6 +688,7 @@ def aktualizacja_koszyka_minus(request):
     return JsonResponse("Edycja koszyka", safe=False)
 
 
+@login_required(login_url='/login/')
 def usuwanie_elementu(request):
     data = json.loads(request.body)
     cart = Koszyk.objects.get(klient=request.user, zamowione=False)
@@ -685,6 +699,7 @@ def usuwanie_elementu(request):
     return JsonResponse("Edycja koszyka", safe=False)
 
 
+@login_required(login_url='/login/')
 def pusty_koszyk(request):
     data = json.loads(request.body)
     cart = Koszyk.objects.get(klient=request.user, zamowione=False)
@@ -710,6 +725,7 @@ def szuakj(request):
     return render(request, 'szukaj.html', dane)
 
 
+@login_required(login_url='/login/')
 def numer_telefonu(request):
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
@@ -718,6 +734,7 @@ def numer_telefonu(request):
     return render(request, 'numer_telefonu.html', dane)
 
 
+@login_required(login_url='/login/')
 def zamowienie(request):
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
@@ -794,6 +811,7 @@ def zamowienie(request):
     return render(request, 'zamowienie.html', dane)
 
 
+@login_required(login_url='/login/')
 def rozliczenie(request):
     global order_id
     kategorie = Kategoria.objects.all()
@@ -811,6 +829,7 @@ def rozliczenie(request):
     return render(request, 'rozliczenie.html', context)
 
 
+@login_required(login_url='/login/')
 def udane_rozliczenie(request):
     global order_id
     kategorie = Kategoria.objects.all()
@@ -854,6 +873,7 @@ def udane_rozliczenie(request):
     return render(request, 'udane_rozliczenie.html', context)
 
 
+@login_required(login_url='/login/')
 def podsumowanie(request):
     global order_id
     kategorie = Kategoria.objects.all()
@@ -876,6 +896,7 @@ def podsumowanie(request):
     return render(request, 'podsumowanie.html', context)
 
 
+@login_required(login_url='/login/')
 def historia_zamowien(request):
     orders = Zamowienie.objects.all()
     user_orders = []
@@ -889,6 +910,7 @@ def historia_zamowien(request):
     return render(request, 'historia_zamowien.html', context)
 
 
+@login_required(login_url='/login/')
 def historia_zamowien_id(request, id):
     order = Zamowienie.objects.get(pk=id)
     cart = order.koszyk

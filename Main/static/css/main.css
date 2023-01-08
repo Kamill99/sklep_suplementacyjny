@@ -27,4 +27,8 @@
             background-color: yellowgreen;
             color: white;
             font-weight: bold;
+            height: 3vh;
+        }
+        .carousel-inner {
+            margin: auto;
         }
