@@ -1,10 +1,159 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
+    {% load static %}
+    <link rel="shortcut icon" href="../../media/images/Logo.png">
+    <link rel="stylesheet" href="../../static/css/main.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Sklep z suplementami</title>
 </head>
 <body>
-
+    <div class="row text-white m-0">
+        <div class="col-1 d-none d-md-block header">
+            <a href="{% url 'index' %}"><img src="{{logo.foto.url}}" style="height: 5vh"><br></a>
+        </div>
+        <div class="col-3 d-none d-md-block header">
+            <form class="form-inline my-2 my-lg-0" action="szukaj">
+                  <div class="input-group p-0">
+                      <input name="q" type="text" class="form-control" placeholder="Szukaj" style="font-size: 1.5vh;"/>
+                      <div class="input-group-append p-0">
+                        <button class="btn btn-dark bi bi-search" type="submit" id="button-addon2" style="font-size: 1.5vh"></button>
+                      </div>
+                  </div>
+            </form>
+        </div>
+        <div class="col-2 d-none d-md-block header">
+            <div class="dropdown">
+              <button class="btn dropdown-toggle kategorie text-white font-weight-bold" type="button" id="kategorie"
+                      style="font-size: 2vh" data-bs-toggle="dropdown" aria-expanded="false">
+                  Kategorie
+              </button>
+              <div class="dropdown-menu" aria-labelledby="kategorie">
+                  {% for kat in kategorie %}
+                    <p>
+                        <a class="dropdown-item" href="/kategoria/{{ kat.id }}" style="font-size: 3vh">{{ kat.nazwa }}</a>
+                    </p>
+                  {% endfor %}
+              </div>
+            </div>
+        </div>
+        <div class="col-3 d-none d-md-block header align-items-center">
+            <div class="dropdown">
+              <button class="btn dropdown-toggle text-white font-weight-bold" type="button" id="producenci"
+                      style="font-size: 2vh" data-bs-toggle="dropdown" aria-expanded="false">
+                Producenci
+              </button>
+              <div class="dropdown-menu" aria-labelledby="producenci">
+                    {% for producent in producenci %}
+                        <p>
+                            <a class="dropdown-item" href="/producent/{{ producent.id }}" style="font-size: 3vh">{{ producent.nazwa }}</a>
+                        </p>
+                    {% endfor %}
+              </div>
+            </div>
+        </div>
+        <div class="col-1 d-none d-md-block header">
+            {% if not request.user.is_anonymous %}
+                <h1 style="font-size: 4vh"><a href="{% url 'koszyk' %}"><span class="bi-basket text-white"></span></a></h1>
+            {% endif %}
+        </div>
+        <div class="col-1 d-none d-md-block header text-right">
+            {% if not request.user.is_anonymous %}
+                <h5 style="font-size: 4vh"><a href="{% url 'profil' %}"><span class="bi-person text-white"></span></a></h5>
+            {% endif %}
+        </div>
+        <div class="col-1 d-none d-md-block header">
+                {% if not request.user.is_anonymous %}
+                    <a class="text-white" href="{% url 'wylogowanie' %}"><button class="btn-danger btn-sm bi bi-box-arrow-right" style="font-size: 1.5vh"></button></a>
+                {% else %}
+                    <h5><button class="btn-success btn-sm" style="font-size: 1.5vh"><a class="text-white text-decoration-none" href="{% url 'wylogowanie' %}">Zaloguj</a></button></h5>
+                {% endif %}
+        </div>
+    </div>
+    <div class="row text-white m-0" style="height: 15vh">
+        <div class="col-2 d-md-none header p-0">
+            <a href="{% url 'index' %}"><img src="{{logo.foto.url}}" style="height: 10vh"><br></a>
+        </div>
+        <div class="col-4 d-md-none header">
+            {% if not request.user.is_anonymous %}
+                <h3 style="font-size: 10vh"><a href="{% url 'koszyk' %}"><span class="bi-basket text-white"></span></a></h3>
+            {% endif %}
+        </div>
+        <div class="col-2 d-md-none header">
+            {% if not request.user.is_anonymous %}
+                <a href="{% url 'profil' %}"><h4 class="bi-person text-white" style="font-size: 10vh"></h4></a>
+            {% endif %}
+        </div>
+        <div class="col-4 d-md-none header">
+            {% if request.user.is_anonymous %}
+                <a class="text-white" href="{% url 'wylogowanie' %}"><button class="btn-success btn-sm bi bi-door-open" style="font-size: 2vh"></button></a>
+            {% else %}
+                <a class="text-white" href="{% url 'wylogowanie' %}"><button class="btn-danger btn btn-sm bi bi-box-arrow-right" style="font-size: 3vh"></button></a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row m-0">
+        <div class="col-6 d-md-none header">
+            <form class="form-inline my-2 my-lg-0" action="szukaj">
+                <div class="input-group">
+                    <input name="q" type="text" class="form-control" placeholder="Szukaj" style="font-size: 3vh"/>
+                    <div class="input-group-append">
+                        <button class="btn btn-dark bi bi-search" type="submit" id="button-addon2" style="font-size: 3vh"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-3 d-md-none header">
+            <div class="dropdown">
+              <button class="btn btn-sm dropdown-toggle kategorie text-white font-weight-bold p-0" type="button"
+                      style="font-size: 3vh" id="kategorie" data-bs-toggle="dropdown" aria-expanded="false">
+                Kategorie
+              </button>
+              <div class="dropdown-menu" aria-labelledby="kategorie">
+                  {% for kat in kategorie %}
+                    <p>
+                        <a class="dropdown-item" href="/kategoria/{{ kat.id }}" style="height: 2vh">{{ kat.nazwa }}</a>
+                    </p>
+                {% endfor %}
+              </div>
+            </div>
+        </div>
+        <div class="col-3 d-md-none header">
+            <div class="dropdown align-items-center">
+              <button class="btn btn-sm dropdown-toggle text-white font-weight-bold" type="button" id="producenci"
+                      style="font-size: 3vh" data-bs-toggle="dropdown" aria-expanded="false">
+                Producenci
+              </button>
+              <div class="dropdown-menu" aria-labelledby="producenci">
+                  {% for producent in producenci %}
+                    <p>
+                        <a class="dropdown-item" href="/producent/{{ producent.id }}" style="font-size: 2vh">{{ producent.nazwa }}</a>
+                    </p>
+                    {% endfor %}
+              </div>
+            </div>
+        </div>
+    </div>
+    <h2 class="text-center mt-2">SKLEP SUPLEMENTACYJNY</h2><br>
+    <div class="text-center">
+        <p class="bi bi-building"> ul. Suplementacyjna 2/3 Rzeszów</p>
+        <p class="bi-envelope"> sklepsuplementacyjny@gmail.com</p>
+        <p class="bi-telephone"> 121-212-121</p>
+        <button class="btn btn-info">
+            <a class="text-white" href="{% url 'index' %}">Strona główna</a>
+        </button>
+    </div>
+    <div class="row footer text-center fixed-bottom">
+        <div class="col-12 footer text-center p-0" style="height: 5vh;">
+            <h5 style="font-size: 2vh;"><a href="{% url 'ankieta' %}" style="color:white;">->Ankieta<-</a>
+            <a href="{% url 'kontakt' %}" style="color:white;">->Kontakt<-</a></h5>
+        </div>
+    </div>
 </body>
 </html>
