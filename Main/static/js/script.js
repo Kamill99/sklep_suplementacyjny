@@ -22,8 +22,8 @@ btns.forEach(btn=>{
 })
 
 function addToCart(e){
+    alert("Dodano produkt do koszyka")
     let suplement_id = e.target.value
-    console.log(e.target)
     let url = "/dodanie_do_koszyka/"
     let data = {id:suplement_id}
     fetch(url, {
@@ -39,4 +39,3 @@ function addToCart(e){
             console.log(error)
         })
 }
-

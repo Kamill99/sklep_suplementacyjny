@@ -77,7 +77,7 @@
                 {% endif %}
         </div>
     </div>
-    <div class="row text-white m-0" style="height: 15vh">
+    <div class="row text-white m-0">
         <div class="col-2 d-md-none header p-0">
             <a href="{% url 'index' %}"><img src="{{logo.foto.url}}" style="height: 10vh"><br></a>
         </div>
@@ -166,7 +166,11 @@
                             <button class="btn btn-success plus" value="{{ suplement.id }}">+</button></p>
                         </div>
                         <div class="col-3 font-weight-bold"><p>{{suplement.produkt.cena}} - {{ suplement.kwota }} zł</p></div>
-                        <div class="col-2"><p><button class="btn btn-danger bi bi-trash-fill trash" value="{{ suplement.id }}"></button></p></div>
+                        <div class="col-2">
+                            <p>
+                                <button class="btn btn-danger bi bi-trash-fill trash" value="{{ suplement.id }}"></button>
+                            </p>
+                        </div>
                     </div><hr>
             {% endfor %}
         </div>
@@ -183,6 +187,7 @@
         </div>
     {% endif %}
     </div>
+
     <script>
         function getCookie(name) {
             let cookieValue = null;
@@ -266,28 +271,33 @@
         }
 
         function trashSupplement(e){
-            let suplement_id = e.target.value
-            console.log(e.target)
-            let url = "/usuwanie_elementu/"
-            let data = {id:suplement_id}
-            fetch(url, {
-                method: "POST",
-                headers: {"Content-Type":"application/json", 'X-CSRFToken': csrftoken},
-                body: JSON.stringify(data)
-            })
-                .then(res=>res.json())
-                .then(data=>{
-                    console.log(data)
+            let answer = window.confirm("Usunąć wybrany suplement z koszyka?");
+            if (answer) {
+                let suplement_id = e.target.value
+                console.log(e.target)
+                let url = "/usuwanie_elementu/"
+                let data = {id:suplement_id}
+                fetch(url, {
+                    method: "POST",
+                    headers: {"Content-Type":"application/json", 'X-CSRFToken': csrftoken},
+                    body: JSON.stringify(data)
                 })
-                .catch(error=>{
-                    console.log(error)
-                })
-            location.reload()
+                    .then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                    })
+                    .catch(error=>{
+                        console.log(error)
+                    })
+                location.reload()
+            }
         }
 
         function emptyCart(e){
-            let suplement_id = e.target.value
-            console.log(e.target)
+            let answer = window.confirm("Wyczyścić cały koszyk?");
+            if (answer) {
+                let suplement_id = e.target.value
+                console.log(e.target)
             let url = "/pusty_koszyk/"
             let data = {id:suplement_id}
             fetch(url, {
@@ -303,6 +313,7 @@
                     console.log(error)
                 })
             location.reload()
+            }
         }
     </script>
     <div class="row footer text-center fixed-bottom">
