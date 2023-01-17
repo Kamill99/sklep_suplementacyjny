@@ -713,7 +713,7 @@ def brak_koszyka(request):
     return render(request, 'brak_koszyka.html', dane)
 
 
-def szuakj(request):
+def szukaj(request):
     q = request.GET['q']
     suplementy = Supplement.objects.filter(nazwa__icontains=q)
     kategorie = Kategoria.objects.all()

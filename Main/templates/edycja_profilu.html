@@ -14,16 +14,21 @@
     <title>Sklep z suplementami</title>
 </head>
 <body>
-        <div class="col-12 container- bg-transparent">
-            <br><h3 class="font-italic">Edycja danych użytkownika</h3><br><hr>
-            <div class="form-group">
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button class="btn btn-info">Zmień dane</button>
-                </form>
-                <br><button class="btn btn-warning"><a class="text-white" href="{% url 'profil' %}">Cofnij</a></button>
-            </div>
+        <div class="col-12 container- bg-transparent text-center">
+            <div class="row m-0">
+                <div class="col-4"></div>
+                    <div class="col-4 text-center">
+                        <br><h3 class="font-italic">Edycja danych użytkownika</h3><br><hr>
+                        <div class="form-group">
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button class="btn btn-info">Zmień dane</button>
+                            </form>
+                            <br><button class="btn btn-warning"><a class="text-white" href="{% url 'profil' %}">Cofnij</a></button>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 </body>
