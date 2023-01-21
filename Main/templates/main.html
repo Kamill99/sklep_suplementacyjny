@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <title>Sklep z suplementami</title>
 </head>
-<body>
+<body style="background-color: #d6d18d">
     <div class="row text-white m-0">
         <div class="col-1 d-none d-md-block header">
             <a href="{% url 'index' %}"><img src="{{logo.foto.url}}" style="height: 5vh"><br></a>
@@ -60,7 +60,15 @@
         </div>
         <div class="col-1 d-none d-md-block header">
             {% if not request.user.is_anonymous %}
-                <h1 style="font-size: 4vh"><a href="{% url 'koszyk' %}"><span class="bi-basket text-white"></span></a></h1>
+                <h1 style="font-size: 4vh">
+                    <a class="text-decoration-none" href="{% url 'koszyk' %}">
+                        <span class="bi-basket text-white">
+                            {% if ikona > 0 %}
+                                <span class="badge badge-pill badge-light" style="font-size: 1.5vh">{{ ikona }}</span>
+                            {% endif %}
+                        </span>
+                    </a>
+                </h1>
             {% endif %}
         </div>
         <div class="col-1 d-none d-md-block header text-right">
@@ -82,7 +90,15 @@
         </div>
         <div class="col-4 d-md-none header">
             {% if not request.user.is_anonymous %}
-                <h3 style="font-size: 10vh"><a href="{% url 'koszyk' %}"><span class="bi-basket text-white"></span></a></h3>
+                <h3 style="font-size: 10vh">
+                    <a class="text-decoration-none" href="{% url 'koszyk' %}">
+                        <span class="bi-basket text-white">
+                        {% if ikona > 0 %}
+                            <span class="badge badge-light" style="font-size: 2.5vh">{{ ikona }}</span>
+                        {% endif %}
+                        </span>
+                    </a>
+                </h3>
             {% endif %}
         </div>
         <div class="col-2 d-md-none header">
@@ -140,38 +156,38 @@
             </div>
         </div>
     </div>
-    <div class="col-12">
-        <br><h3 style="font-size: 3vh"><b>WITAMY NA STRONIE SKLEPU!</b></h3><br><hr>
+    <div class="col-12 text-white" style="background-color: #d6d18d">
+        <br><h3 style="font-size: 3vh"><b>WITAMY NA STRONIE SKLEPU!</b></h3><hr>
         <h5 style="font-size: 3vh">
-            Zapraszamy do uzupełnienia ankiety, która pomoże w doborze suplementów (link na dole strony)<br><hr><br>
+            Zapraszamy do uzupełnienia ankiety, która pomoże w doborze suplementów (link na dole strony)<hr>
         </h5>
-        <br><h4 style="font-size: 3vh">NAJPOPULARNIEJSZE PRODUKTY</h4><br><hr>
-        <div class="row p-0">
-            <div class="col-1"></div>
-                <div class="col-10 text-center">
+        <br><h4 style="font-size: 3vh">NAJPOPULARNIEJSZE PRODUKTY</h4><hr>
+        <div class="row p-0" style="background-color: #d6d18d">
+            <div class="col-3" style="background-color: #d6d18d"></div>
+                <div class="col-6 text-center p-0" style="background-color: #d6d18d">
                     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                {% if witamina_c %}
-                                    <a href="/suplement/{{ witamina_c.id }}" class="text-left">
-                                        <img class="card-img-top" src="{{witamina_c.foto.foto.url}}" style="height: 43vh; width: 30vw"><br>
+                                {% if omega %}
+                                    <a href="/suplement/{{ omega.id }}" class="text-left text-white">
+                                        <img class="card-img-top" src="{{omega.foto.foto.url}}" style="height: 43vh; width: 30vw"><br>
                                         <div class="card-body text-center">
                                             <h6 style="font-size: 2vw">
-                                                {{ witamina_c.nazwa }} - {{ witamina_c.producent }}<br>
-                                                {{ witamina_c.cena }}
+                                                {{ omega.nazwa }} - {{ omega.producent }}<br>
+                                                {{ omega.cena }}
                                             </h6>
                                         </div>
                                     </a>
                                 {% endif %}
                             </div>
                         <div class="carousel-item">
-                        {% if witamina_d %}
-                            <a href="/suplement/{{ witamina_d.id }}" class="text-left">
-                                <img class="card-img-top" src="{{witamina_d.foto.foto.url}}" style="height: 50vh; width: 30vw"><br>
+                        {% if witamina_c %}
+                            <a href="/suplement/{{ witamina_c.id }}" class="text-left text-white">
+                                <img class="card-img-top" src="{{witamina_c.foto.foto.url}}" style="height: 50vh; width: 30vw"><br>
                                 <div class="card-body text-center">
                                     <h6 style="font-size: 2vw">
-                                        {{ witamina_d.nazwa }} - {{ witamina_d.producent }}<br>
-                                        {{ witamina_d.cena }}
+                                        {{ witamina_c.nazwa }} - {{ witamina_c.producent }}<br>
+                                        {{ witamina_c.cena }}
                                     </h6>
                                 </div>
                             </a>
@@ -179,7 +195,7 @@
                         {% endif %}
                         {% if zelazo %}
                             <div class="carousel-item">
-                            <a href="/suplement/{{ zelazo.id }}" class="text-left">
+                            <a href="/suplement/{{ zelazo.id }}" class="text-left text-white">
                                 <img class="card-img-top" src="{{zelazo.foto.foto.url}}" style="height: 50vh; width: 40vw"><br>
                                 <div class="card-body text-center">
                                     <h6 style="font-size: 2vw">
@@ -196,8 +212,8 @@
     <br><br><br><br><br><br><br><br>
     <div class="row footer text-center fixed-bottom">
         <div class="col-12 footer text-center p-0" style="height: 5vh;">
-            <h5 style="font-size: 2vh;"><a href="{% url 'ankieta' %}" style="color:white;">->Ankieta<-</a>
-                <a href="{% url 'kontakt' %}" style="color:white;">->Kontakt<-</a></h5>
+            <h5 style="font-size: 2vh;"><a href="{% url 'ankieta' %}" style="color:white;"><i class="bi bi-ui-checks"> Ankieta</i></a>
+                <a href="{% url 'kontakt' %}" style="color:white;"><i class="bi bi-person-lines-fill"> Kontakt</i></a></h5>
         </div>
     </div>
 </body>

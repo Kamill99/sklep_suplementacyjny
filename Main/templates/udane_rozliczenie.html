@@ -61,7 +61,15 @@
         </div>
         <div class="col-1 d-none d-md-block header">
             {% if not request.user.is_anonymous %}
-                <h1 style="font-size: 4vh"><a href="{% url 'koszyk' %}"><span class="bi-basket text-white"></span></a></h1>
+                <h1 style="font-size: 4vh">
+                    <a class="text-decoration-none" href="{% url 'koszyk' %}">
+                        <span class="bi-basket text-white">
+                            {% if ikona > 0 %}
+                                <span class="badge badge-pill badge-light" style="font-size: 1.5vh">{{ ikona }}</span>
+                            {% endif %}
+                        </span>
+                    </a>
+                </h1>
             {% endif %}
         </div>
         <div class="col-1 d-none d-md-block header text-right">
@@ -83,7 +91,15 @@
         </div>
         <div class="col-4 d-md-none header">
             {% if not request.user.is_anonymous %}
-                <h3 style="font-size: 10vh"><a href="{% url 'koszyk' %}"><span class="bi-basket text-white"></span></a></h3>
+                <h3 style="font-size: 10vh">
+                    <a class="text-decoration-none" href="{% url 'koszyk' %}">
+                        <span class="bi-basket text-white">
+                        {% if ikona > 0 %}
+                            <span class="badge badge-light" style="font-size: 2.5vh">{{ ikona }}</span>
+                        {% endif %}
+                        </span>
+                    </a>
+                </h3>
             {% endif %}
         </div>
         <div class="col-2 d-md-none header">
@@ -189,8 +205,8 @@
     <br><br><br><br><br>
     <div class="row footer text-center fixed-bottom">
         <div class="col-12 footer text-center p-0" style="height: 5vh;">
-            <h5 style="font-size: 2vh;"><a href="{% url 'ankieta' %}" style="color:white;">->Ankieta<-</a>
-                <a href="{% url 'kontakt' %}" style="color:white;">->Kontakt<-</a></h5>
+            <h5 style="font-size: 2vh;"><a href="{% url 'ankieta' %}" style="color:white;"><i class="bi bi-ui-checks"> Ankieta</i></a>
+                <a href="{% url 'kontakt' %}" style="color:white;"><i class="bi bi-person-lines-fill"> Kontakt</i></a></h5>
         </div>
     </div>
 </body>

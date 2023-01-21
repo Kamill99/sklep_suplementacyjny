@@ -1,7 +1,6 @@
 import uuid
 
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
@@ -48,7 +47,7 @@ class Foto(models.Model):
         verbose_name_plural = "Fotografie"
 
 
-class Supplement(models.Model):
+class Suplement(models.Model):
     kategoria = models.ForeignKey(Kategoria, on_delete=models.CASCADE, null=True)
     producent = models.ForeignKey(Producent, on_delete=models.CASCADE, null=True)
     foto = models.ForeignKey(Foto, on_delete=models.CASCADE, null=True)
@@ -65,21 +64,6 @@ class Supplement(models.Model):
     class Meta:
         verbose_name = "Suplement"
         verbose_name_plural = "Suplementy"
-
-
-class Ocena(models.Model):
-    opinia = models.TextField(default="Wpisz swoją opinię")
-    nota = models.IntegerField(default=5, validators=[MinValueValidator(1),
-                                                      MaxValueValidator(5)])
-    suplement = models.ForeignKey(Supplement, on_delete=models.CASCADE,
-                                  related_name='oceny')
-
-    def __str__(self):
-        return self.suplement
-
-    class Meta:
-        verbose_name = "Ocena"
-        verbose_name_plural = "Oceny"
 
 
 class Koszyk(models.Model):
@@ -102,7 +86,7 @@ class Koszyk(models.Model):
 
 
 class ElementKoszyka(models.Model):
-    produkt = models.ForeignKey(Supplement, on_delete=models.CASCADE, related_name='items')
+    produkt = models.ForeignKey(Suplement, on_delete=models.CASCADE, related_name='items')
     koszyk = models.ForeignKey(Koszyk, on_delete=models.CASCADE, related_name='cartitems')
     ilosc = models.IntegerField(default=0)
 

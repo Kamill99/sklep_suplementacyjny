@@ -156,12 +156,12 @@
             </div>
         </div>
     </div>
-    <h2 class="text-center mt-2">Nieprawidłowo podany numer telefonu</h2><br>
-    <h4 class="text-center mt-2">Numer telefonu powinien zawierać od 7 do 12 znaków wyłącznie w liczbach</h4><br>
     <div class="text-center">
-        <button class="btn btn-info">
-            <a class="text-white" href="{% url 'zamowienie' %}">Cofnij</a>
-        </button>
+        <h2 class="text-center mt-2">PROMOCJA - kod rabatowy na 10% STYCZEN10</h2><br>
+        <h4 class="text-center">Masz inny kod rabatowy? Sprawdź czy jest poprawny</h4>
+        <input id="rabat" type="text" class="small"><br>
+        <button class="btn btn-info m-2" onclick="check()">Sprawdź</button><br>
+        <a class="text-white" href="{% url 'zamowienie' %}"><button class="btn btn-success">Przejdź dalej</button></a>
     </div>
     <div class="row footer text-center fixed-bottom">
         <div class="col-12 footer text-center p-0" style="height: 5vh;">
@@ -169,5 +169,19 @@
                 <a href="{% url 'kontakt' %}" style="color:white;"><i class="bi bi-person-lines-fill"> Kontakt</i></a></h5>
         </div>
     </div>
+    <script>
+        let code = document.getElementById('rabat')
+        function check() {
+            if (code.value == "STYCZEN10") {
+                alert("Kod poprawny")
+            }
+            else if (code.value == "STYCZEN20") {
+                alert("Kod poprawny")
+            }
+            else {
+                alert("Kod niepoprawny")
+            }
+        }
+    </script>
 </body>
 </html>

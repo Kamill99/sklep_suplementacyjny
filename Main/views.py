@@ -7,7 +7,7 @@ from django.views import generic
 from django.contrib.auth.views import PasswordChangeView
 from rest_framework.reverse import reverse_lazy
 from .forms import PasswordChangingForm
-from .models import Supplement, Kategoria, Koszyk, ElementKoszyka, Zamowienie, KodyRabatowe, Producent, Foto
+from .models import Suplement, Kategoria, Koszyk, ElementKoszyka, Zamowienie, KodyRabatowe, Producent, Foto
 from django.shortcuts import render, redirect
 from .forms import CreateUserForm, EditProfileForm
 from django.contrib import messages
@@ -131,12 +131,17 @@ trawienie = "untitled-ontology-15.przeznaczenie.some(untitled-ontology-15.Trawie
 def index(request):
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
-    witamina_c = Supplement.objects.get(id=1)
-    witamina_d = Supplement.objects.get(id=37)
-    zelazo = Supplement.objects.get(id=33)
+    omega = Suplement.objects.get(id=23)
+    witamina_c = Suplement.objects.get(id=20)
+    zelazo = Suplement.objects.get(id=33)
     logo = Foto.objects.get(nazwa="Logo")
-    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo,
-            'witamina_c': witamina_c, 'witamina_d': witamina_d, 'zelazo': zelazo}
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
+    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona,
+            'omega': omega, 'witamina_c': witamina_c, 'zelazo': zelazo}
     return render(request, 'main.html', dane)
 
 
@@ -144,7 +149,12 @@ def kontakt(request):
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
-    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
+    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     return render(request, 'kontakt.html', dane)
 
 
@@ -297,7 +307,12 @@ def ankieta(request):
         else:
             trawienie_suplementy = None
         return redirect('wyniki')
-    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
+    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     return render(request, 'ankieta.html', dane)
 
 
@@ -309,245 +324,266 @@ def wyniki(request):
         polecane_koszyk = request.POST.get('koszyk_polecane')
         if polecane_koszyk == "sfd":
             cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
-            supplement = Supplement.objects.get(id=36)
+            supplement = Suplement.objects.get(id=36)
             ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if wegan_suplementy:
-                supplement = Supplement.objects.get(id=25)
+                supplement = Suplement.objects.get(id=25)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=11)
+                supplement = Suplement.objects.get(id=11)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=36)
+                supplement = Suplement.objects.get(id=36)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=34)
+                supplement = Suplement.objects.get(id=34)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if wegetarian_suplementy:
-                supplement = Supplement.objects.get(id=18)
+                supplement = Suplement.objects.get(id=18)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=21)
+                supplement = Suplement.objects.get(id=21)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=32)
+                supplement = Suplement.objects.get(id=32)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=11)
+                supplement = Suplement.objects.get(id=11)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=36)
+                supplement = Suplement.objects.get(id=36)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=34)
+                supplement = Suplement.objects.get(id=34)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if koncentracja_suplementy:
-                supplement = Supplement.objects.get(id=40)
+                supplement = Suplement.objects.get(id=40)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if sen_suplementy:
-                supplement = Supplement.objects.get(id=16)
+                supplement = Suplement.objects.get(id=16)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if pamiec_suplementy:
-                supplement = Supplement.objects.get(id=18)
+                supplement = Suplement.objects.get(id=18)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=21)
+                supplement = Suplement.objects.get(id=21)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=49)
+                supplement = Suplement.objects.get(id=49)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if stres_suplementy:
-                supplement = Supplement.objects.get(id=40)
+                supplement = Suplement.objects.get(id=40)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=46)
+                supplement = Suplement.objects.get(id=46)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if odpornosc_suplementy:
-                supplement = Supplement.objects.get(id=46)
+                supplement = Suplement.objects.get(id=46)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=1)
+                supplement = Suplement.objects.get(id=1)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if serce_suplementy:
-                supplement = Supplement.objects.get(id=46)
+                supplement = Suplement.objects.get(id=46)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=21)
+                supplement = Suplement.objects.get(id=21)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if trawienie_suplementy:
-                supplement = Supplement.objects.get(id=58)
+                supplement = Suplement.objects.get(id=58)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             return redirect('koszyk')
         elif polecane_koszyk == "allnutrition":
             cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
-            supplement = Supplement.objects.get(id=37)
+            supplement = Suplement.objects.get(id=37)
             ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if wegan_suplementy:
-                supplement = Supplement.objects.get(id=37)
+                supplement = Suplement.objects.get(id=37)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if wegetarian_suplementy:
-                supplement = Supplement.objects.get(id=28)
+                supplement = Suplement.objects.get(id=28)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=22)
+                supplement = Suplement.objects.get(id=22)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=31)
+                supplement = Suplement.objects.get(id=31)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=37)
+                supplement = Suplement.objects.get(id=37)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if sen_suplementy:
-                supplement = Supplement.objects.get(id=43)
+                supplement = Suplement.objects.get(id=43)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if pamiec_suplementy:
-                supplement = Supplement.objects.get(id=28)
+                supplement = Suplement.objects.get(id=28)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=22)
+                supplement = Suplement.objects.get(id=22)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=50)
+                supplement = Suplement.objects.get(id=50)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if pobudzenie_suplementy:
-                supplement = Supplement.objects.get(id=53)
+                supplement = Suplement.objects.get(id=53)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if wzrok_suplementy:
-                supplement = Supplement.objects.get(id=47)
+                supplement = Suplement.objects.get(id=47)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if odpornosc_suplementy:
-                supplement = Supplement.objects.get(id=13)
+                supplement = Suplement.objects.get(id=13)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if serce_suplementy:
-                supplement = Supplement.objects.get(id=22)
+                supplement = Suplement.objects.get(id=22)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if stawy_suplementy:
-                supplement = Supplement.objects.get(id=56)
+                supplement = Suplement.objects.get(id=56)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if trawienie_suplementy:
-                supplement = Supplement.objects.get(id=59)
+                supplement = Suplement.objects.get(id=59)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             return redirect('koszyk')
         elif polecane_koszyk == "kfd":
             cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
-            supplement = Supplement.objects.get(id=2)
+            supplement = Suplement.objects.get(id=2)
             ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if wegan_suplementy:
-                supplement = Supplement.objects.get(id=27)
+                supplement = Suplement.objects.get(id=27)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=39)
+                supplement = Suplement.objects.get(id=39)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=2)
+                supplement = Suplement.objects.get(id=2)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if wegetarian_suplementy:
-                supplement = Supplement.objects.get(id=30)
+                supplement = Suplement.objects.get(id=30)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=24)
+                supplement = Suplement.objects.get(id=24)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=39)
+                supplement = Suplement.objects.get(id=39)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if koncentracja_suplementy:
-                supplement = Supplement.objects.get(id=42)
+                supplement = Suplement.objects.get(id=42)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if sen_suplementy:
-                supplement = Supplement.objects.get(id=45)
+                supplement = Suplement.objects.get(id=45)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if pamiec_suplementy:
-                supplement = Supplement.objects.get(id=30)
+                supplement = Suplement.objects.get(id=30)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=24)
+                supplement = Suplement.objects.get(id=24)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=52)
+                supplement = Suplement.objects.get(id=52)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if stres_suplementy:
-                supplement = Supplement.objects.get(id=42)
+                supplement = Suplement.objects.get(id=42)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if pobudzenie_suplementy:
-                supplement = Supplement.objects.get(id=55)
+                supplement = Suplement.objects.get(id=55)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if odpornosc_suplementy:
-                supplement = Supplement.objects.get(id=19)
+                supplement = Suplement.objects.get(id=19)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if serce_suplementy:
-                supplement = Supplement.objects.get(id=24)
+                supplement = Suplement.objects.get(id=24)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             return redirect('koszyk')
         elif polecane_koszyk == "olimp":
             cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
             if wegan_suplementy:
-                supplement = Supplement.objects.get(id=26)
+                supplement = Suplement.objects.get(id=26)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=38)
+                supplement = Suplement.objects.get(id=38)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=35)
+                supplement = Suplement.objects.get(id=35)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if wegetarian_suplementy:
-                supplement = Supplement.objects.get(id=29)
+                supplement = Suplement.objects.get(id=29)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=23)
+                supplement = Suplement.objects.get(id=23)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=33)
+                supplement = Suplement.objects.get(id=33)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=12)
+                supplement = Suplement.objects.get(id=12)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=38)
+                supplement = Suplement.objects.get(id=38)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=35)
+                supplement = Suplement.objects.get(id=35)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if koncentracja_suplementy:
-                supplement = Supplement.objects.get(id=41)
+                supplement = Suplement.objects.get(id=41)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if sen_suplementy:
-                supplement = Supplement.objects.get(id=44)
+                supplement = Suplement.objects.get(id=44)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if pamiec_suplementy:
-                supplement = Supplement.objects.get(id=29)
+                supplement = Suplement.objects.get(id=29)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=23)
+                supplement = Suplement.objects.get(id=23)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
-                supplement = Supplement.objects.get(id=51)
+                supplement = Suplement.objects.get(id=51)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if stres_suplementy:
-                supplement = Supplement.objects.get(id=41)
+                supplement = Suplement.objects.get(id=41)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if pobudzenie_suplementy:
-                supplement = Supplement.objects.get(id=54)
+                supplement = Suplement.objects.get(id=54)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if wzrok_suplementy:
-                supplement = Supplement.objects.get(id=48)
+                supplement = Suplement.objects.get(id=48)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if odpornosc_suplementy:
-                supplement = Supplement.objects.get(id=20)
+                supplement = Suplement.objects.get(id=20)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if serce_suplementy:
-                supplement = Supplement.objects.get(id=23)
+                supplement = Suplement.objects.get(id=23)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             if stawy_suplementy:
-                supplement = Supplement.objects.get(id=57)
+                supplement = Suplement.objects.get(id=57)
                 ElementKoszyka.objects.get_or_create(koszyk=cart, produkt=supplement, ilosc=1)
             return redirect('koszyk')
         elif polecane_koszyk == "nie":
             return redirect('index')
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
     dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'wegetarian': wegetarian_suplementy,
             'wegan': wegan_suplementy, 'koncentracja': koncentracja_suplementy, 'sen': sen_suplementy,
             'pamiec': pamiec_suplementy, 'stres': stres_suplementy, 'pobudzenie': pobudzenie_suplementy,
             'wzrok': wzrok_suplementy, 'odpornosc': odpornosc_suplementy, 'serce': serce_suplementy,
-            'stawy': stawy_suplementy, 'trawienie': trawienie_suplementy}
+            'stawy': stawy_suplementy, 'trawienie': trawienie_suplementy, 'ikona': ikona}
     return render(request, 'wyniki.html', dane)
 
 
 def kategoria(request, id):
     kategoria_adres = Kategoria.objects.get(pk=id)
-    kategoria_suplement = Supplement.objects.filter(kategoria=kategoria_adres)
+    kategoria_suplement = Suplement.objects.filter(kategoria=kategoria_adres)
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
     dane = {'kategoria_adres': kategoria_adres,
             'kategoria_suplement': kategoria_suplement,
-            'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+            'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     return render(request, 'kategoria_suplement.html', dane)
 
 
 def producent(request, id):
     producent_adres = Producent.objects.get(pk=id)
-    producent_suplementy = Supplement.objects.filter(producent=producent_adres)
+    producent_suplementy = Suplement.objects.filter(producent=producent_adres)
     producenci = Producent.objects.all()
     kategorie = Kategoria.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
     data = {'producent_adres': producent_adres,
             'producent_suplementy': producent_suplementy,
-            'producenci': producenci, 'kategorie': kategorie, 'logo': logo}
+            'producenci': producenci, 'kategorie': kategorie, 'logo': logo, 'ikona': ikona}
     return render(request, 'producenci.html', data)
 
 
 def suplement(request, id):
-    suplement_adres = Supplement.objects.get(pk=id)
+    suplement_adres = Suplement.objects.get(pk=id)
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
-    dane = {'suplement_adres': suplement_adres, 'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
+    dane = {'suplement_adres': suplement_adres, 'kategorie': kategorie,
+            'producenci': producenci, 'logo': logo, 'ikona': ikona}
     if request.method == 'POST':
         global quantity
         quantity = request.POST.get('ilosc')
@@ -563,8 +599,13 @@ def profil(request):
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
     dane = {'nazwa': nazwa, 'imie': imie, 'nazwisko': nazwisko, 'mail': mail,
-            'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+            'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     return render(request, 'profil.html', dane)
 
 
@@ -639,7 +680,13 @@ def koszyk(request):
     if request.user.is_authenticated:
         cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
         cartitems = cart.cartitems.all()
-    context = {"cart": cart, "items": cartitems, 'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
+    context = {"cart": cart, "items": cartitems, 'kategorie': kategorie, 'producenci': producenci,
+               'logo': logo, 'ikona': ikona}
     return render(request, "koszyk.html", context)
 
 
@@ -647,7 +694,7 @@ def koszyk(request):
 def dodanie_do_koszyka(request):
     data = json.loads(request.body)
     supplement_id = data["id"]
-    supplement = Supplement.objects.get(id=supplement_id)
+    supplement = Suplement.objects.get(id=supplement_id)
 
     if request.user.is_authenticated:
         cart, created = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
@@ -709,17 +756,40 @@ def brak_koszyka(request):
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
-    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
+    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     return render(request, 'brak_koszyka.html', dane)
+
+
+def rabat(request):
+    kategorie = Kategoria.objects.all()
+    producenci = Producent.objects.all()
+    logo = Foto.objects.get(nazwa="Logo")
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
+    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
+    return render(request, 'rabat.html', dane)
 
 
 def szukaj(request):
     q = request.GET['q']
-    suplementy = Supplement.objects.filter(nazwa__icontains=q)
+    suplementy = Suplement.objects.filter(nazwa__icontains=q)
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
-    dane = {'suplementy': suplementy, 'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
+    dane = {'suplementy': suplementy, 'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     return render(request, 'szukaj.html', dane)
 
 
@@ -728,7 +798,12 @@ def numer_telefonu(request):
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
-    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
+    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     return render(request, 'numer_telefonu.html', dane)
 
 
@@ -737,7 +812,12 @@ def zamowienie(request):
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
-    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
+    dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     cart = Koszyk.objects.get(klient=request.user, zamowione=False)
     cartitems = cart.cartitems.all()
     if not cartitems:
@@ -823,7 +903,12 @@ def rozliczenie(request):
             return render(request, 'brak_koszyka.html')
     except:
         return render(request, 'brak_koszyka.html')
-    context = {"order": order, 'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
+    context = {"order": order, 'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     return render(request, 'rozliczenie.html', context)
 
 
@@ -849,8 +934,11 @@ def udane_rozliczenie(request):
     global delivery_cost
     products_cost = order.kwota - delivery_cost
     delivery_cost = 0
+    koszyk = Koszyk.objects.get(klient=request.user, zamowione=False)
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
     context = {"order": order, "cart": cart, "items": cartitems, "total_cost": total_cost, "cost": products_cost,
-               'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+               'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     message = ""
     for element in cartitems:
         product = "Produkt: " + element.produkt.nazwa + "\n"
@@ -904,7 +992,12 @@ def historia_zamowien(request):
     for order in orders:
         if order.koszyk.klient == request.user:
             user_orders.append(order)
-    context = {"orders": user_orders, 'kategorie': kategorie, 'producenci': producenci, 'logo': logo}
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
+    context = {"orders": user_orders, 'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     return render(request, 'historia_zamowien.html', context)
 
 
@@ -916,6 +1009,11 @@ def historia_zamowien_id(request, id):
     kategorie = Kategoria.objects.all()
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
+    ikona = 0
+    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+    elementy_koszyka = koszyk.cartitems.all()
+    ikona = len(elementy_koszyka)
     context = {"order": order, "cart": cart, "items": cartitems, 'kategorie': kategorie,
-               'producenci': producenci, 'logo': logo}
+               'producenci': producenci, 'logo': logo, 'ikona': ikona}
     return render(request, 'historia_zamowien_id.html', context)

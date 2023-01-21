@@ -25,6 +25,7 @@ urlpatterns = [
     path('password/', PasswordsChangeView.as_view(template_name='zmiana_hasla.html')),
     path('zmienione_haslo/', views.zmienione_haslo, name="zmienione_haslo"),
     path('koszyk/', views.koszyk, name="koszyk"),
+    path('rabat/', views.rabat, name="rabat"),
     path('brak_koszyka/', views.brak_koszyka, name="brak_koszyka"),
     path('dodanie_do_koszyka/', views.dodanie_do_koszyka, name="dodanie_do_koszyka"),
     path('aktualizacja_koszyka_plus/', views.aktualizacja_koszyka_plus, name="aktualizacja_koszyka_plus"),
