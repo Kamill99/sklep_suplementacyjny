@@ -181,11 +181,11 @@
             {% endfor %}
             <div>
             {% if order %}
-                <h4>Suma zamówienia</h4>
-                <h5>Kwota zamówienia: {{ cost }} zł</h5>
-                {% if total_cost %}
-                    <h5>Kwota wraz z dostawą: {{ total_cost }} zł</h5>
+                <h4>Podsumowanie</h4>
+                {% if cost > 0 %}
+                    <h5>Kwota zamówienia: {{ cost }} zł</h5>
                 {% endif %}
+                <h5>Kwota zamówienia (wliczając dostawę): {{ total_cost }} zł</h5>
                 <hr>
             </div>
             </div>
@@ -199,7 +199,7 @@
                     <h5>Data złożenia zamówienia: {{ order.data }}</h5>
                     <button class="btn btn-success"><a class="text-white" href="{% url 'index' %}">Strona główna</a></button>
                     <hr>
-                {% endif %}
+            {% endif %}
             </div>
     </div>
     <br><br><br><br><br>

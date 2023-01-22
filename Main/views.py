@@ -942,12 +942,15 @@ def udane_rozliczenie(request):
     order.save()
     total_cost = order.kwota
     global delivery_cost
-    products_cost = order.kwota - delivery_cost
+    order_delivery = delivery_cost
     delivery_cost = 0
-    koszyk = Koszyk.objects.get(klient=request.user, zamowione=False)
-    elementy_koszyka = koszyk.cartitems.all()
-    ikona = len(elementy_koszyka)
-    context = {"order": order, "cart": cart, "items": cartitems, "total_cost": total_cost, "cost": products_cost,
+    ikona = 0
+    if request.user.is_authenticated:
+        obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+        koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+        elementy_koszyka = koszyk.cartitems.all()
+        ikona = len(elementy_koszyka)
+    context = {"order": order, "cart": cart, "items": cartitems, "total_cost": total_cost, "cost": order_delivery,
                'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     message = ""
     for element in cartitems:
