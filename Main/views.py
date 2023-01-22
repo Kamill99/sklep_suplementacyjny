@@ -136,10 +136,11 @@ def index(request):
     zelazo = Suplement.objects.get(id=33)
     logo = Foto.objects.get(nazwa="Logo")
     ikona = 0
-    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
-    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
-    elementy_koszyka = koszyk.cartitems.all()
-    ikona = len(elementy_koszyka)
+    if request.user.is_authenticated:
+        obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+        koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+        elementy_koszyka = koszyk.cartitems.all()
+        ikona = len(elementy_koszyka)
     dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona,
             'omega': omega, 'witamina_c': witamina_c, 'zelazo': zelazo}
     return render(request, 'main.html', dane)
@@ -150,10 +151,11 @@ def kontakt(request):
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
     ikona = 0
-    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
-    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
-    elementy_koszyka = koszyk.cartitems.all()
-    ikona = len(elementy_koszyka)
+    if request.user.is_authenticated:
+        obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+        koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+        elementy_koszyka = koszyk.cartitems.all()
+        ikona = len(elementy_koszyka)
     dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     return render(request, 'kontakt.html', dane)
 
@@ -308,10 +310,11 @@ def ankieta(request):
             trawienie_suplementy = None
         return redirect('wyniki')
     ikona = 0
-    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
-    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
-    elementy_koszyka = koszyk.cartitems.all()
-    ikona = len(elementy_koszyka)
+    if request.user.is_authenticated:
+        obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+        koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+        elementy_koszyka = koszyk.cartitems.all()
+        ikona = len(elementy_koszyka)
     dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     return render(request, 'ankieta.html', dane)
 
@@ -526,10 +529,11 @@ def wyniki(request):
         elif polecane_koszyk == "nie":
             return redirect('index')
     ikona = 0
-    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
-    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
-    elementy_koszyka = koszyk.cartitems.all()
-    ikona = len(elementy_koszyka)
+    if request.user.is_authenticated:
+        obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+        koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+        elementy_koszyka = koszyk.cartitems.all()
+        ikona = len(elementy_koszyka)
     dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'wegetarian': wegetarian_suplementy,
             'wegan': wegan_suplementy, 'koncentracja': koncentracja_suplementy, 'sen': sen_suplementy,
             'pamiec': pamiec_suplementy, 'stres': stres_suplementy, 'pobudzenie': pobudzenie_suplementy,
@@ -545,10 +549,11 @@ def kategoria(request, id):
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
     ikona = 0
-    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
-    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
-    elementy_koszyka = koszyk.cartitems.all()
-    ikona = len(elementy_koszyka)
+    if request.user.is_authenticated:
+        obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+        koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+        elementy_koszyka = koszyk.cartitems.all()
+        ikona = len(elementy_koszyka)
     dane = {'kategoria_adres': kategoria_adres,
             'kategoria_suplement': kategoria_suplement,
             'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
@@ -562,10 +567,11 @@ def producent(request, id):
     kategorie = Kategoria.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
     ikona = 0
-    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
-    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
-    elementy_koszyka = koszyk.cartitems.all()
-    ikona = len(elementy_koszyka)
+    if request.user.is_authenticated:
+        obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+        koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+        elementy_koszyka = koszyk.cartitems.all()
+        ikona = len(elementy_koszyka)
     data = {'producent_adres': producent_adres,
             'producent_suplementy': producent_suplementy,
             'producenci': producenci, 'kategorie': kategorie, 'logo': logo, 'ikona': ikona}
@@ -578,10 +584,11 @@ def suplement(request, id):
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
     ikona = 0
-    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
-    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
-    elementy_koszyka = koszyk.cartitems.all()
-    ikona = len(elementy_koszyka)
+    if request.user.is_authenticated:
+        obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+        koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+        elementy_koszyka = koszyk.cartitems.all()
+        ikona = len(elementy_koszyka)
     dane = {'suplement_adres': suplement_adres, 'kategorie': kategorie,
             'producenci': producenci, 'logo': logo, 'ikona': ikona}
     if request.method == 'POST':
@@ -757,10 +764,11 @@ def brak_koszyka(request):
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
     ikona = 0
-    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
-    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
-    elementy_koszyka = koszyk.cartitems.all()
-    ikona = len(elementy_koszyka)
+    if request.user.is_authenticated:
+        obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+        koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+        elementy_koszyka = koszyk.cartitems.all()
+        ikona = len(elementy_koszyka)
     dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     return render(request, 'brak_koszyka.html', dane)
 
@@ -785,10 +793,11 @@ def szukaj(request):
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
     ikona = 0
-    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
-    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
-    elementy_koszyka = koszyk.cartitems.all()
-    ikona = len(elementy_koszyka)
+    if request.user.is_authenticated:
+        obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+        koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+        elementy_koszyka = koszyk.cartitems.all()
+        ikona = len(elementy_koszyka)
     dane = {'suplementy': suplementy, 'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     return render(request, 'szukaj.html', dane)
 
@@ -799,10 +808,11 @@ def numer_telefonu(request):
     producenci = Producent.objects.all()
     logo = Foto.objects.get(nazwa="Logo")
     ikona = 0
-    obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
-    koszyk = Koszyk.objects.get(id=str(obiekt[0]))
-    elementy_koszyka = koszyk.cartitems.all()
-    ikona = len(elementy_koszyka)
+    if request.user.is_authenticated:
+        obiekt = Koszyk.objects.get_or_create(klient=request.user, zamowione=False)
+        koszyk = Koszyk.objects.get(id=str(obiekt[0]))
+        elementy_koszyka = koszyk.cartitems.all()
+        ikona = len(elementy_koszyka)
     dane = {'kategorie': kategorie, 'producenci': producenci, 'logo': logo, 'ikona': ikona}
     return render(request, 'numer_telefonu.html', dane)
 

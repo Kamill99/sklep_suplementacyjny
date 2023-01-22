@@ -29,14 +29,3 @@ class PasswordChangingForm(PasswordChangeForm):
     class Meta:
         model = User
         fields = ('old_password', 'new_password1', 'new_password2')
-
-
-# class OrderForm(ModelForm):
-#     first_name = forms.CharField(label="Imię", max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
-#     last_name = forms.CharField(label="Nazwisko", max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
-#     tel_number = forms.IntegerField(label="Numer telefonu", min_length=9,
-#                                     widget=forms.IntegerField())
-#     town = forms.CharField(label="Miejscowość", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-#     house_number = forms.IntegerField(label="Numer domu", min_length=1,
-#                                       widget=forms.IntegerField(attrs={'class': 'form-control'}))
-#     post = forms.CharField(label="Kod pocztowy", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
